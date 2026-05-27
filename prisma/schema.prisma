@@ -1,0 +1,128 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum UserRole {
+  RESIDENT
+  STAFF
+  SUPERUSER
+}
+
+enum AmenityType {
+  PARTY_ROOM
+  MEETING_ROOM
+  GYM
+  COURT
+  OTHER
+}
+
+enum AmenityStatus {
+  ACTIVE
+  INACTIVE
+  MAINTENANCE
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  REJECTED
+}
+
+model User {
+  id                String     @id @default(cuid())
+  email             String     @unique
+  name              String
+  phone             String?
+  role              UserRole   @default(RESIDENT)
+  passwordHash      String?
+  bookings          Booking[]  @relation("ResidentBookings")
+  approvedBookings  Booking[]  @relation("BookingApprover")
+  auditLogs         AuditLog[] @relation("AuditActor")
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+}
+
+model Amenity {
+  id                        String         @id @default(cuid())
+  name                      String
+  slug                      String         @unique
+  type                      AmenityType    @default(OTHER)
+  description               String
+  imageUrl                  String?
+  location                  String
+  capacity                  Int
+  slotDurationMinutes       Int
+  openTime                  String
+  closeTime                 String
+  rules                     String?
+  status                    AmenityStatus  @default(ACTIVE)
+  requiresApproval          Boolean        @default(false)
+  maxAdvanceDays            Int?
+  maxBookingDurationMinutes Int?
+  cancellationCutoffHours   Int?
+  bookings                  Booking[]
+  blackoutDates             BlackoutDate[]
+  createdAt                 DateTime       @default(now())
+  updatedAt                 DateTime       @updatedAt
+}
+
+model Booking {
+  id            String        @id @default(cuid())
+  residentId    String
+  amenityId     String
+  approvedById  String?
+  startAt       DateTime
+  endAt         DateTime
+  guestCount    Int?
+  status        BookingStatus @default(PENDING)
+  notes         String?
+  eventTitle    String?
+  eventDetails  String?
+  approvedAt    DateTime?
+  cancelledAt   DateTime?
+  resident      User          @relation("ResidentBookings", fields: [residentId], references: [id], onDelete: Cascade)
+  amenity       Amenity       @relation(fields: [amenityId], references: [id], onDelete: Cascade)
+  approvedBy    User?         @relation("BookingApprover", fields: [approvedById], references: [id], onDelete: SetNull)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([residentId, status])
+  @@index([amenityId, startAt, endAt])
+  @@index([status, startAt])
+}
+
+model BlackoutDate {
+  id        String   @id @default(cuid())
+  amenityId String
+  startAt   DateTime
+  endAt     DateTime
+  reason    String
+  allDay    Boolean  @default(false)
+  amenity   Amenity  @relation(fields: [amenityId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([amenityId, startAt, endAt])
+}
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  actorUserId String?
+  action      String
+  entityType  String
+  entityId    String
+  metadata    Json?
+  actor       User?    @relation("AuditActor", fields: [actorUserId], references: [id], onDelete: SetNull)
+  createdAt   DateTime @default(now())
+
+  @@index([actorUserId])
+  @@index([entityType, entityId])
+}
