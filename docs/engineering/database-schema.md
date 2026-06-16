@@ -2,20 +2,31 @@
 
 ## 1. Database Direction
 
-This project uses Prisma against PostgreSQL, hosted later on Supabase.
+This project uses Prisma against PostgreSQL hosted on Supabase.
 
 Current connection model:
 
 - `DATABASE_URL`: pooled runtime connection
 - `DIRECT_URL`: direct migration connection
 
+The data model is tenant-scoped by `Location`.
+
 ## 2. Core Enums
 
-### UserRole
+### PlatformRole
+
+- `USER`
+- `SUPERUSER`
+
+### LocationMembershipRole
 
 - `RESIDENT`
 - `STAFF`
-- `SUPERUSER`
+
+### LocationStatus
+
+- `ACTIVE`
+- `INACTIVE`
 
 ### AmenityType
 
@@ -42,32 +53,80 @@ Current connection model:
 
 ### User
 
+Global account record.
+
 Key fields:
 
 - `id`
+- `authUserId`
 - `email`
 - `name`
 - `phone`
-- `role`
+- `platformRole`
 - `passwordHash`
 
 Relations:
 
+- Supabase Auth identity
+- location memberships
 - resident bookings
 - approved bookings
 - audit logs as actor
+- locations created by superuser
 
-### Amenity
+### Location
+
+Tenant boundary for a building, site, or managed property.
 
 Key fields:
 
 - `id`
 - `name`
 - `slug`
+- `addressLine1`
+- `addressLine2`
+- `city`
+- `province`
+- `postalCode`
+- `country`
+- `timezone`
+- `status`
+- `createdById`
+
+Relations:
+
+- memberships
+- amenities
+- bookings
+- blackout dates
+- audit logs
+
+### LocationMembership
+
+Connects a user to a location and defines their location-scoped role.
+
+Key fields:
+
+- `id`
+- `userId`
+- `locationId`
+- `role`
+- `isPrimary`
+
+### Amenity
+
+Location-scoped amenity or party room.
+
+Key fields:
+
+- `id`
+- `locationId`
+- `name`
+- `slug`
 - `type`
 - `description`
 - `imageUrl`
-- `location`
+- `area`
 - `capacity`
 - `slotDurationMinutes`
 - `openTime`
@@ -81,14 +140,18 @@ Key fields:
 
 Relations:
 
+- location
 - bookings
 - blackout dates
 
 ### Booking
 
+Location-scoped reservation.
+
 Key fields:
 
 - `id`
+- `locationId`
 - `residentId`
 - `amenityId`
 - `approvedById`
@@ -104,13 +167,17 @@ Key fields:
 
 Notes:
 
-- `eventTitle` and `eventDetails` are included to support party room booking requirements.
+- `eventTitle` and `eventDetails` support party room booking requirements.
+- location must match the resident and amenity location.
 
 ### BlackoutDate
+
+Location-scoped blocked window for an amenity.
 
 Key fields:
 
 - `id`
+- `locationId`
 - `amenityId`
 - `startAt`
 - `endAt`
@@ -119,10 +186,13 @@ Key fields:
 
 ### AuditLog
 
+Audit trail for admin and superuser actions.
+
 Key fields:
 
 - `id`
 - `actorUserId`
+- `locationId`
 - `action`
 - `entityType`
 - `entityId`
@@ -137,7 +207,8 @@ These rules are not fully implemented yet, but the schema is shaped for them:
 - respect blackout windows
 - support approval-required amenities
 - support stricter party room metadata
-- support resident and approver ownership
+- support location-scoped visibility for residents and staff
+- allow superuser to manage all locations globally
 
 ## 5. Current Implementation Reference
 

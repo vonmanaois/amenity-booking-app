@@ -122,23 +122,52 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
+  authUserId: 'authUserId',
   email: 'email',
   name: 'name',
   phone: 'phone',
-  role: 'role',
+  platformRole: 'platformRole',
   passwordHash: 'passwordHash',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.LocationScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  addressLine1: 'addressLine1',
+  addressLine2: 'addressLine2',
+  city: 'city',
+  province: 'province',
+  postalCode: 'postalCode',
+  country: 'country',
+  timezone: 'timezone',
+  status: 'status',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.LocationMembershipScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  locationId: 'locationId',
+  role: 'role',
+  isPrimary: 'isPrimary',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
 
 exports.Prisma.AmenityScalarFieldEnum = {
   id: 'id',
+  locationId: 'locationId',
   name: 'name',
   slug: 'slug',
   type: 'type',
   description: 'description',
   imageUrl: 'imageUrl',
-  location: 'location',
+  area: 'area',
   capacity: 'capacity',
   slotDurationMinutes: 'slotDurationMinutes',
   openTime: 'openTime',
@@ -155,6 +184,7 @@ exports.Prisma.AmenityScalarFieldEnum = {
 
 exports.Prisma.BookingScalarFieldEnum = {
   id: 'id',
+  locationId: 'locationId',
   residentId: 'residentId',
   amenityId: 'amenityId',
   approvedById: 'approvedById',
@@ -173,6 +203,7 @@ exports.Prisma.BookingScalarFieldEnum = {
 
 exports.Prisma.BlackoutDateScalarFieldEnum = {
   id: 'id',
+  locationId: 'locationId',
   amenityId: 'amenityId',
   startAt: 'startAt',
   endAt: 'endAt',
@@ -185,6 +216,7 @@ exports.Prisma.BlackoutDateScalarFieldEnum = {
 exports.Prisma.AuditLogScalarFieldEnum = {
   id: 'id',
   actorUserId: 'actorUserId',
+  locationId: 'locationId',
   action: 'action',
   entityType: 'entityType',
   entityId: 'entityId',
@@ -217,10 +249,19 @@ exports.Prisma.JsonNullValueFilter = {
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
 };
-exports.UserRole = exports.$Enums.UserRole = {
-  RESIDENT: 'RESIDENT',
-  STAFF: 'STAFF',
+exports.PlatformRole = exports.$Enums.PlatformRole = {
+  USER: 'USER',
   SUPERUSER: 'SUPERUSER'
+};
+
+exports.LocationStatus = exports.$Enums.LocationStatus = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE'
+};
+
+exports.LocationMembershipRole = exports.$Enums.LocationMembershipRole = {
+  RESIDENT: 'RESIDENT',
+  STAFF: 'STAFF'
 };
 
 exports.AmenityType = exports.$Enums.AmenityType = {
@@ -246,6 +287,8 @@ exports.BookingStatus = exports.$Enums.BookingStatus = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Location: 'Location',
+  LocationMembership: 'LocationMembership',
   Amenity: 'Amenity',
   Booking: 'Booking',
   BlackoutDate: 'BlackoutDate',

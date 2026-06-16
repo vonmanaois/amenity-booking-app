@@ -17,6 +17,7 @@ Completed:
 - role-separated route structure
 - PWA manifest baseline
 - Prisma setup
+- Supabase SSR helpers
 
 Remaining:
 
@@ -33,12 +34,23 @@ Next:
 - run initial migration
 - confirm Prisma client against live database
 
+## Phase 2.5: Multi-Location Schema
+
+Next:
+
+- finalize `Location`-based tenant model
+- migrate `User` into `platformRole`
+- add `LocationMembership`
+- scope amenities, bookings, blackout dates, and audit logs to `Location`
+- seed multiple locations and users
+
 ## Phase 3: Authentication And Roles
 
-- choose auth strategy
+- Supabase Auth chosen as the identity layer
 - implement resident, staff, and superuser access
 - protect route groups
 - attach user roles to session state
+- resolve location context from membership
 
 ## Phase 4: Resident Booking Flow
 
@@ -52,13 +64,14 @@ Next:
 ## Phase 5: Staff Operations
 
 - admin dashboard metrics
-- amenities CRUD
+- amenities CRUD for assigned locations
 - party room rule management
 - booking management
 - blackout date management
 
 ## Phase 6: Superuser Oversight
 
+- location management
 - staff management
 - role management
 - audit visibility
@@ -73,4 +86,4 @@ Next:
 
 ## Current Recommendation
 
-Do not move into heavy UI work yet. Connect Supabase and run the first schema migration first, because the booking domain depends heavily on stable data modeling.
+Do not move into heavy UI work yet. Finish the Location-based migration and seed data first, because the booking domain depends heavily on stable tenant scoping.

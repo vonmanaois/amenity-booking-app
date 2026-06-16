@@ -23,7 +23,7 @@
 
 ## Project Snapshot
 
-This project is designed as a modern amenity reservation system for residential use. It supports residents booking shared spaces, staff coordinating operational rules, and superusers overseeing platform-level control.
+This project is designed as a modern multi-location amenity reservation system for residential use. It supports residents booking shared spaces in their assigned location, staff coordinating operational rules for that location, and superusers overseeing platform-level control across all locations.
 
 The app is being built with party room booking as a first-class workflow, not just a generic amenity type. That matters because party rooms usually carry stricter rules, more scheduling friction, and more admin involvement than ordinary shared amenities.
 
@@ -32,7 +32,7 @@ The app is being built with party room booking as a first-class workflow, not ju
 This project is serving as hands-on practice in:
 
 - structuring a real Next.js application from the start
-- modeling a booking domain with actual constraints
+- modeling a multi-tenant booking domain with actual constraints
 - separating product roles clearly
 - documenting decisions and implementation flow properly
 - building with a cleaner engineering process instead of jumping straight into UI work
@@ -41,20 +41,22 @@ This project is serving as hands-on practice in:
 
 ### Resident
 
-- browse amenities and party rooms
+- browse amenities and party rooms in an assigned location
 - check availability
 - create bookings
 - manage personal reservations
 
 ### Coordinator / Staff Admin
 
-- manage amenities
+- manage amenities in assigned locations
 - review party room requests
 - control booking rules and blackout windows
 - update booking statuses
 
 ### Superuser
 
+- create locations
+- assign staff and residents to locations
 - manage staff roles
 - oversee sensitive settings
 - review audit activity
@@ -66,6 +68,7 @@ The product is centered around:
 - amenity discovery
 - party room booking
 - booking validation
+- location-based tenant isolation
 - operational admin control
 - role-based access and governance
 
@@ -79,13 +82,14 @@ The product is centered around:
 - Prisma schema and shared client
 - project documentation system
 - Git and GitHub project setup
+- Location-based schema migration and seed data in Supabase
+- Supabase Auth chosen as the identity layer
+- app-user mapping layer started
 
 ### Next
 
-- connect Supabase
-- run the first database migration
-- add seed data
-- implement authentication
+- implement authentication screens and flows
+- add location-aware authorization
 - replace placeholder pages with real resident and admin flows
 
 ## Screenshots

@@ -87,3 +87,41 @@ Impact:
 
 - simpler learning path
 - easier migrations and tutorials
+
+## 2026-05-27 - Model The App As A Location-Based Multi-Tenant Platform
+
+Decision:
+
+Use `Location` as the tenant boundary and connect users to locations through `LocationMembership`.
+
+Why:
+
+- the company has multiple managed locations
+- residents should only see their own location's amenities and bookings
+- staff should only manage assigned locations
+- superusers need global visibility and control
+
+Impact:
+
+- schema now includes `Location` and `LocationMembership`
+- amenities, bookings, blackout dates, and audit logs are location-scoped
+- superuser can create and manage locations directly
+- docs and seed data must reflect tenant behavior
+
+## 2026-06-03 - Use Supabase Auth For Identity And Prisma For App Users
+
+Decision:
+
+Use Supabase Auth for sign-in/session identity and Prisma `User` rows for application roles, memberships, and tenant-scoped data.
+
+Why:
+
+- keeps auth and domain data separated cleanly
+- allows Prisma to remain the source of truth for location access and roles
+- lets the app map Supabase users to seeded or newly created app users by `authUserId`
+
+Impact:
+
+- `User` now has an `authUserId` field
+- route checks can sync/authenticate against Supabase and then resolve Prisma access rules
+- protected routes will rely on a DAL-style auth helper layer

@@ -20,6 +20,7 @@ docs/
     decisions.md
     worklog.md
     next-steps.md
+    handoff-template.md
 ```
 
 ## Source Of Truth
@@ -28,12 +29,20 @@ docs/
 - `product/design.md`: UX and flow decisions, user/admin/superuser interaction model
 - `product/roadmap.md`: phased implementation sequence
 - `engineering/architecture.md`: route structure, folder design, technical direction
-- `engineering/database-schema.md`: application data model and persistence notes
+- `engineering/database-schema.md`: application data model, location tenancy, and persistence notes
 - `engineering/api-contracts.md`: route and payload expectations
 - `process/changelog.md`: major dated milestones
 - `process/decisions.md`: important technical and product decisions with rationale
 - `process/worklog.md`: session-by-session execution log
 - `process/next-steps.md`: current backlog and immediate follow-up tasks
+- `process/handoff-template.md`: copy-paste prompt for resuming the project after a break
+
+Current architecture theme:
+
+- one app
+- many locations
+- residents and staff scoped by location
+- superuser global control
 
 ## Update Rules
 
@@ -54,6 +63,7 @@ Recommended Git rhythm for this project:
 3. Verify with lint, build, or tests.
 4. Update `process/worklog.md` and `process/next-steps.md`.
 5. Commit with a focused message.
+6. Refresh `process/handoff-template.md` if the durable project state changes.
 
 Suggested commit styles:
 
@@ -69,4 +79,5 @@ Before stopping work:
 - record what changed in `process/worklog.md`
 - add or revise any durable decisions in `process/decisions.md`
 - refresh `process/next-steps.md`
+- update `process/handoff-template.md` if the resume context changed
 - commit the current work

@@ -2,7 +2,7 @@
 
 ## 1. Product Summary
 
-The Amenity Booking App is a Next.js PWA for residents to discover, reserve, and manage shared amenities. Party room booking is a primary product flow and must be handled explicitly rather than buried under generic amenities.
+The Amenity Booking App is a Next.js PWA for residents to discover, reserve, and manage shared amenities across multiple locations. Party room booking is a primary product flow and must be handled explicitly rather than buried under generic amenities.
 
 The application supports three roles:
 
@@ -56,7 +56,8 @@ The product replaces that with a structured self-service experience backed by ad
 Can:
 
 - sign in
-- browse amenities and party rooms
+- access only their assigned location
+- browse amenities and party rooms for that location
 - view availability
 - create bookings
 - cancel eligible bookings
@@ -73,17 +74,18 @@ Cannot:
 Can:
 
 - access admin dashboard
-- create, edit, disable, and manage amenities
-- review and manage party room bookings
+- create, edit, disable, and manage amenities for assigned location(s)
+- review and manage party room bookings for assigned location(s)
 - configure rules and blackout windows
 - update booking statuses
-- view residents and booking activity
+- view residents and booking activity within assigned location(s)
 
 ### Superuser
 
 Can:
 
 - access all staff capabilities
+- create and manage locations
 - manage staff accounts and roles
 - manage sensitive platform settings
 - review audit activity
@@ -95,6 +97,7 @@ Can:
 
 - authentication foundation
 - role-based access
+- location creation and management by superuser
 - resident dashboard shell
 - amenities list and detail
 - party room list and detail
@@ -114,7 +117,7 @@ Can:
 - recurring reservations
 - QR access control
 - advanced analytics exports
-- multi-property support
+- multi-location support
 
 ## 6. User Journey Overview
 
@@ -132,16 +135,17 @@ Can:
 
 1. Staff admin signs in.
 2. Staff admin reviews dashboard activity.
-3. Staff admin creates or edits amenities, including party rooms.
+3. Staff admin manages amenities, including party rooms, for assigned location(s).
 4. Staff admin adjusts booking rules and blackout dates.
 5. Staff admin reviews and updates booking statuses.
 
 ### Superuser Journey
 
 1. Superuser signs in.
-2. Superuser enters platform oversight area.
-3. Superuser reviews staff roles and audit events.
-4. Superuser resolves escalated issues as needed.
+2. Superuser creates or manages locations.
+3. Superuser enters platform oversight area.
+4. Superuser reviews staff roles and audit events.
+5. Superuser resolves escalated issues as needed.
 
 ## 7. Screen Inventory
 
@@ -174,6 +178,7 @@ Can:
 ### Superuser
 
 - Superuser overview
+- Locations
 - Staff management
 - Role management
 - Audit / oversight
@@ -184,10 +189,12 @@ Can:
 
 - The app must support residents, staff admins, and superusers.
 - Protected routes must enforce role-based access.
+- Resident and staff access must be scoped to assigned locations.
+- Superuser access must be global.
 
 ### Amenity Browsing
 
-- Residents must be able to browse amenities.
+- Residents must be able to browse amenities for their location.
 - Residents must be able to enter a dedicated party room flow.
 
 ### Availability
@@ -200,10 +207,12 @@ Can:
 - Residents must be able to create valid bookings.
 - Party room bookings may require event details or approval rules.
 - Residents must be able to cancel eligible bookings.
+- Bookings must be validated against location ownership and amenity ownership.
 
 ### Admin Management
 
-- Staff admins must be able to manage amenities and bookings.
+- Staff admins must be able to manage amenities and bookings for assigned locations.
+- Superusers must be able to create and manage locations.
 - Superusers must be able to manage staff and roles.
 
 ## 9. Acceptance Themes
@@ -224,12 +233,12 @@ Implemented so far:
 - project docs and process structure
 - Prisma schema and shared Prisma client
 - buildable Next.js scaffold
+- location-based schema redesign
+- location migration and seed data in Supabase
+- Supabase Auth integration plan and app-user mapping layer
 
 Not yet implemented:
 
-- Supabase connection
-- migrations
 - auth
 - real data fetching
 - booking logic
-- seed data

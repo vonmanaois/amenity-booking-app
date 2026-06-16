@@ -18,6 +18,8 @@ The app is structured with role-oriented route areas:
 - `admin` for staff admin operations
 - `superuser` for platform-level governance
 
+All runtime data must be scoped to the active `Location` unless the current user is a superuser.
+
 ## 3. Current Route Map
 
 ### Resident
@@ -42,6 +44,7 @@ The app is structured with role-oriented route areas:
 ### Superuser
 
 - `/superuser`
+- `/superuser/locations`
 - `/superuser/staff`
 - `/superuser/roles`
 - `/superuser/audit`
@@ -70,6 +73,8 @@ Current notable folders:
 - keep generated code out of normal app logic
 - keep role separation visible in routing and layout
 - keep party room flows explicit instead of hiding them under generic amenities
+- keep tenant scoping explicit through `Location` and `LocationMembership`
+- do not query cross-location data for resident and staff flows
 
 ## 6. Runtime Data Strategy
 
@@ -82,6 +87,8 @@ Initial implementation should prefer:
 - server components for reads where useful
 - route handlers or server actions for mutations
 - central Prisma client import from `src/lib/db/prisma.ts`
+- a location resolver that maps the current user to an active location context
+- Supabase Auth as the identity layer, with Prisma storing the application user record
 
 ## 7. Current Scaffold Notes
 
@@ -94,3 +101,5 @@ The current app already has:
 - manifest baseline
 
 This is enough to start real integration work without reshaping the route tree again.
+
+The next architecture step is to introduce location-aware query helpers and shared authorization checks for resident, staff, and superuser flows.

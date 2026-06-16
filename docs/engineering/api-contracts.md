@@ -6,13 +6,45 @@ No route handlers or mutation contracts are implemented yet. This file defines t
 
 ## Planned Initial Endpoints
 
+### Superuser Location Management
+
+#### `GET /api/superuser/locations`
+
+Purpose:
+
+- return all locations for platform oversight
+
+#### `POST /api/superuser/locations`
+
+Purpose:
+
+- create a new location
+
+Expected request shape:
+
+- `name`
+- `slug`
+- `addressLine1`
+- `addressLine2`
+- `city`
+- `province`
+- `postalCode`
+- `country`
+- `timezone`
+
+#### `PATCH /api/superuser/locations/:locationId`
+
+Purpose:
+
+- update location metadata or status
+
 ### Resident Reads
 
 #### `GET /api/amenities`
 
 Purpose:
 
-- return active amenities for resident browsing
+- return active amenities for the resident's assigned location
 
 Expected response shape:
 
@@ -29,6 +61,7 @@ Expected response shape:
 - amenity detail
 - rules
 - summary availability metadata later
+- location context
 
 #### `GET /api/amenities/:amenityId/availability`
 
@@ -77,7 +110,7 @@ Purpose:
 
 Purpose:
 
-- list bookings with filters
+- list bookings with filters, scoped to assigned location(s)
 
 #### `PATCH /api/admin/bookings/:bookingId`
 
@@ -89,13 +122,13 @@ Purpose:
 
 Purpose:
 
-- create amenity
+- create amenity for assigned location
 
 #### `PATCH /api/admin/amenities/:amenityId`
 
 Purpose:
 
-- update amenity
+- update amenity within the assigned location
 
 ### Superuser
 
@@ -111,12 +144,19 @@ Purpose:
 
 - update role assignment
 
+#### `PATCH /api/superuser/users/:userId/locations`
+
+Purpose:
+
+- assign or update a user's location memberships
+
 ## Contract Rules
 
 - all write requests must validate server-side
 - role checks must run before business logic
 - booking availability must never rely only on client state
 - party room validation must support extra event details
+- location checks must run before any resident or staff query returns data
 
 ## Documentation Rule
 

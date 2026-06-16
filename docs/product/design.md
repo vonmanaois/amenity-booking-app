@@ -10,6 +10,7 @@ Design principles:
 - show rules before the user commits
 - keep party rooms prominent because they carry more operational risk
 - keep admin and resident flows visually distinct
+- keep location context visible where it affects access or availability
 - favor clear information architecture over decoration
 
 ## 2. Resident Experience
@@ -28,6 +29,7 @@ Design principles:
 - clear rules
 - easy availability selection
 - obvious success and failure states
+- invisible tenant switching for single-location residents
 
 ### Party Room UX Notes
 
@@ -39,6 +41,7 @@ Important party room behaviors:
 - event title or notes may be required
 - approval requirements should be obvious
 - stricter cancellation windows should be visible
+- if a resident belongs to only one location, no location picker should appear
 
 ## 3. Staff Admin Experience
 
@@ -57,6 +60,7 @@ Important party room behaviors:
 - review party room activity efficiently
 - manage rules without digging through unrelated screens
 - resolve booking exceptions with minimal friction
+- operate only within assigned location context
 
 ## 4. Superuser Experience
 
@@ -73,6 +77,7 @@ Important party room behaviors:
 - staff control
 - escalation handling
 - visibility into sensitive changes
+- create and manage locations without using the staff admin flow
 
 ## 5. Visual Direction
 
@@ -98,6 +103,8 @@ The booking flow should eventually be split into clear steps:
 5. submit
 6. confirm outcome
 
+Location context should be resolved before the flow starts, not midway through the booking.
+
 ### Error Handling
 
 Errors should explain:
@@ -121,6 +128,7 @@ Use explicit statuses:
 - staff admins should not see superuser controls
 - superuser navigation should emphasize governance, not resident tasks
 - party rooms should have a dedicated resident entry point
+- location switching should be explicit for superusers and hidden for single-location residents
 
 ## 8. Documentation Rule
 

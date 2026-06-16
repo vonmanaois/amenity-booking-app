@@ -19,6 +19,16 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
+ * Model Location
+ * 
+ */
+export type Location = $Result.DefaultSelection<Prisma.$LocationPayload>
+/**
+ * Model LocationMembership
+ * 
+ */
+export type LocationMembership = $Result.DefaultSelection<Prisma.$LocationMembershipPayload>
+/**
  * Model Amenity
  * 
  */
@@ -43,13 +53,28 @@ export type AuditLog = $Result.DefaultSelection<Prisma.$AuditLogPayload>
  * Enums
  */
 export namespace $Enums {
-  export const UserRole: {
-  RESIDENT: 'RESIDENT',
-  STAFF: 'STAFF',
+  export const PlatformRole: {
+  USER: 'USER',
   SUPERUSER: 'SUPERUSER'
 };
 
-export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+export type PlatformRole = (typeof PlatformRole)[keyof typeof PlatformRole]
+
+
+export const LocationMembershipRole: {
+  RESIDENT: 'RESIDENT',
+  STAFF: 'STAFF'
+};
+
+export type LocationMembershipRole = (typeof LocationMembershipRole)[keyof typeof LocationMembershipRole]
+
+
+export const LocationStatus: {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE'
+};
+
+export type LocationStatus = (typeof LocationStatus)[keyof typeof LocationStatus]
 
 
 export const AmenityType: {
@@ -83,9 +108,17 @@ export type BookingStatus = (typeof BookingStatus)[keyof typeof BookingStatus]
 
 }
 
-export type UserRole = $Enums.UserRole
+export type PlatformRole = $Enums.PlatformRole
 
-export const UserRole: typeof $Enums.UserRole
+export const PlatformRole: typeof $Enums.PlatformRole
+
+export type LocationMembershipRole = $Enums.LocationMembershipRole
+
+export const LocationMembershipRole: typeof $Enums.LocationMembershipRole
+
+export type LocationStatus = $Enums.LocationStatus
+
+export const LocationStatus: typeof $Enums.LocationStatus
 
 export type AmenityType = $Enums.AmenityType
 
@@ -226,6 +259,26 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.location`: Exposes CRUD operations for the **Location** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Locations
+    * const locations = await prisma.location.findMany()
+    * ```
+    */
+  get location(): Prisma.LocationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.locationMembership`: Exposes CRUD operations for the **LocationMembership** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LocationMemberships
+    * const locationMemberships = await prisma.locationMembership.findMany()
+    * ```
+    */
+  get locationMembership(): Prisma.LocationMembershipDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.amenity`: Exposes CRUD operations for the **Amenity** model.
@@ -707,6 +760,8 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
+    Location: 'Location',
+    LocationMembership: 'LocationMembership',
     Amenity: 'Amenity',
     Booking: 'Booking',
     BlackoutDate: 'BlackoutDate',
@@ -729,7 +784,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "amenity" | "booking" | "blackoutDate" | "auditLog"
+      modelProps: "user" | "location" | "locationMembership" | "amenity" | "booking" | "blackoutDate" | "auditLog"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -804,6 +859,154 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      Location: {
+        payload: Prisma.$LocationPayload<ExtArgs>
+        fields: Prisma.LocationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LocationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LocationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>
+          }
+          findFirst: {
+            args: Prisma.LocationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LocationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>
+          }
+          findMany: {
+            args: Prisma.LocationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>[]
+          }
+          create: {
+            args: Prisma.LocationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>
+          }
+          createMany: {
+            args: Prisma.LocationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LocationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>[]
+          }
+          delete: {
+            args: Prisma.LocationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>
+          }
+          update: {
+            args: Prisma.LocationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>
+          }
+          deleteMany: {
+            args: Prisma.LocationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LocationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.LocationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>[]
+          }
+          upsert: {
+            args: Prisma.LocationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>
+          }
+          aggregate: {
+            args: Prisma.LocationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLocation>
+          }
+          groupBy: {
+            args: Prisma.LocationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LocationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LocationCountArgs<ExtArgs>
+            result: $Utils.Optional<LocationCountAggregateOutputType> | number
+          }
+        }
+      }
+      LocationMembership: {
+        payload: Prisma.$LocationMembershipPayload<ExtArgs>
+        fields: Prisma.LocationMembershipFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LocationMembershipFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationMembershipPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LocationMembershipFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationMembershipPayload>
+          }
+          findFirst: {
+            args: Prisma.LocationMembershipFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationMembershipPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LocationMembershipFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationMembershipPayload>
+          }
+          findMany: {
+            args: Prisma.LocationMembershipFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationMembershipPayload>[]
+          }
+          create: {
+            args: Prisma.LocationMembershipCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationMembershipPayload>
+          }
+          createMany: {
+            args: Prisma.LocationMembershipCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LocationMembershipCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationMembershipPayload>[]
+          }
+          delete: {
+            args: Prisma.LocationMembershipDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationMembershipPayload>
+          }
+          update: {
+            args: Prisma.LocationMembershipUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationMembershipPayload>
+          }
+          deleteMany: {
+            args: Prisma.LocationMembershipDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LocationMembershipUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.LocationMembershipUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationMembershipPayload>[]
+          }
+          upsert: {
+            args: Prisma.LocationMembershipUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationMembershipPayload>
+          }
+          aggregate: {
+            args: Prisma.LocationMembershipAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLocationMembership>
+          }
+          groupBy: {
+            args: Prisma.LocationMembershipGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LocationMembershipGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LocationMembershipCountArgs<ExtArgs>
+            result: $Utils.Optional<LocationMembershipCountAggregateOutputType> | number
           }
         }
       }
@@ -1200,6 +1403,8 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     user?: UserOmit
+    location?: LocationOmit
+    locationMembership?: LocationMembershipOmit
     amenity?: AmenityOmit
     booking?: BookingOmit
     blackoutDate?: BlackoutDateOmit
@@ -1284,15 +1489,19 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
+    memberships: number
     bookings: number
     approvedBookings: number
     auditLogs: number
+    createdLocations: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    memberships?: boolean | UserCountOutputTypeCountMembershipsArgs
     bookings?: boolean | UserCountOutputTypeCountBookingsArgs
     approvedBookings?: boolean | UserCountOutputTypeCountApprovedBookingsArgs
     auditLogs?: boolean | UserCountOutputTypeCountAuditLogsArgs
+    createdLocations?: boolean | UserCountOutputTypeCountCreatedLocationsArgs
   }
 
   // Custom InputTypes
@@ -1304,6 +1513,13 @@ export namespace Prisma {
      * Select specific fields to fetch from the UserCountOutputType
      */
     select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountMembershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LocationMembershipWhereInput
   }
 
   /**
@@ -1324,6 +1540,80 @@ export namespace Prisma {
    * UserCountOutputType without action
    */
   export type UserCountOutputTypeCountAuditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AuditLogWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCreatedLocationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LocationWhereInput
+  }
+
+
+  /**
+   * Count Type LocationCountOutputType
+   */
+
+  export type LocationCountOutputType = {
+    memberships: number
+    amenities: number
+    bookings: number
+    blackoutDates: number
+    auditLogs: number
+  }
+
+  export type LocationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    memberships?: boolean | LocationCountOutputTypeCountMembershipsArgs
+    amenities?: boolean | LocationCountOutputTypeCountAmenitiesArgs
+    bookings?: boolean | LocationCountOutputTypeCountBookingsArgs
+    blackoutDates?: boolean | LocationCountOutputTypeCountBlackoutDatesArgs
+    auditLogs?: boolean | LocationCountOutputTypeCountAuditLogsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * LocationCountOutputType without action
+   */
+  export type LocationCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LocationCountOutputType
+     */
+    select?: LocationCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * LocationCountOutputType without action
+   */
+  export type LocationCountOutputTypeCountMembershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LocationMembershipWhereInput
+  }
+
+  /**
+   * LocationCountOutputType without action
+   */
+  export type LocationCountOutputTypeCountAmenitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AmenityWhereInput
+  }
+
+  /**
+   * LocationCountOutputType without action
+   */
+  export type LocationCountOutputTypeCountBookingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BookingWhereInput
+  }
+
+  /**
+   * LocationCountOutputType without action
+   */
+  export type LocationCountOutputTypeCountBlackoutDatesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BlackoutDateWhereInput
+  }
+
+  /**
+   * LocationCountOutputType without action
+   */
+  export type LocationCountOutputTypeCountAuditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AuditLogWhereInput
   }
 
@@ -1384,10 +1674,11 @@ export namespace Prisma {
 
   export type UserMinAggregateOutputType = {
     id: string | null
+    authUserId: string | null
     email: string | null
     name: string | null
     phone: string | null
-    role: $Enums.UserRole | null
+    platformRole: $Enums.PlatformRole | null
     passwordHash: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -1395,10 +1686,11 @@ export namespace Prisma {
 
   export type UserMaxAggregateOutputType = {
     id: string | null
+    authUserId: string | null
     email: string | null
     name: string | null
     phone: string | null
-    role: $Enums.UserRole | null
+    platformRole: $Enums.PlatformRole | null
     passwordHash: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -1406,10 +1698,11 @@ export namespace Prisma {
 
   export type UserCountAggregateOutputType = {
     id: number
+    authUserId: number
     email: number
     name: number
     phone: number
-    role: number
+    platformRole: number
     passwordHash: number
     createdAt: number
     updatedAt: number
@@ -1419,10 +1712,11 @@ export namespace Prisma {
 
   export type UserMinAggregateInputType = {
     id?: true
+    authUserId?: true
     email?: true
     name?: true
     phone?: true
-    role?: true
+    platformRole?: true
     passwordHash?: true
     createdAt?: true
     updatedAt?: true
@@ -1430,10 +1724,11 @@ export namespace Prisma {
 
   export type UserMaxAggregateInputType = {
     id?: true
+    authUserId?: true
     email?: true
     name?: true
     phone?: true
-    role?: true
+    platformRole?: true
     passwordHash?: true
     createdAt?: true
     updatedAt?: true
@@ -1441,10 +1736,11 @@ export namespace Prisma {
 
   export type UserCountAggregateInputType = {
     id?: true
+    authUserId?: true
     email?: true
     name?: true
     phone?: true
-    role?: true
+    platformRole?: true
     passwordHash?: true
     createdAt?: true
     updatedAt?: true
@@ -1525,10 +1821,11 @@ export namespace Prisma {
 
   export type UserGroupByOutputType = {
     id: string
+    authUserId: string | null
     email: string
     name: string
     phone: string | null
-    role: $Enums.UserRole
+    platformRole: $Enums.PlatformRole
     passwordHash: string | null
     createdAt: Date
     updatedAt: Date
@@ -1553,25 +1850,29 @@ export namespace Prisma {
 
   export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    authUserId?: boolean
     email?: boolean
     name?: boolean
     phone?: boolean
-    role?: boolean
+    platformRole?: boolean
     passwordHash?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    memberships?: boolean | User$membershipsArgs<ExtArgs>
     bookings?: boolean | User$bookingsArgs<ExtArgs>
     approvedBookings?: boolean | User$approvedBookingsArgs<ExtArgs>
     auditLogs?: boolean | User$auditLogsArgs<ExtArgs>
+    createdLocations?: boolean | User$createdLocationsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    authUserId?: boolean
     email?: boolean
     name?: boolean
     phone?: boolean
-    role?: boolean
+    platformRole?: boolean
     passwordHash?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -1579,10 +1880,11 @@ export namespace Prisma {
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    authUserId?: boolean
     email?: boolean
     name?: boolean
     phone?: boolean
-    role?: boolean
+    platformRole?: boolean
     passwordHash?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -1590,20 +1892,23 @@ export namespace Prisma {
 
   export type UserSelectScalar = {
     id?: boolean
+    authUserId?: boolean
     email?: boolean
     name?: boolean
     phone?: boolean
-    role?: boolean
+    platformRole?: boolean
     passwordHash?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "phone" | "role" | "passwordHash" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "authUserId" | "email" | "name" | "phone" | "platformRole" | "passwordHash" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    memberships?: boolean | User$membershipsArgs<ExtArgs>
     bookings?: boolean | User$bookingsArgs<ExtArgs>
     approvedBookings?: boolean | User$approvedBookingsArgs<ExtArgs>
     auditLogs?: boolean | User$auditLogsArgs<ExtArgs>
+    createdLocations?: boolean | User$createdLocationsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1612,16 +1917,19 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
+      memberships: Prisma.$LocationMembershipPayload<ExtArgs>[]
       bookings: Prisma.$BookingPayload<ExtArgs>[]
       approvedBookings: Prisma.$BookingPayload<ExtArgs>[]
       auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
+      createdLocations: Prisma.$LocationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      authUserId: string | null
       email: string
       name: string
       phone: string | null
-      role: $Enums.UserRole
+      platformRole: $Enums.PlatformRole
       passwordHash: string | null
       createdAt: Date
       updatedAt: Date
@@ -2019,9 +2327,11 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    memberships<T extends User$membershipsArgs<ExtArgs> = {}>(args?: Subset<T, User$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LocationMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     bookings<T extends User$bookingsArgs<ExtArgs> = {}>(args?: Subset<T, User$bookingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     approvedBookings<T extends User$approvedBookingsArgs<ExtArgs> = {}>(args?: Subset<T, User$approvedBookingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     auditLogs<T extends User$auditLogsArgs<ExtArgs> = {}>(args?: Subset<T, User$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    createdLocations<T extends User$createdLocationsArgs<ExtArgs> = {}>(args?: Subset<T, User$createdLocationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2052,10 +2362,11 @@ export namespace Prisma {
    */
   interface UserFieldRefs {
     readonly id: FieldRef<"User", 'String'>
+    readonly authUserId: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
     readonly phone: FieldRef<"User", 'String'>
-    readonly role: FieldRef<"User", 'UserRole'>
+    readonly platformRole: FieldRef<"User", 'PlatformRole'>
     readonly passwordHash: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
@@ -2447,6 +2758,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.memberships
+   */
+  export type User$membershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LocationMembership
+     */
+    select?: LocationMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LocationMembership
+     */
+    omit?: LocationMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationMembershipInclude<ExtArgs> | null
+    where?: LocationMembershipWhereInput
+    orderBy?: LocationMembershipOrderByWithRelationInput | LocationMembershipOrderByWithRelationInput[]
+    cursor?: LocationMembershipWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LocationMembershipScalarFieldEnum | LocationMembershipScalarFieldEnum[]
+  }
+
+  /**
    * User.bookings
    */
   export type User$bookingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2519,6 +2854,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.createdLocations
+   */
+  export type User$createdLocationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    where?: LocationWhereInput
+    orderBy?: LocationOrderByWithRelationInput | LocationOrderByWithRelationInput[]
+    cursor?: LocationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LocationScalarFieldEnum | LocationScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2534,6 +2893,2434 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Location
+   */
+
+  export type AggregateLocation = {
+    _count: LocationCountAggregateOutputType | null
+    _min: LocationMinAggregateOutputType | null
+    _max: LocationMaxAggregateOutputType | null
+  }
+
+  export type LocationMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    slug: string | null
+    addressLine1: string | null
+    addressLine2: string | null
+    city: string | null
+    province: string | null
+    postalCode: string | null
+    country: string | null
+    timezone: string | null
+    status: $Enums.LocationStatus | null
+    createdById: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LocationMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    slug: string | null
+    addressLine1: string | null
+    addressLine2: string | null
+    city: string | null
+    province: string | null
+    postalCode: string | null
+    country: string | null
+    timezone: string | null
+    status: $Enums.LocationStatus | null
+    createdById: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LocationCountAggregateOutputType = {
+    id: number
+    name: number
+    slug: number
+    addressLine1: number
+    addressLine2: number
+    city: number
+    province: number
+    postalCode: number
+    country: number
+    timezone: number
+    status: number
+    createdById: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type LocationMinAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    addressLine1?: true
+    addressLine2?: true
+    city?: true
+    province?: true
+    postalCode?: true
+    country?: true
+    timezone?: true
+    status?: true
+    createdById?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LocationMaxAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    addressLine1?: true
+    addressLine2?: true
+    city?: true
+    province?: true
+    postalCode?: true
+    country?: true
+    timezone?: true
+    status?: true
+    createdById?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LocationCountAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    addressLine1?: true
+    addressLine2?: true
+    city?: true
+    province?: true
+    postalCode?: true
+    country?: true
+    timezone?: true
+    status?: true
+    createdById?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type LocationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Location to aggregate.
+     */
+    where?: LocationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Locations to fetch.
+     */
+    orderBy?: LocationOrderByWithRelationInput | LocationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LocationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Locations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Locations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Locations
+    **/
+    _count?: true | LocationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LocationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LocationMaxAggregateInputType
+  }
+
+  export type GetLocationAggregateType<T extends LocationAggregateArgs> = {
+        [P in keyof T & keyof AggregateLocation]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLocation[P]>
+      : GetScalarType<T[P], AggregateLocation[P]>
+  }
+
+
+
+
+  export type LocationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LocationWhereInput
+    orderBy?: LocationOrderByWithAggregationInput | LocationOrderByWithAggregationInput[]
+    by: LocationScalarFieldEnum[] | LocationScalarFieldEnum
+    having?: LocationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LocationCountAggregateInputType | true
+    _min?: LocationMinAggregateInputType
+    _max?: LocationMaxAggregateInputType
+  }
+
+  export type LocationGroupByOutputType = {
+    id: string
+    name: string
+    slug: string
+    addressLine1: string
+    addressLine2: string | null
+    city: string
+    province: string
+    postalCode: string | null
+    country: string
+    timezone: string
+    status: $Enums.LocationStatus
+    createdById: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: LocationCountAggregateOutputType | null
+    _min: LocationMinAggregateOutputType | null
+    _max: LocationMaxAggregateOutputType | null
+  }
+
+  type GetLocationGroupByPayload<T extends LocationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LocationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LocationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LocationGroupByOutputType[P]>
+            : GetScalarType<T[P], LocationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LocationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    addressLine1?: boolean
+    addressLine2?: boolean
+    city?: boolean
+    province?: boolean
+    postalCode?: boolean
+    country?: boolean
+    timezone?: boolean
+    status?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean | Location$createdByArgs<ExtArgs>
+    memberships?: boolean | Location$membershipsArgs<ExtArgs>
+    amenities?: boolean | Location$amenitiesArgs<ExtArgs>
+    bookings?: boolean | Location$bookingsArgs<ExtArgs>
+    blackoutDates?: boolean | Location$blackoutDatesArgs<ExtArgs>
+    auditLogs?: boolean | Location$auditLogsArgs<ExtArgs>
+    _count?: boolean | LocationCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["location"]>
+
+  export type LocationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    addressLine1?: boolean
+    addressLine2?: boolean
+    city?: boolean
+    province?: boolean
+    postalCode?: boolean
+    country?: boolean
+    timezone?: boolean
+    status?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean | Location$createdByArgs<ExtArgs>
+  }, ExtArgs["result"]["location"]>
+
+  export type LocationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    addressLine1?: boolean
+    addressLine2?: boolean
+    city?: boolean
+    province?: boolean
+    postalCode?: boolean
+    country?: boolean
+    timezone?: boolean
+    status?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean | Location$createdByArgs<ExtArgs>
+  }, ExtArgs["result"]["location"]>
+
+  export type LocationSelectScalar = {
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    addressLine1?: boolean
+    addressLine2?: boolean
+    city?: boolean
+    province?: boolean
+    postalCode?: boolean
+    country?: boolean
+    timezone?: boolean
+    status?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type LocationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "addressLine1" | "addressLine2" | "city" | "province" | "postalCode" | "country" | "timezone" | "status" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["location"]>
+  export type LocationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | Location$createdByArgs<ExtArgs>
+    memberships?: boolean | Location$membershipsArgs<ExtArgs>
+    amenities?: boolean | Location$amenitiesArgs<ExtArgs>
+    bookings?: boolean | Location$bookingsArgs<ExtArgs>
+    blackoutDates?: boolean | Location$blackoutDatesArgs<ExtArgs>
+    auditLogs?: boolean | Location$auditLogsArgs<ExtArgs>
+    _count?: boolean | LocationCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type LocationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | Location$createdByArgs<ExtArgs>
+  }
+  export type LocationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | Location$createdByArgs<ExtArgs>
+  }
+
+  export type $LocationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Location"
+    objects: {
+      createdBy: Prisma.$UserPayload<ExtArgs> | null
+      memberships: Prisma.$LocationMembershipPayload<ExtArgs>[]
+      amenities: Prisma.$AmenityPayload<ExtArgs>[]
+      bookings: Prisma.$BookingPayload<ExtArgs>[]
+      blackoutDates: Prisma.$BlackoutDatePayload<ExtArgs>[]
+      auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      slug: string
+      addressLine1: string
+      addressLine2: string | null
+      city: string
+      province: string
+      postalCode: string | null
+      country: string
+      timezone: string
+      status: $Enums.LocationStatus
+      createdById: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["location"]>
+    composites: {}
+  }
+
+  type LocationGetPayload<S extends boolean | null | undefined | LocationDefaultArgs> = $Result.GetResult<Prisma.$LocationPayload, S>
+
+  type LocationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<LocationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: LocationCountAggregateInputType | true
+    }
+
+  export interface LocationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Location'], meta: { name: 'Location' } }
+    /**
+     * Find zero or one Location that matches the filter.
+     * @param {LocationFindUniqueArgs} args - Arguments to find a Location
+     * @example
+     * // Get one Location
+     * const location = await prisma.location.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LocationFindUniqueArgs>(args: SelectSubset<T, LocationFindUniqueArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Location that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {LocationFindUniqueOrThrowArgs} args - Arguments to find a Location
+     * @example
+     * // Get one Location
+     * const location = await prisma.location.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LocationFindUniqueOrThrowArgs>(args: SelectSubset<T, LocationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Location that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationFindFirstArgs} args - Arguments to find a Location
+     * @example
+     * // Get one Location
+     * const location = await prisma.location.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LocationFindFirstArgs>(args?: SelectSubset<T, LocationFindFirstArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Location that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationFindFirstOrThrowArgs} args - Arguments to find a Location
+     * @example
+     * // Get one Location
+     * const location = await prisma.location.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LocationFindFirstOrThrowArgs>(args?: SelectSubset<T, LocationFindFirstOrThrowArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Locations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Locations
+     * const locations = await prisma.location.findMany()
+     * 
+     * // Get first 10 Locations
+     * const locations = await prisma.location.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const locationWithIdOnly = await prisma.location.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LocationFindManyArgs>(args?: SelectSubset<T, LocationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Location.
+     * @param {LocationCreateArgs} args - Arguments to create a Location.
+     * @example
+     * // Create one Location
+     * const Location = await prisma.location.create({
+     *   data: {
+     *     // ... data to create a Location
+     *   }
+     * })
+     * 
+     */
+    create<T extends LocationCreateArgs>(args: SelectSubset<T, LocationCreateArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Locations.
+     * @param {LocationCreateManyArgs} args - Arguments to create many Locations.
+     * @example
+     * // Create many Locations
+     * const location = await prisma.location.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LocationCreateManyArgs>(args?: SelectSubset<T, LocationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Locations and returns the data saved in the database.
+     * @param {LocationCreateManyAndReturnArgs} args - Arguments to create many Locations.
+     * @example
+     * // Create many Locations
+     * const location = await prisma.location.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Locations and only return the `id`
+     * const locationWithIdOnly = await prisma.location.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LocationCreateManyAndReturnArgs>(args?: SelectSubset<T, LocationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Location.
+     * @param {LocationDeleteArgs} args - Arguments to delete one Location.
+     * @example
+     * // Delete one Location
+     * const Location = await prisma.location.delete({
+     *   where: {
+     *     // ... filter to delete one Location
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LocationDeleteArgs>(args: SelectSubset<T, LocationDeleteArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Location.
+     * @param {LocationUpdateArgs} args - Arguments to update one Location.
+     * @example
+     * // Update one Location
+     * const location = await prisma.location.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LocationUpdateArgs>(args: SelectSubset<T, LocationUpdateArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Locations.
+     * @param {LocationDeleteManyArgs} args - Arguments to filter Locations to delete.
+     * @example
+     * // Delete a few Locations
+     * const { count } = await prisma.location.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LocationDeleteManyArgs>(args?: SelectSubset<T, LocationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Locations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Locations
+     * const location = await prisma.location.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LocationUpdateManyArgs>(args: SelectSubset<T, LocationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Locations and returns the data updated in the database.
+     * @param {LocationUpdateManyAndReturnArgs} args - Arguments to update many Locations.
+     * @example
+     * // Update many Locations
+     * const location = await prisma.location.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Locations and only return the `id`
+     * const locationWithIdOnly = await prisma.location.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends LocationUpdateManyAndReturnArgs>(args: SelectSubset<T, LocationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Location.
+     * @param {LocationUpsertArgs} args - Arguments to update or create a Location.
+     * @example
+     * // Update or create a Location
+     * const location = await prisma.location.upsert({
+     *   create: {
+     *     // ... data to create a Location
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Location we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LocationUpsertArgs>(args: SelectSubset<T, LocationUpsertArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Locations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationCountArgs} args - Arguments to filter Locations to count.
+     * @example
+     * // Count the number of Locations
+     * const count = await prisma.location.count({
+     *   where: {
+     *     // ... the filter for the Locations we want to count
+     *   }
+     * })
+    **/
+    count<T extends LocationCountArgs>(
+      args?: Subset<T, LocationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LocationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Location.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LocationAggregateArgs>(args: Subset<T, LocationAggregateArgs>): Prisma.PrismaPromise<GetLocationAggregateType<T>>
+
+    /**
+     * Group by Location.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LocationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LocationGroupByArgs['orderBy'] }
+        : { orderBy?: LocationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LocationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLocationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Location model
+   */
+  readonly fields: LocationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Location.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LocationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    createdBy<T extends Location$createdByArgs<ExtArgs> = {}>(args?: Subset<T, Location$createdByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    memberships<T extends Location$membershipsArgs<ExtArgs> = {}>(args?: Subset<T, Location$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LocationMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    amenities<T extends Location$amenitiesArgs<ExtArgs> = {}>(args?: Subset<T, Location$amenitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AmenityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    bookings<T extends Location$bookingsArgs<ExtArgs> = {}>(args?: Subset<T, Location$bookingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    blackoutDates<T extends Location$blackoutDatesArgs<ExtArgs> = {}>(args?: Subset<T, Location$blackoutDatesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlackoutDatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    auditLogs<T extends Location$auditLogsArgs<ExtArgs> = {}>(args?: Subset<T, Location$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Location model
+   */
+  interface LocationFieldRefs {
+    readonly id: FieldRef<"Location", 'String'>
+    readonly name: FieldRef<"Location", 'String'>
+    readonly slug: FieldRef<"Location", 'String'>
+    readonly addressLine1: FieldRef<"Location", 'String'>
+    readonly addressLine2: FieldRef<"Location", 'String'>
+    readonly city: FieldRef<"Location", 'String'>
+    readonly province: FieldRef<"Location", 'String'>
+    readonly postalCode: FieldRef<"Location", 'String'>
+    readonly country: FieldRef<"Location", 'String'>
+    readonly timezone: FieldRef<"Location", 'String'>
+    readonly status: FieldRef<"Location", 'LocationStatus'>
+    readonly createdById: FieldRef<"Location", 'String'>
+    readonly createdAt: FieldRef<"Location", 'DateTime'>
+    readonly updatedAt: FieldRef<"Location", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Location findUnique
+   */
+  export type LocationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
+     * Filter, which Location to fetch.
+     */
+    where: LocationWhereUniqueInput
+  }
+
+  /**
+   * Location findUniqueOrThrow
+   */
+  export type LocationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
+     * Filter, which Location to fetch.
+     */
+    where: LocationWhereUniqueInput
+  }
+
+  /**
+   * Location findFirst
+   */
+  export type LocationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
+     * Filter, which Location to fetch.
+     */
+    where?: LocationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Locations to fetch.
+     */
+    orderBy?: LocationOrderByWithRelationInput | LocationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Locations.
+     */
+    cursor?: LocationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Locations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Locations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Locations.
+     */
+    distinct?: LocationScalarFieldEnum | LocationScalarFieldEnum[]
+  }
+
+  /**
+   * Location findFirstOrThrow
+   */
+  export type LocationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
+     * Filter, which Location to fetch.
+     */
+    where?: LocationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Locations to fetch.
+     */
+    orderBy?: LocationOrderByWithRelationInput | LocationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Locations.
+     */
+    cursor?: LocationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Locations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Locations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Locations.
+     */
+    distinct?: LocationScalarFieldEnum | LocationScalarFieldEnum[]
+  }
+
+  /**
+   * Location findMany
+   */
+  export type LocationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
+     * Filter, which Locations to fetch.
+     */
+    where?: LocationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Locations to fetch.
+     */
+    orderBy?: LocationOrderByWithRelationInput | LocationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Locations.
+     */
+    cursor?: LocationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Locations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Locations.
+     */
+    skip?: number
+    distinct?: LocationScalarFieldEnum | LocationScalarFieldEnum[]
+  }
+
+  /**
+   * Location create
+   */
+  export type LocationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Location.
+     */
+    data: XOR<LocationCreateInput, LocationUncheckedCreateInput>
+  }
+
+  /**
+   * Location createMany
+   */
+  export type LocationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Locations.
+     */
+    data: LocationCreateManyInput | LocationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Location createManyAndReturn
+   */
+  export type LocationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * The data used to create many Locations.
+     */
+    data: LocationCreateManyInput | LocationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Location update
+   */
+  export type LocationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Location.
+     */
+    data: XOR<LocationUpdateInput, LocationUncheckedUpdateInput>
+    /**
+     * Choose, which Location to update.
+     */
+    where: LocationWhereUniqueInput
+  }
+
+  /**
+   * Location updateMany
+   */
+  export type LocationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Locations.
+     */
+    data: XOR<LocationUpdateManyMutationInput, LocationUncheckedUpdateManyInput>
+    /**
+     * Filter which Locations to update
+     */
+    where?: LocationWhereInput
+    /**
+     * Limit how many Locations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Location updateManyAndReturn
+   */
+  export type LocationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * The data used to update Locations.
+     */
+    data: XOR<LocationUpdateManyMutationInput, LocationUncheckedUpdateManyInput>
+    /**
+     * Filter which Locations to update
+     */
+    where?: LocationWhereInput
+    /**
+     * Limit how many Locations to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Location upsert
+   */
+  export type LocationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Location to update in case it exists.
+     */
+    where: LocationWhereUniqueInput
+    /**
+     * In case the Location found by the `where` argument doesn't exist, create a new Location with this data.
+     */
+    create: XOR<LocationCreateInput, LocationUncheckedCreateInput>
+    /**
+     * In case the Location was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LocationUpdateInput, LocationUncheckedUpdateInput>
+  }
+
+  /**
+   * Location delete
+   */
+  export type LocationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
+     * Filter which Location to delete.
+     */
+    where: LocationWhereUniqueInput
+  }
+
+  /**
+   * Location deleteMany
+   */
+  export type LocationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Locations to delete
+     */
+    where?: LocationWhereInput
+    /**
+     * Limit how many Locations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Location.createdBy
+   */
+  export type Location$createdByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * Location.memberships
+   */
+  export type Location$membershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LocationMembership
+     */
+    select?: LocationMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LocationMembership
+     */
+    omit?: LocationMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationMembershipInclude<ExtArgs> | null
+    where?: LocationMembershipWhereInput
+    orderBy?: LocationMembershipOrderByWithRelationInput | LocationMembershipOrderByWithRelationInput[]
+    cursor?: LocationMembershipWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LocationMembershipScalarFieldEnum | LocationMembershipScalarFieldEnum[]
+  }
+
+  /**
+   * Location.amenities
+   */
+  export type Location$amenitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Amenity
+     */
+    select?: AmenitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Amenity
+     */
+    omit?: AmenityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AmenityInclude<ExtArgs> | null
+    where?: AmenityWhereInput
+    orderBy?: AmenityOrderByWithRelationInput | AmenityOrderByWithRelationInput[]
+    cursor?: AmenityWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AmenityScalarFieldEnum | AmenityScalarFieldEnum[]
+  }
+
+  /**
+   * Location.bookings
+   */
+  export type Location$bookingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Booking
+     */
+    select?: BookingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Booking
+     */
+    omit?: BookingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookingInclude<ExtArgs> | null
+    where?: BookingWhereInput
+    orderBy?: BookingOrderByWithRelationInput | BookingOrderByWithRelationInput[]
+    cursor?: BookingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BookingScalarFieldEnum | BookingScalarFieldEnum[]
+  }
+
+  /**
+   * Location.blackoutDates
+   */
+  export type Location$blackoutDatesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BlackoutDate
+     */
+    select?: BlackoutDateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BlackoutDate
+     */
+    omit?: BlackoutDateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BlackoutDateInclude<ExtArgs> | null
+    where?: BlackoutDateWhereInput
+    orderBy?: BlackoutDateOrderByWithRelationInput | BlackoutDateOrderByWithRelationInput[]
+    cursor?: BlackoutDateWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BlackoutDateScalarFieldEnum | BlackoutDateScalarFieldEnum[]
+  }
+
+  /**
+   * Location.auditLogs
+   */
+  export type Location$auditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AuditLog
+     */
+    select?: AuditLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AuditLog
+     */
+    omit?: AuditLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AuditLogInclude<ExtArgs> | null
+    where?: AuditLogWhereInput
+    orderBy?: AuditLogOrderByWithRelationInput | AuditLogOrderByWithRelationInput[]
+    cursor?: AuditLogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AuditLogScalarFieldEnum | AuditLogScalarFieldEnum[]
+  }
+
+  /**
+   * Location without action
+   */
+  export type LocationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model LocationMembership
+   */
+
+  export type AggregateLocationMembership = {
+    _count: LocationMembershipCountAggregateOutputType | null
+    _min: LocationMembershipMinAggregateOutputType | null
+    _max: LocationMembershipMaxAggregateOutputType | null
+  }
+
+  export type LocationMembershipMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    locationId: string | null
+    role: $Enums.LocationMembershipRole | null
+    isPrimary: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LocationMembershipMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    locationId: string | null
+    role: $Enums.LocationMembershipRole | null
+    isPrimary: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LocationMembershipCountAggregateOutputType = {
+    id: number
+    userId: number
+    locationId: number
+    role: number
+    isPrimary: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type LocationMembershipMinAggregateInputType = {
+    id?: true
+    userId?: true
+    locationId?: true
+    role?: true
+    isPrimary?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LocationMembershipMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    locationId?: true
+    role?: true
+    isPrimary?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LocationMembershipCountAggregateInputType = {
+    id?: true
+    userId?: true
+    locationId?: true
+    role?: true
+    isPrimary?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type LocationMembershipAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LocationMembership to aggregate.
+     */
+    where?: LocationMembershipWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LocationMemberships to fetch.
+     */
+    orderBy?: LocationMembershipOrderByWithRelationInput | LocationMembershipOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LocationMembershipWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LocationMemberships from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LocationMemberships.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LocationMemberships
+    **/
+    _count?: true | LocationMembershipCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LocationMembershipMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LocationMembershipMaxAggregateInputType
+  }
+
+  export type GetLocationMembershipAggregateType<T extends LocationMembershipAggregateArgs> = {
+        [P in keyof T & keyof AggregateLocationMembership]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLocationMembership[P]>
+      : GetScalarType<T[P], AggregateLocationMembership[P]>
+  }
+
+
+
+
+  export type LocationMembershipGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LocationMembershipWhereInput
+    orderBy?: LocationMembershipOrderByWithAggregationInput | LocationMembershipOrderByWithAggregationInput[]
+    by: LocationMembershipScalarFieldEnum[] | LocationMembershipScalarFieldEnum
+    having?: LocationMembershipScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LocationMembershipCountAggregateInputType | true
+    _min?: LocationMembershipMinAggregateInputType
+    _max?: LocationMembershipMaxAggregateInputType
+  }
+
+  export type LocationMembershipGroupByOutputType = {
+    id: string
+    userId: string
+    locationId: string
+    role: $Enums.LocationMembershipRole
+    isPrimary: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: LocationMembershipCountAggregateOutputType | null
+    _min: LocationMembershipMinAggregateOutputType | null
+    _max: LocationMembershipMaxAggregateOutputType | null
+  }
+
+  type GetLocationMembershipGroupByPayload<T extends LocationMembershipGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LocationMembershipGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LocationMembershipGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LocationMembershipGroupByOutputType[P]>
+            : GetScalarType<T[P], LocationMembershipGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LocationMembershipSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    locationId?: boolean
+    role?: boolean
+    isPrimary?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    location?: boolean | LocationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["locationMembership"]>
+
+  export type LocationMembershipSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    locationId?: boolean
+    role?: boolean
+    isPrimary?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    location?: boolean | LocationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["locationMembership"]>
+
+  export type LocationMembershipSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    locationId?: boolean
+    role?: boolean
+    isPrimary?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    location?: boolean | LocationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["locationMembership"]>
+
+  export type LocationMembershipSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    locationId?: boolean
+    role?: boolean
+    isPrimary?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type LocationMembershipOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "locationId" | "role" | "isPrimary" | "createdAt" | "updatedAt", ExtArgs["result"]["locationMembership"]>
+  export type LocationMembershipInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    location?: boolean | LocationDefaultArgs<ExtArgs>
+  }
+  export type LocationMembershipIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    location?: boolean | LocationDefaultArgs<ExtArgs>
+  }
+  export type LocationMembershipIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    location?: boolean | LocationDefaultArgs<ExtArgs>
+  }
+
+  export type $LocationMembershipPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "LocationMembership"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      location: Prisma.$LocationPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      locationId: string
+      role: $Enums.LocationMembershipRole
+      isPrimary: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["locationMembership"]>
+    composites: {}
+  }
+
+  type LocationMembershipGetPayload<S extends boolean | null | undefined | LocationMembershipDefaultArgs> = $Result.GetResult<Prisma.$LocationMembershipPayload, S>
+
+  type LocationMembershipCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<LocationMembershipFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: LocationMembershipCountAggregateInputType | true
+    }
+
+  export interface LocationMembershipDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LocationMembership'], meta: { name: 'LocationMembership' } }
+    /**
+     * Find zero or one LocationMembership that matches the filter.
+     * @param {LocationMembershipFindUniqueArgs} args - Arguments to find a LocationMembership
+     * @example
+     * // Get one LocationMembership
+     * const locationMembership = await prisma.locationMembership.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LocationMembershipFindUniqueArgs>(args: SelectSubset<T, LocationMembershipFindUniqueArgs<ExtArgs>>): Prisma__LocationMembershipClient<$Result.GetResult<Prisma.$LocationMembershipPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one LocationMembership that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {LocationMembershipFindUniqueOrThrowArgs} args - Arguments to find a LocationMembership
+     * @example
+     * // Get one LocationMembership
+     * const locationMembership = await prisma.locationMembership.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LocationMembershipFindUniqueOrThrowArgs>(args: SelectSubset<T, LocationMembershipFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LocationMembershipClient<$Result.GetResult<Prisma.$LocationMembershipPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first LocationMembership that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationMembershipFindFirstArgs} args - Arguments to find a LocationMembership
+     * @example
+     * // Get one LocationMembership
+     * const locationMembership = await prisma.locationMembership.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LocationMembershipFindFirstArgs>(args?: SelectSubset<T, LocationMembershipFindFirstArgs<ExtArgs>>): Prisma__LocationMembershipClient<$Result.GetResult<Prisma.$LocationMembershipPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first LocationMembership that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationMembershipFindFirstOrThrowArgs} args - Arguments to find a LocationMembership
+     * @example
+     * // Get one LocationMembership
+     * const locationMembership = await prisma.locationMembership.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LocationMembershipFindFirstOrThrowArgs>(args?: SelectSubset<T, LocationMembershipFindFirstOrThrowArgs<ExtArgs>>): Prisma__LocationMembershipClient<$Result.GetResult<Prisma.$LocationMembershipPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more LocationMemberships that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationMembershipFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LocationMemberships
+     * const locationMemberships = await prisma.locationMembership.findMany()
+     * 
+     * // Get first 10 LocationMemberships
+     * const locationMemberships = await prisma.locationMembership.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const locationMembershipWithIdOnly = await prisma.locationMembership.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LocationMembershipFindManyArgs>(args?: SelectSubset<T, LocationMembershipFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LocationMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a LocationMembership.
+     * @param {LocationMembershipCreateArgs} args - Arguments to create a LocationMembership.
+     * @example
+     * // Create one LocationMembership
+     * const LocationMembership = await prisma.locationMembership.create({
+     *   data: {
+     *     // ... data to create a LocationMembership
+     *   }
+     * })
+     * 
+     */
+    create<T extends LocationMembershipCreateArgs>(args: SelectSubset<T, LocationMembershipCreateArgs<ExtArgs>>): Prisma__LocationMembershipClient<$Result.GetResult<Prisma.$LocationMembershipPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many LocationMemberships.
+     * @param {LocationMembershipCreateManyArgs} args - Arguments to create many LocationMemberships.
+     * @example
+     * // Create many LocationMemberships
+     * const locationMembership = await prisma.locationMembership.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LocationMembershipCreateManyArgs>(args?: SelectSubset<T, LocationMembershipCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many LocationMemberships and returns the data saved in the database.
+     * @param {LocationMembershipCreateManyAndReturnArgs} args - Arguments to create many LocationMemberships.
+     * @example
+     * // Create many LocationMemberships
+     * const locationMembership = await prisma.locationMembership.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many LocationMemberships and only return the `id`
+     * const locationMembershipWithIdOnly = await prisma.locationMembership.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LocationMembershipCreateManyAndReturnArgs>(args?: SelectSubset<T, LocationMembershipCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LocationMembershipPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a LocationMembership.
+     * @param {LocationMembershipDeleteArgs} args - Arguments to delete one LocationMembership.
+     * @example
+     * // Delete one LocationMembership
+     * const LocationMembership = await prisma.locationMembership.delete({
+     *   where: {
+     *     // ... filter to delete one LocationMembership
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LocationMembershipDeleteArgs>(args: SelectSubset<T, LocationMembershipDeleteArgs<ExtArgs>>): Prisma__LocationMembershipClient<$Result.GetResult<Prisma.$LocationMembershipPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one LocationMembership.
+     * @param {LocationMembershipUpdateArgs} args - Arguments to update one LocationMembership.
+     * @example
+     * // Update one LocationMembership
+     * const locationMembership = await prisma.locationMembership.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LocationMembershipUpdateArgs>(args: SelectSubset<T, LocationMembershipUpdateArgs<ExtArgs>>): Prisma__LocationMembershipClient<$Result.GetResult<Prisma.$LocationMembershipPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more LocationMemberships.
+     * @param {LocationMembershipDeleteManyArgs} args - Arguments to filter LocationMemberships to delete.
+     * @example
+     * // Delete a few LocationMemberships
+     * const { count } = await prisma.locationMembership.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LocationMembershipDeleteManyArgs>(args?: SelectSubset<T, LocationMembershipDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LocationMemberships.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationMembershipUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LocationMemberships
+     * const locationMembership = await prisma.locationMembership.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LocationMembershipUpdateManyArgs>(args: SelectSubset<T, LocationMembershipUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LocationMemberships and returns the data updated in the database.
+     * @param {LocationMembershipUpdateManyAndReturnArgs} args - Arguments to update many LocationMemberships.
+     * @example
+     * // Update many LocationMemberships
+     * const locationMembership = await prisma.locationMembership.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more LocationMemberships and only return the `id`
+     * const locationMembershipWithIdOnly = await prisma.locationMembership.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends LocationMembershipUpdateManyAndReturnArgs>(args: SelectSubset<T, LocationMembershipUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LocationMembershipPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one LocationMembership.
+     * @param {LocationMembershipUpsertArgs} args - Arguments to update or create a LocationMembership.
+     * @example
+     * // Update or create a LocationMembership
+     * const locationMembership = await prisma.locationMembership.upsert({
+     *   create: {
+     *     // ... data to create a LocationMembership
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LocationMembership we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LocationMembershipUpsertArgs>(args: SelectSubset<T, LocationMembershipUpsertArgs<ExtArgs>>): Prisma__LocationMembershipClient<$Result.GetResult<Prisma.$LocationMembershipPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of LocationMemberships.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationMembershipCountArgs} args - Arguments to filter LocationMemberships to count.
+     * @example
+     * // Count the number of LocationMemberships
+     * const count = await prisma.locationMembership.count({
+     *   where: {
+     *     // ... the filter for the LocationMemberships we want to count
+     *   }
+     * })
+    **/
+    count<T extends LocationMembershipCountArgs>(
+      args?: Subset<T, LocationMembershipCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LocationMembershipCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LocationMembership.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationMembershipAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LocationMembershipAggregateArgs>(args: Subset<T, LocationMembershipAggregateArgs>): Prisma.PrismaPromise<GetLocationMembershipAggregateType<T>>
+
+    /**
+     * Group by LocationMembership.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationMembershipGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LocationMembershipGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LocationMembershipGroupByArgs['orderBy'] }
+        : { orderBy?: LocationMembershipGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LocationMembershipGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLocationMembershipGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the LocationMembership model
+   */
+  readonly fields: LocationMembershipFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LocationMembership.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LocationMembershipClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    location<T extends LocationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LocationDefaultArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the LocationMembership model
+   */
+  interface LocationMembershipFieldRefs {
+    readonly id: FieldRef<"LocationMembership", 'String'>
+    readonly userId: FieldRef<"LocationMembership", 'String'>
+    readonly locationId: FieldRef<"LocationMembership", 'String'>
+    readonly role: FieldRef<"LocationMembership", 'LocationMembershipRole'>
+    readonly isPrimary: FieldRef<"LocationMembership", 'Boolean'>
+    readonly createdAt: FieldRef<"LocationMembership", 'DateTime'>
+    readonly updatedAt: FieldRef<"LocationMembership", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * LocationMembership findUnique
+   */
+  export type LocationMembershipFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LocationMembership
+     */
+    select?: LocationMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LocationMembership
+     */
+    omit?: LocationMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationMembershipInclude<ExtArgs> | null
+    /**
+     * Filter, which LocationMembership to fetch.
+     */
+    where: LocationMembershipWhereUniqueInput
+  }
+
+  /**
+   * LocationMembership findUniqueOrThrow
+   */
+  export type LocationMembershipFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LocationMembership
+     */
+    select?: LocationMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LocationMembership
+     */
+    omit?: LocationMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationMembershipInclude<ExtArgs> | null
+    /**
+     * Filter, which LocationMembership to fetch.
+     */
+    where: LocationMembershipWhereUniqueInput
+  }
+
+  /**
+   * LocationMembership findFirst
+   */
+  export type LocationMembershipFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LocationMembership
+     */
+    select?: LocationMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LocationMembership
+     */
+    omit?: LocationMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationMembershipInclude<ExtArgs> | null
+    /**
+     * Filter, which LocationMembership to fetch.
+     */
+    where?: LocationMembershipWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LocationMemberships to fetch.
+     */
+    orderBy?: LocationMembershipOrderByWithRelationInput | LocationMembershipOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LocationMemberships.
+     */
+    cursor?: LocationMembershipWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LocationMemberships from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LocationMemberships.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LocationMemberships.
+     */
+    distinct?: LocationMembershipScalarFieldEnum | LocationMembershipScalarFieldEnum[]
+  }
+
+  /**
+   * LocationMembership findFirstOrThrow
+   */
+  export type LocationMembershipFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LocationMembership
+     */
+    select?: LocationMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LocationMembership
+     */
+    omit?: LocationMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationMembershipInclude<ExtArgs> | null
+    /**
+     * Filter, which LocationMembership to fetch.
+     */
+    where?: LocationMembershipWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LocationMemberships to fetch.
+     */
+    orderBy?: LocationMembershipOrderByWithRelationInput | LocationMembershipOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LocationMemberships.
+     */
+    cursor?: LocationMembershipWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LocationMemberships from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LocationMemberships.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LocationMemberships.
+     */
+    distinct?: LocationMembershipScalarFieldEnum | LocationMembershipScalarFieldEnum[]
+  }
+
+  /**
+   * LocationMembership findMany
+   */
+  export type LocationMembershipFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LocationMembership
+     */
+    select?: LocationMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LocationMembership
+     */
+    omit?: LocationMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationMembershipInclude<ExtArgs> | null
+    /**
+     * Filter, which LocationMemberships to fetch.
+     */
+    where?: LocationMembershipWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LocationMemberships to fetch.
+     */
+    orderBy?: LocationMembershipOrderByWithRelationInput | LocationMembershipOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LocationMemberships.
+     */
+    cursor?: LocationMembershipWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LocationMemberships from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LocationMemberships.
+     */
+    skip?: number
+    distinct?: LocationMembershipScalarFieldEnum | LocationMembershipScalarFieldEnum[]
+  }
+
+  /**
+   * LocationMembership create
+   */
+  export type LocationMembershipCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LocationMembership
+     */
+    select?: LocationMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LocationMembership
+     */
+    omit?: LocationMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationMembershipInclude<ExtArgs> | null
+    /**
+     * The data needed to create a LocationMembership.
+     */
+    data: XOR<LocationMembershipCreateInput, LocationMembershipUncheckedCreateInput>
+  }
+
+  /**
+   * LocationMembership createMany
+   */
+  export type LocationMembershipCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LocationMemberships.
+     */
+    data: LocationMembershipCreateManyInput | LocationMembershipCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LocationMembership createManyAndReturn
+   */
+  export type LocationMembershipCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LocationMembership
+     */
+    select?: LocationMembershipSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the LocationMembership
+     */
+    omit?: LocationMembershipOmit<ExtArgs> | null
+    /**
+     * The data used to create many LocationMemberships.
+     */
+    data: LocationMembershipCreateManyInput | LocationMembershipCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationMembershipIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * LocationMembership update
+   */
+  export type LocationMembershipUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LocationMembership
+     */
+    select?: LocationMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LocationMembership
+     */
+    omit?: LocationMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationMembershipInclude<ExtArgs> | null
+    /**
+     * The data needed to update a LocationMembership.
+     */
+    data: XOR<LocationMembershipUpdateInput, LocationMembershipUncheckedUpdateInput>
+    /**
+     * Choose, which LocationMembership to update.
+     */
+    where: LocationMembershipWhereUniqueInput
+  }
+
+  /**
+   * LocationMembership updateMany
+   */
+  export type LocationMembershipUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LocationMemberships.
+     */
+    data: XOR<LocationMembershipUpdateManyMutationInput, LocationMembershipUncheckedUpdateManyInput>
+    /**
+     * Filter which LocationMemberships to update
+     */
+    where?: LocationMembershipWhereInput
+    /**
+     * Limit how many LocationMemberships to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * LocationMembership updateManyAndReturn
+   */
+  export type LocationMembershipUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LocationMembership
+     */
+    select?: LocationMembershipSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the LocationMembership
+     */
+    omit?: LocationMembershipOmit<ExtArgs> | null
+    /**
+     * The data used to update LocationMemberships.
+     */
+    data: XOR<LocationMembershipUpdateManyMutationInput, LocationMembershipUncheckedUpdateManyInput>
+    /**
+     * Filter which LocationMemberships to update
+     */
+    where?: LocationMembershipWhereInput
+    /**
+     * Limit how many LocationMemberships to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationMembershipIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * LocationMembership upsert
+   */
+  export type LocationMembershipUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LocationMembership
+     */
+    select?: LocationMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LocationMembership
+     */
+    omit?: LocationMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationMembershipInclude<ExtArgs> | null
+    /**
+     * The filter to search for the LocationMembership to update in case it exists.
+     */
+    where: LocationMembershipWhereUniqueInput
+    /**
+     * In case the LocationMembership found by the `where` argument doesn't exist, create a new LocationMembership with this data.
+     */
+    create: XOR<LocationMembershipCreateInput, LocationMembershipUncheckedCreateInput>
+    /**
+     * In case the LocationMembership was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LocationMembershipUpdateInput, LocationMembershipUncheckedUpdateInput>
+  }
+
+  /**
+   * LocationMembership delete
+   */
+  export type LocationMembershipDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LocationMembership
+     */
+    select?: LocationMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LocationMembership
+     */
+    omit?: LocationMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationMembershipInclude<ExtArgs> | null
+    /**
+     * Filter which LocationMembership to delete.
+     */
+    where: LocationMembershipWhereUniqueInput
+  }
+
+  /**
+   * LocationMembership deleteMany
+   */
+  export type LocationMembershipDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LocationMemberships to delete
+     */
+    where?: LocationMembershipWhereInput
+    /**
+     * Limit how many LocationMemberships to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * LocationMembership without action
+   */
+  export type LocationMembershipDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LocationMembership
+     */
+    select?: LocationMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LocationMembership
+     */
+    omit?: LocationMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationMembershipInclude<ExtArgs> | null
   }
 
 
@@ -2567,12 +5354,13 @@ export namespace Prisma {
 
   export type AmenityMinAggregateOutputType = {
     id: string | null
+    locationId: string | null
     name: string | null
     slug: string | null
     type: $Enums.AmenityType | null
     description: string | null
     imageUrl: string | null
-    location: string | null
+    area: string | null
     capacity: number | null
     slotDurationMinutes: number | null
     openTime: string | null
@@ -2589,12 +5377,13 @@ export namespace Prisma {
 
   export type AmenityMaxAggregateOutputType = {
     id: string | null
+    locationId: string | null
     name: string | null
     slug: string | null
     type: $Enums.AmenityType | null
     description: string | null
     imageUrl: string | null
-    location: string | null
+    area: string | null
     capacity: number | null
     slotDurationMinutes: number | null
     openTime: string | null
@@ -2611,12 +5400,13 @@ export namespace Prisma {
 
   export type AmenityCountAggregateOutputType = {
     id: number
+    locationId: number
     name: number
     slug: number
     type: number
     description: number
     imageUrl: number
-    location: number
+    area: number
     capacity: number
     slotDurationMinutes: number
     openTime: number
@@ -2651,12 +5441,13 @@ export namespace Prisma {
 
   export type AmenityMinAggregateInputType = {
     id?: true
+    locationId?: true
     name?: true
     slug?: true
     type?: true
     description?: true
     imageUrl?: true
-    location?: true
+    area?: true
     capacity?: true
     slotDurationMinutes?: true
     openTime?: true
@@ -2673,12 +5464,13 @@ export namespace Prisma {
 
   export type AmenityMaxAggregateInputType = {
     id?: true
+    locationId?: true
     name?: true
     slug?: true
     type?: true
     description?: true
     imageUrl?: true
-    location?: true
+    area?: true
     capacity?: true
     slotDurationMinutes?: true
     openTime?: true
@@ -2695,12 +5487,13 @@ export namespace Prisma {
 
   export type AmenityCountAggregateInputType = {
     id?: true
+    locationId?: true
     name?: true
     slug?: true
     type?: true
     description?: true
     imageUrl?: true
-    location?: true
+    area?: true
     capacity?: true
     slotDurationMinutes?: true
     openTime?: true
@@ -2804,12 +5597,13 @@ export namespace Prisma {
 
   export type AmenityGroupByOutputType = {
     id: string
+    locationId: string
     name: string
     slug: string
     type: $Enums.AmenityType
     description: string
     imageUrl: string | null
-    location: string
+    area: string
     capacity: number
     slotDurationMinutes: number
     openTime: string
@@ -2845,12 +5639,13 @@ export namespace Prisma {
 
   export type AmenitySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    locationId?: boolean
     name?: boolean
     slug?: boolean
     type?: boolean
     description?: boolean
     imageUrl?: boolean
-    location?: boolean
+    area?: boolean
     capacity?: boolean
     slotDurationMinutes?: boolean
     openTime?: boolean
@@ -2863,6 +5658,7 @@ export namespace Prisma {
     cancellationCutoffHours?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    location?: boolean | LocationDefaultArgs<ExtArgs>
     bookings?: boolean | Amenity$bookingsArgs<ExtArgs>
     blackoutDates?: boolean | Amenity$blackoutDatesArgs<ExtArgs>
     _count?: boolean | AmenityCountOutputTypeDefaultArgs<ExtArgs>
@@ -2870,12 +5666,13 @@ export namespace Prisma {
 
   export type AmenitySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    locationId?: boolean
     name?: boolean
     slug?: boolean
     type?: boolean
     description?: boolean
     imageUrl?: boolean
-    location?: boolean
+    area?: boolean
     capacity?: boolean
     slotDurationMinutes?: boolean
     openTime?: boolean
@@ -2888,16 +5685,18 @@ export namespace Prisma {
     cancellationCutoffHours?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    location?: boolean | LocationDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["amenity"]>
 
   export type AmenitySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    locationId?: boolean
     name?: boolean
     slug?: boolean
     type?: boolean
     description?: boolean
     imageUrl?: boolean
-    location?: boolean
+    area?: boolean
     capacity?: boolean
     slotDurationMinutes?: boolean
     openTime?: boolean
@@ -2910,16 +5709,18 @@ export namespace Prisma {
     cancellationCutoffHours?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    location?: boolean | LocationDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["amenity"]>
 
   export type AmenitySelectScalar = {
     id?: boolean
+    locationId?: boolean
     name?: boolean
     slug?: boolean
     type?: boolean
     description?: boolean
     imageUrl?: boolean
-    location?: boolean
+    area?: boolean
     capacity?: boolean
     slotDurationMinutes?: boolean
     openTime?: boolean
@@ -2934,29 +5735,36 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type AmenityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "type" | "description" | "imageUrl" | "location" | "capacity" | "slotDurationMinutes" | "openTime" | "closeTime" | "rules" | "status" | "requiresApproval" | "maxAdvanceDays" | "maxBookingDurationMinutes" | "cancellationCutoffHours" | "createdAt" | "updatedAt", ExtArgs["result"]["amenity"]>
+  export type AmenityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "locationId" | "name" | "slug" | "type" | "description" | "imageUrl" | "area" | "capacity" | "slotDurationMinutes" | "openTime" | "closeTime" | "rules" | "status" | "requiresApproval" | "maxAdvanceDays" | "maxBookingDurationMinutes" | "cancellationCutoffHours" | "createdAt" | "updatedAt", ExtArgs["result"]["amenity"]>
   export type AmenityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    location?: boolean | LocationDefaultArgs<ExtArgs>
     bookings?: boolean | Amenity$bookingsArgs<ExtArgs>
     blackoutDates?: boolean | Amenity$blackoutDatesArgs<ExtArgs>
     _count?: boolean | AmenityCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type AmenityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type AmenityIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type AmenityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    location?: boolean | LocationDefaultArgs<ExtArgs>
+  }
+  export type AmenityIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    location?: boolean | LocationDefaultArgs<ExtArgs>
+  }
 
   export type $AmenityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Amenity"
     objects: {
+      location: Prisma.$LocationPayload<ExtArgs>
       bookings: Prisma.$BookingPayload<ExtArgs>[]
       blackoutDates: Prisma.$BlackoutDatePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      locationId: string
       name: string
       slug: string
       type: $Enums.AmenityType
       description: string
       imageUrl: string | null
-      location: string
+      area: string
       capacity: number
       slotDurationMinutes: number
       openTime: string
@@ -3363,6 +6171,7 @@ export namespace Prisma {
    */
   export interface Prisma__AmenityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    location<T extends LocationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LocationDefaultArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     bookings<T extends Amenity$bookingsArgs<ExtArgs> = {}>(args?: Subset<T, Amenity$bookingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     blackoutDates<T extends Amenity$blackoutDatesArgs<ExtArgs> = {}>(args?: Subset<T, Amenity$blackoutDatesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlackoutDatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -3395,12 +6204,13 @@ export namespace Prisma {
    */
   interface AmenityFieldRefs {
     readonly id: FieldRef<"Amenity", 'String'>
+    readonly locationId: FieldRef<"Amenity", 'String'>
     readonly name: FieldRef<"Amenity", 'String'>
     readonly slug: FieldRef<"Amenity", 'String'>
     readonly type: FieldRef<"Amenity", 'AmenityType'>
     readonly description: FieldRef<"Amenity", 'String'>
     readonly imageUrl: FieldRef<"Amenity", 'String'>
-    readonly location: FieldRef<"Amenity", 'String'>
+    readonly area: FieldRef<"Amenity", 'String'>
     readonly capacity: FieldRef<"Amenity", 'Int'>
     readonly slotDurationMinutes: FieldRef<"Amenity", 'Int'>
     readonly openTime: FieldRef<"Amenity", 'String'>
@@ -3662,6 +6472,10 @@ export namespace Prisma {
      */
     data: AmenityCreateManyInput | AmenityCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AmenityIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3732,6 +6546,10 @@ export namespace Prisma {
      * Limit how many Amenities to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AmenityIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3889,6 +6707,7 @@ export namespace Prisma {
 
   export type BookingMinAggregateOutputType = {
     id: string | null
+    locationId: string | null
     residentId: string | null
     amenityId: string | null
     approvedById: string | null
@@ -3907,6 +6726,7 @@ export namespace Prisma {
 
   export type BookingMaxAggregateOutputType = {
     id: string | null
+    locationId: string | null
     residentId: string | null
     amenityId: string | null
     approvedById: string | null
@@ -3925,6 +6745,7 @@ export namespace Prisma {
 
   export type BookingCountAggregateOutputType = {
     id: number
+    locationId: number
     residentId: number
     amenityId: number
     approvedById: number
@@ -3953,6 +6774,7 @@ export namespace Prisma {
 
   export type BookingMinAggregateInputType = {
     id?: true
+    locationId?: true
     residentId?: true
     amenityId?: true
     approvedById?: true
@@ -3971,6 +6793,7 @@ export namespace Prisma {
 
   export type BookingMaxAggregateInputType = {
     id?: true
+    locationId?: true
     residentId?: true
     amenityId?: true
     approvedById?: true
@@ -3989,6 +6812,7 @@ export namespace Prisma {
 
   export type BookingCountAggregateInputType = {
     id?: true
+    locationId?: true
     residentId?: true
     amenityId?: true
     approvedById?: true
@@ -4094,6 +6918,7 @@ export namespace Prisma {
 
   export type BookingGroupByOutputType = {
     id: string
+    locationId: string
     residentId: string
     amenityId: string
     approvedById: string | null
@@ -4131,6 +6956,7 @@ export namespace Prisma {
 
   export type BookingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    locationId?: boolean
     residentId?: boolean
     amenityId?: boolean
     approvedById?: boolean
@@ -4145,6 +6971,7 @@ export namespace Prisma {
     cancelledAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    location?: boolean | LocationDefaultArgs<ExtArgs>
     resident?: boolean | UserDefaultArgs<ExtArgs>
     amenity?: boolean | AmenityDefaultArgs<ExtArgs>
     approvedBy?: boolean | Booking$approvedByArgs<ExtArgs>
@@ -4152,6 +6979,7 @@ export namespace Prisma {
 
   export type BookingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    locationId?: boolean
     residentId?: boolean
     amenityId?: boolean
     approvedById?: boolean
@@ -4166,6 +6994,7 @@ export namespace Prisma {
     cancelledAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    location?: boolean | LocationDefaultArgs<ExtArgs>
     resident?: boolean | UserDefaultArgs<ExtArgs>
     amenity?: boolean | AmenityDefaultArgs<ExtArgs>
     approvedBy?: boolean | Booking$approvedByArgs<ExtArgs>
@@ -4173,6 +7002,7 @@ export namespace Prisma {
 
   export type BookingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    locationId?: boolean
     residentId?: boolean
     amenityId?: boolean
     approvedById?: boolean
@@ -4187,6 +7017,7 @@ export namespace Prisma {
     cancelledAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    location?: boolean | LocationDefaultArgs<ExtArgs>
     resident?: boolean | UserDefaultArgs<ExtArgs>
     amenity?: boolean | AmenityDefaultArgs<ExtArgs>
     approvedBy?: boolean | Booking$approvedByArgs<ExtArgs>
@@ -4194,6 +7025,7 @@ export namespace Prisma {
 
   export type BookingSelectScalar = {
     id?: boolean
+    locationId?: boolean
     residentId?: boolean
     amenityId?: boolean
     approvedById?: boolean
@@ -4210,18 +7042,21 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type BookingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "residentId" | "amenityId" | "approvedById" | "startAt" | "endAt" | "guestCount" | "status" | "notes" | "eventTitle" | "eventDetails" | "approvedAt" | "cancelledAt" | "createdAt" | "updatedAt", ExtArgs["result"]["booking"]>
+  export type BookingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "locationId" | "residentId" | "amenityId" | "approvedById" | "startAt" | "endAt" | "guestCount" | "status" | "notes" | "eventTitle" | "eventDetails" | "approvedAt" | "cancelledAt" | "createdAt" | "updatedAt", ExtArgs["result"]["booking"]>
   export type BookingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    location?: boolean | LocationDefaultArgs<ExtArgs>
     resident?: boolean | UserDefaultArgs<ExtArgs>
     amenity?: boolean | AmenityDefaultArgs<ExtArgs>
     approvedBy?: boolean | Booking$approvedByArgs<ExtArgs>
   }
   export type BookingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    location?: boolean | LocationDefaultArgs<ExtArgs>
     resident?: boolean | UserDefaultArgs<ExtArgs>
     amenity?: boolean | AmenityDefaultArgs<ExtArgs>
     approvedBy?: boolean | Booking$approvedByArgs<ExtArgs>
   }
   export type BookingIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    location?: boolean | LocationDefaultArgs<ExtArgs>
     resident?: boolean | UserDefaultArgs<ExtArgs>
     amenity?: boolean | AmenityDefaultArgs<ExtArgs>
     approvedBy?: boolean | Booking$approvedByArgs<ExtArgs>
@@ -4230,12 +7065,14 @@ export namespace Prisma {
   export type $BookingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Booking"
     objects: {
+      location: Prisma.$LocationPayload<ExtArgs>
       resident: Prisma.$UserPayload<ExtArgs>
       amenity: Prisma.$AmenityPayload<ExtArgs>
       approvedBy: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      locationId: string
       residentId: string
       amenityId: string
       approvedById: string | null
@@ -4644,6 +7481,7 @@ export namespace Prisma {
    */
   export interface Prisma__BookingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    location<T extends LocationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LocationDefaultArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     resident<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     amenity<T extends AmenityDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AmenityDefaultArgs<ExtArgs>>): Prisma__AmenityClient<$Result.GetResult<Prisma.$AmenityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     approvedBy<T extends Booking$approvedByArgs<ExtArgs> = {}>(args?: Subset<T, Booking$approvedByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -4677,6 +7515,7 @@ export namespace Prisma {
    */
   interface BookingFieldRefs {
     readonly id: FieldRef<"Booking", 'String'>
+    readonly locationId: FieldRef<"Booking", 'String'>
     readonly residentId: FieldRef<"Booking", 'String'>
     readonly amenityId: FieldRef<"Booking", 'String'>
     readonly approvedById: FieldRef<"Booking", 'String'>
@@ -5136,6 +7975,7 @@ export namespace Prisma {
 
   export type BlackoutDateMinAggregateOutputType = {
     id: string | null
+    locationId: string | null
     amenityId: string | null
     startAt: Date | null
     endAt: Date | null
@@ -5147,6 +7987,7 @@ export namespace Prisma {
 
   export type BlackoutDateMaxAggregateOutputType = {
     id: string | null
+    locationId: string | null
     amenityId: string | null
     startAt: Date | null
     endAt: Date | null
@@ -5158,6 +7999,7 @@ export namespace Prisma {
 
   export type BlackoutDateCountAggregateOutputType = {
     id: number
+    locationId: number
     amenityId: number
     startAt: number
     endAt: number
@@ -5171,6 +8013,7 @@ export namespace Prisma {
 
   export type BlackoutDateMinAggregateInputType = {
     id?: true
+    locationId?: true
     amenityId?: true
     startAt?: true
     endAt?: true
@@ -5182,6 +8025,7 @@ export namespace Prisma {
 
   export type BlackoutDateMaxAggregateInputType = {
     id?: true
+    locationId?: true
     amenityId?: true
     startAt?: true
     endAt?: true
@@ -5193,6 +8037,7 @@ export namespace Prisma {
 
   export type BlackoutDateCountAggregateInputType = {
     id?: true
+    locationId?: true
     amenityId?: true
     startAt?: true
     endAt?: true
@@ -5277,6 +8122,7 @@ export namespace Prisma {
 
   export type BlackoutDateGroupByOutputType = {
     id: string
+    locationId: string
     amenityId: string
     startAt: Date
     endAt: Date
@@ -5305,6 +8151,7 @@ export namespace Prisma {
 
   export type BlackoutDateSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    locationId?: boolean
     amenityId?: boolean
     startAt?: boolean
     endAt?: boolean
@@ -5312,11 +8159,13 @@ export namespace Prisma {
     allDay?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    location?: boolean | LocationDefaultArgs<ExtArgs>
     amenity?: boolean | AmenityDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["blackoutDate"]>
 
   export type BlackoutDateSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    locationId?: boolean
     amenityId?: boolean
     startAt?: boolean
     endAt?: boolean
@@ -5324,11 +8173,13 @@ export namespace Prisma {
     allDay?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    location?: boolean | LocationDefaultArgs<ExtArgs>
     amenity?: boolean | AmenityDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["blackoutDate"]>
 
   export type BlackoutDateSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    locationId?: boolean
     amenityId?: boolean
     startAt?: boolean
     endAt?: boolean
@@ -5336,11 +8187,13 @@ export namespace Prisma {
     allDay?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    location?: boolean | LocationDefaultArgs<ExtArgs>
     amenity?: boolean | AmenityDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["blackoutDate"]>
 
   export type BlackoutDateSelectScalar = {
     id?: boolean
+    locationId?: boolean
     amenityId?: boolean
     startAt?: boolean
     endAt?: boolean
@@ -5350,24 +8203,29 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type BlackoutDateOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "amenityId" | "startAt" | "endAt" | "reason" | "allDay" | "createdAt" | "updatedAt", ExtArgs["result"]["blackoutDate"]>
+  export type BlackoutDateOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "locationId" | "amenityId" | "startAt" | "endAt" | "reason" | "allDay" | "createdAt" | "updatedAt", ExtArgs["result"]["blackoutDate"]>
   export type BlackoutDateInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    location?: boolean | LocationDefaultArgs<ExtArgs>
     amenity?: boolean | AmenityDefaultArgs<ExtArgs>
   }
   export type BlackoutDateIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    location?: boolean | LocationDefaultArgs<ExtArgs>
     amenity?: boolean | AmenityDefaultArgs<ExtArgs>
   }
   export type BlackoutDateIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    location?: boolean | LocationDefaultArgs<ExtArgs>
     amenity?: boolean | AmenityDefaultArgs<ExtArgs>
   }
 
   export type $BlackoutDatePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "BlackoutDate"
     objects: {
+      location: Prisma.$LocationPayload<ExtArgs>
       amenity: Prisma.$AmenityPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      locationId: string
       amenityId: string
       startAt: Date
       endAt: Date
@@ -5769,6 +8627,7 @@ export namespace Prisma {
    */
   export interface Prisma__BlackoutDateClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    location<T extends LocationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LocationDefaultArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     amenity<T extends AmenityDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AmenityDefaultArgs<ExtArgs>>): Prisma__AmenityClient<$Result.GetResult<Prisma.$AmenityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -5800,6 +8659,7 @@ export namespace Prisma {
    */
   interface BlackoutDateFieldRefs {
     readonly id: FieldRef<"BlackoutDate", 'String'>
+    readonly locationId: FieldRef<"BlackoutDate", 'String'>
     readonly amenityId: FieldRef<"BlackoutDate", 'String'>
     readonly startAt: FieldRef<"BlackoutDate", 'DateTime'>
     readonly endAt: FieldRef<"BlackoutDate", 'DateTime'>
@@ -6234,6 +9094,7 @@ export namespace Prisma {
   export type AuditLogMinAggregateOutputType = {
     id: string | null
     actorUserId: string | null
+    locationId: string | null
     action: string | null
     entityType: string | null
     entityId: string | null
@@ -6243,6 +9104,7 @@ export namespace Prisma {
   export type AuditLogMaxAggregateOutputType = {
     id: string | null
     actorUserId: string | null
+    locationId: string | null
     action: string | null
     entityType: string | null
     entityId: string | null
@@ -6252,6 +9114,7 @@ export namespace Prisma {
   export type AuditLogCountAggregateOutputType = {
     id: number
     actorUserId: number
+    locationId: number
     action: number
     entityType: number
     entityId: number
@@ -6264,6 +9127,7 @@ export namespace Prisma {
   export type AuditLogMinAggregateInputType = {
     id?: true
     actorUserId?: true
+    locationId?: true
     action?: true
     entityType?: true
     entityId?: true
@@ -6273,6 +9137,7 @@ export namespace Prisma {
   export type AuditLogMaxAggregateInputType = {
     id?: true
     actorUserId?: true
+    locationId?: true
     action?: true
     entityType?: true
     entityId?: true
@@ -6282,6 +9147,7 @@ export namespace Prisma {
   export type AuditLogCountAggregateInputType = {
     id?: true
     actorUserId?: true
+    locationId?: true
     action?: true
     entityType?: true
     entityId?: true
@@ -6365,6 +9231,7 @@ export namespace Prisma {
   export type AuditLogGroupByOutputType = {
     id: string
     actorUserId: string | null
+    locationId: string | null
     action: string
     entityType: string
     entityId: string
@@ -6392,39 +9259,46 @@ export namespace Prisma {
   export type AuditLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     actorUserId?: boolean
+    locationId?: boolean
     action?: boolean
     entityType?: boolean
     entityId?: boolean
     metadata?: boolean
     createdAt?: boolean
     actor?: boolean | AuditLog$actorArgs<ExtArgs>
+    location?: boolean | AuditLog$locationArgs<ExtArgs>
   }, ExtArgs["result"]["auditLog"]>
 
   export type AuditLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     actorUserId?: boolean
+    locationId?: boolean
     action?: boolean
     entityType?: boolean
     entityId?: boolean
     metadata?: boolean
     createdAt?: boolean
     actor?: boolean | AuditLog$actorArgs<ExtArgs>
+    location?: boolean | AuditLog$locationArgs<ExtArgs>
   }, ExtArgs["result"]["auditLog"]>
 
   export type AuditLogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     actorUserId?: boolean
+    locationId?: boolean
     action?: boolean
     entityType?: boolean
     entityId?: boolean
     metadata?: boolean
     createdAt?: boolean
     actor?: boolean | AuditLog$actorArgs<ExtArgs>
+    location?: boolean | AuditLog$locationArgs<ExtArgs>
   }, ExtArgs["result"]["auditLog"]>
 
   export type AuditLogSelectScalar = {
     id?: boolean
     actorUserId?: boolean
+    locationId?: boolean
     action?: boolean
     entityType?: boolean
     entityId?: boolean
@@ -6432,25 +9306,30 @@ export namespace Prisma {
     createdAt?: boolean
   }
 
-  export type AuditLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "actorUserId" | "action" | "entityType" | "entityId" | "metadata" | "createdAt", ExtArgs["result"]["auditLog"]>
+  export type AuditLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "actorUserId" | "locationId" | "action" | "entityType" | "entityId" | "metadata" | "createdAt", ExtArgs["result"]["auditLog"]>
   export type AuditLogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     actor?: boolean | AuditLog$actorArgs<ExtArgs>
+    location?: boolean | AuditLog$locationArgs<ExtArgs>
   }
   export type AuditLogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     actor?: boolean | AuditLog$actorArgs<ExtArgs>
+    location?: boolean | AuditLog$locationArgs<ExtArgs>
   }
   export type AuditLogIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     actor?: boolean | AuditLog$actorArgs<ExtArgs>
+    location?: boolean | AuditLog$locationArgs<ExtArgs>
   }
 
   export type $AuditLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "AuditLog"
     objects: {
       actor: Prisma.$UserPayload<ExtArgs> | null
+      location: Prisma.$LocationPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       actorUserId: string | null
+      locationId: string | null
       action: string
       entityType: string
       entityId: string
@@ -6851,6 +9730,7 @@ export namespace Prisma {
   export interface Prisma__AuditLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     actor<T extends AuditLog$actorArgs<ExtArgs> = {}>(args?: Subset<T, AuditLog$actorArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    location<T extends AuditLog$locationArgs<ExtArgs> = {}>(args?: Subset<T, AuditLog$locationArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6882,6 +9762,7 @@ export namespace Prisma {
   interface AuditLogFieldRefs {
     readonly id: FieldRef<"AuditLog", 'String'>
     readonly actorUserId: FieldRef<"AuditLog", 'String'>
+    readonly locationId: FieldRef<"AuditLog", 'String'>
     readonly action: FieldRef<"AuditLog", 'String'>
     readonly entityType: FieldRef<"AuditLog", 'String'>
     readonly entityId: FieldRef<"AuditLog", 'String'>
@@ -7302,6 +10183,25 @@ export namespace Prisma {
   }
 
   /**
+   * AuditLog.location
+   */
+  export type AuditLog$locationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    where?: LocationWhereInput
+  }
+
+  /**
    * AuditLog without action
    */
   export type AuditLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7336,10 +10236,11 @@ export namespace Prisma {
 
   export const UserScalarFieldEnum: {
     id: 'id',
+    authUserId: 'authUserId',
     email: 'email',
     name: 'name',
     phone: 'phone',
-    role: 'role',
+    platformRole: 'platformRole',
     passwordHash: 'passwordHash',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -7348,14 +10249,48 @@ export namespace Prisma {
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+  export const LocationScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    slug: 'slug',
+    addressLine1: 'addressLine1',
+    addressLine2: 'addressLine2',
+    city: 'city',
+    province: 'province',
+    postalCode: 'postalCode',
+    country: 'country',
+    timezone: 'timezone',
+    status: 'status',
+    createdById: 'createdById',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type LocationScalarFieldEnum = (typeof LocationScalarFieldEnum)[keyof typeof LocationScalarFieldEnum]
+
+
+  export const LocationMembershipScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    locationId: 'locationId',
+    role: 'role',
+    isPrimary: 'isPrimary',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type LocationMembershipScalarFieldEnum = (typeof LocationMembershipScalarFieldEnum)[keyof typeof LocationMembershipScalarFieldEnum]
+
+
   export const AmenityScalarFieldEnum: {
     id: 'id',
+    locationId: 'locationId',
     name: 'name',
     slug: 'slug',
     type: 'type',
     description: 'description',
     imageUrl: 'imageUrl',
-    location: 'location',
+    area: 'area',
     capacity: 'capacity',
     slotDurationMinutes: 'slotDurationMinutes',
     openTime: 'openTime',
@@ -7375,6 +10310,7 @@ export namespace Prisma {
 
   export const BookingScalarFieldEnum: {
     id: 'id',
+    locationId: 'locationId',
     residentId: 'residentId',
     amenityId: 'amenityId',
     approvedById: 'approvedById',
@@ -7396,6 +10332,7 @@ export namespace Prisma {
 
   export const BlackoutDateScalarFieldEnum: {
     id: 'id',
+    locationId: 'locationId',
     amenityId: 'amenityId',
     startAt: 'startAt',
     endAt: 'endAt',
@@ -7411,6 +10348,7 @@ export namespace Prisma {
   export const AuditLogScalarFieldEnum: {
     id: 'id',
     actorUserId: 'actorUserId',
+    locationId: 'locationId',
     action: 'action',
     entityType: 'entityType',
     entityId: 'entityId',
@@ -7482,16 +10420,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'UserRole'
+   * Reference to a field of type 'PlatformRole'
    */
-  export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole'>
+  export type EnumPlatformRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlatformRole'>
     
 
 
   /**
-   * Reference to a field of type 'UserRole[]'
+   * Reference to a field of type 'PlatformRole[]'
    */
-  export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole[]'>
+  export type ListEnumPlatformRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlatformRole[]'>
     
 
 
@@ -7506,6 +10444,41 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'LocationStatus'
+   */
+  export type EnumLocationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LocationStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'LocationStatus[]'
+   */
+  export type ListEnumLocationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LocationStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'LocationMembershipRole'
+   */
+  export type EnumLocationMembershipRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LocationMembershipRole'>
+    
+
+
+  /**
+   * Reference to a field of type 'LocationMembershipRole[]'
+   */
+  export type ListEnumLocationMembershipRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LocationMembershipRole[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -7548,13 +10521,6 @@ export namespace Prisma {
    * Reference to a field of type 'AmenityStatus[]'
    */
   export type ListEnumAmenityStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AmenityStatus[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -7608,55 +10574,65 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     id?: StringFilter<"User"> | string
+    authUserId?: StringNullableFilter<"User"> | string | null
     email?: StringFilter<"User"> | string
     name?: StringFilter<"User"> | string
     phone?: StringNullableFilter<"User"> | string | null
-    role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
+    platformRole?: EnumPlatformRoleFilter<"User"> | $Enums.PlatformRole
     passwordHash?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    memberships?: LocationMembershipListRelationFilter
     bookings?: BookingListRelationFilter
     approvedBookings?: BookingListRelationFilter
     auditLogs?: AuditLogListRelationFilter
+    createdLocations?: LocationListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
+    authUserId?: SortOrderInput | SortOrder
     email?: SortOrder
     name?: SortOrder
     phone?: SortOrderInput | SortOrder
-    role?: SortOrder
+    platformRole?: SortOrder
     passwordHash?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    memberships?: LocationMembershipOrderByRelationAggregateInput
     bookings?: BookingOrderByRelationAggregateInput
     approvedBookings?: BookingOrderByRelationAggregateInput
     auditLogs?: AuditLogOrderByRelationAggregateInput
+    createdLocations?: LocationOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    authUserId?: string
     email?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringFilter<"User"> | string
     phone?: StringNullableFilter<"User"> | string | null
-    role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
+    platformRole?: EnumPlatformRoleFilter<"User"> | $Enums.PlatformRole
     passwordHash?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    memberships?: LocationMembershipListRelationFilter
     bookings?: BookingListRelationFilter
     approvedBookings?: BookingListRelationFilter
     auditLogs?: AuditLogListRelationFilter
-  }, "id" | "email">
+    createdLocations?: LocationListRelationFilter
+  }, "id" | "authUserId" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
+    authUserId?: SortOrderInput | SortOrder
     email?: SortOrder
     name?: SortOrder
     phone?: SortOrderInput | SortOrder
-    role?: SortOrder
+    platformRole?: SortOrder
     passwordHash?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -7670,13 +10646,198 @@ export namespace Prisma {
     OR?: UserScalarWhereWithAggregatesInput[]
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"User"> | string
+    authUserId?: StringNullableWithAggregatesFilter<"User"> | string | null
     email?: StringWithAggregatesFilter<"User"> | string
     name?: StringWithAggregatesFilter<"User"> | string
     phone?: StringNullableWithAggregatesFilter<"User"> | string | null
-    role?: EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
+    platformRole?: EnumPlatformRoleWithAggregatesFilter<"User"> | $Enums.PlatformRole
     passwordHash?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+  }
+
+  export type LocationWhereInput = {
+    AND?: LocationWhereInput | LocationWhereInput[]
+    OR?: LocationWhereInput[]
+    NOT?: LocationWhereInput | LocationWhereInput[]
+    id?: StringFilter<"Location"> | string
+    name?: StringFilter<"Location"> | string
+    slug?: StringFilter<"Location"> | string
+    addressLine1?: StringFilter<"Location"> | string
+    addressLine2?: StringNullableFilter<"Location"> | string | null
+    city?: StringFilter<"Location"> | string
+    province?: StringFilter<"Location"> | string
+    postalCode?: StringNullableFilter<"Location"> | string | null
+    country?: StringFilter<"Location"> | string
+    timezone?: StringFilter<"Location"> | string
+    status?: EnumLocationStatusFilter<"Location"> | $Enums.LocationStatus
+    createdById?: StringNullableFilter<"Location"> | string | null
+    createdAt?: DateTimeFilter<"Location"> | Date | string
+    updatedAt?: DateTimeFilter<"Location"> | Date | string
+    createdBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    memberships?: LocationMembershipListRelationFilter
+    amenities?: AmenityListRelationFilter
+    bookings?: BookingListRelationFilter
+    blackoutDates?: BlackoutDateListRelationFilter
+    auditLogs?: AuditLogListRelationFilter
+  }
+
+  export type LocationOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    addressLine1?: SortOrder
+    addressLine2?: SortOrderInput | SortOrder
+    city?: SortOrder
+    province?: SortOrder
+    postalCode?: SortOrderInput | SortOrder
+    country?: SortOrder
+    timezone?: SortOrder
+    status?: SortOrder
+    createdById?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: UserOrderByWithRelationInput
+    memberships?: LocationMembershipOrderByRelationAggregateInput
+    amenities?: AmenityOrderByRelationAggregateInput
+    bookings?: BookingOrderByRelationAggregateInput
+    blackoutDates?: BlackoutDateOrderByRelationAggregateInput
+    auditLogs?: AuditLogOrderByRelationAggregateInput
+  }
+
+  export type LocationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    slug?: string
+    AND?: LocationWhereInput | LocationWhereInput[]
+    OR?: LocationWhereInput[]
+    NOT?: LocationWhereInput | LocationWhereInput[]
+    name?: StringFilter<"Location"> | string
+    addressLine1?: StringFilter<"Location"> | string
+    addressLine2?: StringNullableFilter<"Location"> | string | null
+    city?: StringFilter<"Location"> | string
+    province?: StringFilter<"Location"> | string
+    postalCode?: StringNullableFilter<"Location"> | string | null
+    country?: StringFilter<"Location"> | string
+    timezone?: StringFilter<"Location"> | string
+    status?: EnumLocationStatusFilter<"Location"> | $Enums.LocationStatus
+    createdById?: StringNullableFilter<"Location"> | string | null
+    createdAt?: DateTimeFilter<"Location"> | Date | string
+    updatedAt?: DateTimeFilter<"Location"> | Date | string
+    createdBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    memberships?: LocationMembershipListRelationFilter
+    amenities?: AmenityListRelationFilter
+    bookings?: BookingListRelationFilter
+    blackoutDates?: BlackoutDateListRelationFilter
+    auditLogs?: AuditLogListRelationFilter
+  }, "id" | "slug">
+
+  export type LocationOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    addressLine1?: SortOrder
+    addressLine2?: SortOrderInput | SortOrder
+    city?: SortOrder
+    province?: SortOrder
+    postalCode?: SortOrderInput | SortOrder
+    country?: SortOrder
+    timezone?: SortOrder
+    status?: SortOrder
+    createdById?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: LocationCountOrderByAggregateInput
+    _max?: LocationMaxOrderByAggregateInput
+    _min?: LocationMinOrderByAggregateInput
+  }
+
+  export type LocationScalarWhereWithAggregatesInput = {
+    AND?: LocationScalarWhereWithAggregatesInput | LocationScalarWhereWithAggregatesInput[]
+    OR?: LocationScalarWhereWithAggregatesInput[]
+    NOT?: LocationScalarWhereWithAggregatesInput | LocationScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Location"> | string
+    name?: StringWithAggregatesFilter<"Location"> | string
+    slug?: StringWithAggregatesFilter<"Location"> | string
+    addressLine1?: StringWithAggregatesFilter<"Location"> | string
+    addressLine2?: StringNullableWithAggregatesFilter<"Location"> | string | null
+    city?: StringWithAggregatesFilter<"Location"> | string
+    province?: StringWithAggregatesFilter<"Location"> | string
+    postalCode?: StringNullableWithAggregatesFilter<"Location"> | string | null
+    country?: StringWithAggregatesFilter<"Location"> | string
+    timezone?: StringWithAggregatesFilter<"Location"> | string
+    status?: EnumLocationStatusWithAggregatesFilter<"Location"> | $Enums.LocationStatus
+    createdById?: StringNullableWithAggregatesFilter<"Location"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Location"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Location"> | Date | string
+  }
+
+  export type LocationMembershipWhereInput = {
+    AND?: LocationMembershipWhereInput | LocationMembershipWhereInput[]
+    OR?: LocationMembershipWhereInput[]
+    NOT?: LocationMembershipWhereInput | LocationMembershipWhereInput[]
+    id?: StringFilter<"LocationMembership"> | string
+    userId?: StringFilter<"LocationMembership"> | string
+    locationId?: StringFilter<"LocationMembership"> | string
+    role?: EnumLocationMembershipRoleFilter<"LocationMembership"> | $Enums.LocationMembershipRole
+    isPrimary?: BoolFilter<"LocationMembership"> | boolean
+    createdAt?: DateTimeFilter<"LocationMembership"> | Date | string
+    updatedAt?: DateTimeFilter<"LocationMembership"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    location?: XOR<LocationScalarRelationFilter, LocationWhereInput>
+  }
+
+  export type LocationMembershipOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    locationId?: SortOrder
+    role?: SortOrder
+    isPrimary?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    location?: LocationOrderByWithRelationInput
+  }
+
+  export type LocationMembershipWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_locationId?: LocationMembershipUserIdLocationIdCompoundUniqueInput
+    AND?: LocationMembershipWhereInput | LocationMembershipWhereInput[]
+    OR?: LocationMembershipWhereInput[]
+    NOT?: LocationMembershipWhereInput | LocationMembershipWhereInput[]
+    userId?: StringFilter<"LocationMembership"> | string
+    locationId?: StringFilter<"LocationMembership"> | string
+    role?: EnumLocationMembershipRoleFilter<"LocationMembership"> | $Enums.LocationMembershipRole
+    isPrimary?: BoolFilter<"LocationMembership"> | boolean
+    createdAt?: DateTimeFilter<"LocationMembership"> | Date | string
+    updatedAt?: DateTimeFilter<"LocationMembership"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    location?: XOR<LocationScalarRelationFilter, LocationWhereInput>
+  }, "id" | "userId_locationId">
+
+  export type LocationMembershipOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    locationId?: SortOrder
+    role?: SortOrder
+    isPrimary?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: LocationMembershipCountOrderByAggregateInput
+    _max?: LocationMembershipMaxOrderByAggregateInput
+    _min?: LocationMembershipMinOrderByAggregateInput
+  }
+
+  export type LocationMembershipScalarWhereWithAggregatesInput = {
+    AND?: LocationMembershipScalarWhereWithAggregatesInput | LocationMembershipScalarWhereWithAggregatesInput[]
+    OR?: LocationMembershipScalarWhereWithAggregatesInput[]
+    NOT?: LocationMembershipScalarWhereWithAggregatesInput | LocationMembershipScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"LocationMembership"> | string
+    userId?: StringWithAggregatesFilter<"LocationMembership"> | string
+    locationId?: StringWithAggregatesFilter<"LocationMembership"> | string
+    role?: EnumLocationMembershipRoleWithAggregatesFilter<"LocationMembership"> | $Enums.LocationMembershipRole
+    isPrimary?: BoolWithAggregatesFilter<"LocationMembership"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"LocationMembership"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"LocationMembership"> | Date | string
   }
 
   export type AmenityWhereInput = {
@@ -7684,12 +10845,13 @@ export namespace Prisma {
     OR?: AmenityWhereInput[]
     NOT?: AmenityWhereInput | AmenityWhereInput[]
     id?: StringFilter<"Amenity"> | string
+    locationId?: StringFilter<"Amenity"> | string
     name?: StringFilter<"Amenity"> | string
     slug?: StringFilter<"Amenity"> | string
     type?: EnumAmenityTypeFilter<"Amenity"> | $Enums.AmenityType
     description?: StringFilter<"Amenity"> | string
     imageUrl?: StringNullableFilter<"Amenity"> | string | null
-    location?: StringFilter<"Amenity"> | string
+    area?: StringFilter<"Amenity"> | string
     capacity?: IntFilter<"Amenity"> | number
     slotDurationMinutes?: IntFilter<"Amenity"> | number
     openTime?: StringFilter<"Amenity"> | string
@@ -7702,18 +10864,20 @@ export namespace Prisma {
     cancellationCutoffHours?: IntNullableFilter<"Amenity"> | number | null
     createdAt?: DateTimeFilter<"Amenity"> | Date | string
     updatedAt?: DateTimeFilter<"Amenity"> | Date | string
+    location?: XOR<LocationScalarRelationFilter, LocationWhereInput>
     bookings?: BookingListRelationFilter
     blackoutDates?: BlackoutDateListRelationFilter
   }
 
   export type AmenityOrderByWithRelationInput = {
     id?: SortOrder
+    locationId?: SortOrder
     name?: SortOrder
     slug?: SortOrder
     type?: SortOrder
     description?: SortOrder
     imageUrl?: SortOrderInput | SortOrder
-    location?: SortOrder
+    area?: SortOrder
     capacity?: SortOrder
     slotDurationMinutes?: SortOrder
     openTime?: SortOrder
@@ -7726,21 +10890,24 @@ export namespace Prisma {
     cancellationCutoffHours?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    location?: LocationOrderByWithRelationInput
     bookings?: BookingOrderByRelationAggregateInput
     blackoutDates?: BlackoutDateOrderByRelationAggregateInput
   }
 
   export type AmenityWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    slug?: string
+    locationId_slug?: AmenityLocationIdSlugCompoundUniqueInput
     AND?: AmenityWhereInput | AmenityWhereInput[]
     OR?: AmenityWhereInput[]
     NOT?: AmenityWhereInput | AmenityWhereInput[]
+    locationId?: StringFilter<"Amenity"> | string
     name?: StringFilter<"Amenity"> | string
+    slug?: StringFilter<"Amenity"> | string
     type?: EnumAmenityTypeFilter<"Amenity"> | $Enums.AmenityType
     description?: StringFilter<"Amenity"> | string
     imageUrl?: StringNullableFilter<"Amenity"> | string | null
-    location?: StringFilter<"Amenity"> | string
+    area?: StringFilter<"Amenity"> | string
     capacity?: IntFilter<"Amenity"> | number
     slotDurationMinutes?: IntFilter<"Amenity"> | number
     openTime?: StringFilter<"Amenity"> | string
@@ -7753,18 +10920,20 @@ export namespace Prisma {
     cancellationCutoffHours?: IntNullableFilter<"Amenity"> | number | null
     createdAt?: DateTimeFilter<"Amenity"> | Date | string
     updatedAt?: DateTimeFilter<"Amenity"> | Date | string
+    location?: XOR<LocationScalarRelationFilter, LocationWhereInput>
     bookings?: BookingListRelationFilter
     blackoutDates?: BlackoutDateListRelationFilter
-  }, "id" | "slug">
+  }, "id" | "locationId_slug">
 
   export type AmenityOrderByWithAggregationInput = {
     id?: SortOrder
+    locationId?: SortOrder
     name?: SortOrder
     slug?: SortOrder
     type?: SortOrder
     description?: SortOrder
     imageUrl?: SortOrderInput | SortOrder
-    location?: SortOrder
+    area?: SortOrder
     capacity?: SortOrder
     slotDurationMinutes?: SortOrder
     openTime?: SortOrder
@@ -7789,12 +10958,13 @@ export namespace Prisma {
     OR?: AmenityScalarWhereWithAggregatesInput[]
     NOT?: AmenityScalarWhereWithAggregatesInput | AmenityScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Amenity"> | string
+    locationId?: StringWithAggregatesFilter<"Amenity"> | string
     name?: StringWithAggregatesFilter<"Amenity"> | string
     slug?: StringWithAggregatesFilter<"Amenity"> | string
     type?: EnumAmenityTypeWithAggregatesFilter<"Amenity"> | $Enums.AmenityType
     description?: StringWithAggregatesFilter<"Amenity"> | string
     imageUrl?: StringNullableWithAggregatesFilter<"Amenity"> | string | null
-    location?: StringWithAggregatesFilter<"Amenity"> | string
+    area?: StringWithAggregatesFilter<"Amenity"> | string
     capacity?: IntWithAggregatesFilter<"Amenity"> | number
     slotDurationMinutes?: IntWithAggregatesFilter<"Amenity"> | number
     openTime?: StringWithAggregatesFilter<"Amenity"> | string
@@ -7814,6 +10984,7 @@ export namespace Prisma {
     OR?: BookingWhereInput[]
     NOT?: BookingWhereInput | BookingWhereInput[]
     id?: StringFilter<"Booking"> | string
+    locationId?: StringFilter<"Booking"> | string
     residentId?: StringFilter<"Booking"> | string
     amenityId?: StringFilter<"Booking"> | string
     approvedById?: StringNullableFilter<"Booking"> | string | null
@@ -7828,6 +10999,7 @@ export namespace Prisma {
     cancelledAt?: DateTimeNullableFilter<"Booking"> | Date | string | null
     createdAt?: DateTimeFilter<"Booking"> | Date | string
     updatedAt?: DateTimeFilter<"Booking"> | Date | string
+    location?: XOR<LocationScalarRelationFilter, LocationWhereInput>
     resident?: XOR<UserScalarRelationFilter, UserWhereInput>
     amenity?: XOR<AmenityScalarRelationFilter, AmenityWhereInput>
     approvedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
@@ -7835,6 +11007,7 @@ export namespace Prisma {
 
   export type BookingOrderByWithRelationInput = {
     id?: SortOrder
+    locationId?: SortOrder
     residentId?: SortOrder
     amenityId?: SortOrder
     approvedById?: SortOrderInput | SortOrder
@@ -7849,6 +11022,7 @@ export namespace Prisma {
     cancelledAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    location?: LocationOrderByWithRelationInput
     resident?: UserOrderByWithRelationInput
     amenity?: AmenityOrderByWithRelationInput
     approvedBy?: UserOrderByWithRelationInput
@@ -7859,6 +11033,7 @@ export namespace Prisma {
     AND?: BookingWhereInput | BookingWhereInput[]
     OR?: BookingWhereInput[]
     NOT?: BookingWhereInput | BookingWhereInput[]
+    locationId?: StringFilter<"Booking"> | string
     residentId?: StringFilter<"Booking"> | string
     amenityId?: StringFilter<"Booking"> | string
     approvedById?: StringNullableFilter<"Booking"> | string | null
@@ -7873,6 +11048,7 @@ export namespace Prisma {
     cancelledAt?: DateTimeNullableFilter<"Booking"> | Date | string | null
     createdAt?: DateTimeFilter<"Booking"> | Date | string
     updatedAt?: DateTimeFilter<"Booking"> | Date | string
+    location?: XOR<LocationScalarRelationFilter, LocationWhereInput>
     resident?: XOR<UserScalarRelationFilter, UserWhereInput>
     amenity?: XOR<AmenityScalarRelationFilter, AmenityWhereInput>
     approvedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
@@ -7880,6 +11056,7 @@ export namespace Prisma {
 
   export type BookingOrderByWithAggregationInput = {
     id?: SortOrder
+    locationId?: SortOrder
     residentId?: SortOrder
     amenityId?: SortOrder
     approvedById?: SortOrderInput | SortOrder
@@ -7906,6 +11083,7 @@ export namespace Prisma {
     OR?: BookingScalarWhereWithAggregatesInput[]
     NOT?: BookingScalarWhereWithAggregatesInput | BookingScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Booking"> | string
+    locationId?: StringWithAggregatesFilter<"Booking"> | string
     residentId?: StringWithAggregatesFilter<"Booking"> | string
     amenityId?: StringWithAggregatesFilter<"Booking"> | string
     approvedById?: StringNullableWithAggregatesFilter<"Booking"> | string | null
@@ -7927,6 +11105,7 @@ export namespace Prisma {
     OR?: BlackoutDateWhereInput[]
     NOT?: BlackoutDateWhereInput | BlackoutDateWhereInput[]
     id?: StringFilter<"BlackoutDate"> | string
+    locationId?: StringFilter<"BlackoutDate"> | string
     amenityId?: StringFilter<"BlackoutDate"> | string
     startAt?: DateTimeFilter<"BlackoutDate"> | Date | string
     endAt?: DateTimeFilter<"BlackoutDate"> | Date | string
@@ -7934,11 +11113,13 @@ export namespace Prisma {
     allDay?: BoolFilter<"BlackoutDate"> | boolean
     createdAt?: DateTimeFilter<"BlackoutDate"> | Date | string
     updatedAt?: DateTimeFilter<"BlackoutDate"> | Date | string
+    location?: XOR<LocationScalarRelationFilter, LocationWhereInput>
     amenity?: XOR<AmenityScalarRelationFilter, AmenityWhereInput>
   }
 
   export type BlackoutDateOrderByWithRelationInput = {
     id?: SortOrder
+    locationId?: SortOrder
     amenityId?: SortOrder
     startAt?: SortOrder
     endAt?: SortOrder
@@ -7946,6 +11127,7 @@ export namespace Prisma {
     allDay?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    location?: LocationOrderByWithRelationInput
     amenity?: AmenityOrderByWithRelationInput
   }
 
@@ -7954,6 +11136,7 @@ export namespace Prisma {
     AND?: BlackoutDateWhereInput | BlackoutDateWhereInput[]
     OR?: BlackoutDateWhereInput[]
     NOT?: BlackoutDateWhereInput | BlackoutDateWhereInput[]
+    locationId?: StringFilter<"BlackoutDate"> | string
     amenityId?: StringFilter<"BlackoutDate"> | string
     startAt?: DateTimeFilter<"BlackoutDate"> | Date | string
     endAt?: DateTimeFilter<"BlackoutDate"> | Date | string
@@ -7961,11 +11144,13 @@ export namespace Prisma {
     allDay?: BoolFilter<"BlackoutDate"> | boolean
     createdAt?: DateTimeFilter<"BlackoutDate"> | Date | string
     updatedAt?: DateTimeFilter<"BlackoutDate"> | Date | string
+    location?: XOR<LocationScalarRelationFilter, LocationWhereInput>
     amenity?: XOR<AmenityScalarRelationFilter, AmenityWhereInput>
   }, "id">
 
   export type BlackoutDateOrderByWithAggregationInput = {
     id?: SortOrder
+    locationId?: SortOrder
     amenityId?: SortOrder
     startAt?: SortOrder
     endAt?: SortOrder
@@ -7983,6 +11168,7 @@ export namespace Prisma {
     OR?: BlackoutDateScalarWhereWithAggregatesInput[]
     NOT?: BlackoutDateScalarWhereWithAggregatesInput | BlackoutDateScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"BlackoutDate"> | string
+    locationId?: StringWithAggregatesFilter<"BlackoutDate"> | string
     amenityId?: StringWithAggregatesFilter<"BlackoutDate"> | string
     startAt?: DateTimeWithAggregatesFilter<"BlackoutDate"> | Date | string
     endAt?: DateTimeWithAggregatesFilter<"BlackoutDate"> | Date | string
@@ -7998,23 +11184,27 @@ export namespace Prisma {
     NOT?: AuditLogWhereInput | AuditLogWhereInput[]
     id?: StringFilter<"AuditLog"> | string
     actorUserId?: StringNullableFilter<"AuditLog"> | string | null
+    locationId?: StringNullableFilter<"AuditLog"> | string | null
     action?: StringFilter<"AuditLog"> | string
     entityType?: StringFilter<"AuditLog"> | string
     entityId?: StringFilter<"AuditLog"> | string
     metadata?: JsonNullableFilter<"AuditLog">
     createdAt?: DateTimeFilter<"AuditLog"> | Date | string
     actor?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    location?: XOR<LocationNullableScalarRelationFilter, LocationWhereInput> | null
   }
 
   export type AuditLogOrderByWithRelationInput = {
     id?: SortOrder
     actorUserId?: SortOrderInput | SortOrder
+    locationId?: SortOrderInput | SortOrder
     action?: SortOrder
     entityType?: SortOrder
     entityId?: SortOrder
     metadata?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     actor?: UserOrderByWithRelationInput
+    location?: LocationOrderByWithRelationInput
   }
 
   export type AuditLogWhereUniqueInput = Prisma.AtLeast<{
@@ -8023,17 +11213,20 @@ export namespace Prisma {
     OR?: AuditLogWhereInput[]
     NOT?: AuditLogWhereInput | AuditLogWhereInput[]
     actorUserId?: StringNullableFilter<"AuditLog"> | string | null
+    locationId?: StringNullableFilter<"AuditLog"> | string | null
     action?: StringFilter<"AuditLog"> | string
     entityType?: StringFilter<"AuditLog"> | string
     entityId?: StringFilter<"AuditLog"> | string
     metadata?: JsonNullableFilter<"AuditLog">
     createdAt?: DateTimeFilter<"AuditLog"> | Date | string
     actor?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    location?: XOR<LocationNullableScalarRelationFilter, LocationWhereInput> | null
   }, "id">
 
   export type AuditLogOrderByWithAggregationInput = {
     id?: SortOrder
     actorUserId?: SortOrderInput | SortOrder
+    locationId?: SortOrderInput | SortOrder
     action?: SortOrder
     entityType?: SortOrder
     entityId?: SortOrder
@@ -8050,6 +11243,7 @@ export namespace Prisma {
     NOT?: AuditLogScalarWhereWithAggregatesInput | AuditLogScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"AuditLog"> | string
     actorUserId?: StringNullableWithAggregatesFilter<"AuditLog"> | string | null
+    locationId?: StringNullableWithAggregatesFilter<"AuditLog"> | string | null
     action?: StringWithAggregatesFilter<"AuditLog"> | string
     entityType?: StringWithAggregatesFilter<"AuditLog"> | string
     entityId?: StringWithAggregatesFilter<"AuditLog"> | string
@@ -8059,66 +11253,79 @@ export namespace Prisma {
 
   export type UserCreateInput = {
     id?: string
+    authUserId?: string | null
     email: string
     name: string
     phone?: string | null
-    role?: $Enums.UserRole
+    platformRole?: $Enums.PlatformRole
     passwordHash?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    memberships?: LocationMembershipCreateNestedManyWithoutUserInput
     bookings?: BookingCreateNestedManyWithoutResidentInput
     approvedBookings?: BookingCreateNestedManyWithoutApprovedByInput
     auditLogs?: AuditLogCreateNestedManyWithoutActorInput
+    createdLocations?: LocationCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateInput = {
     id?: string
+    authUserId?: string | null
     email: string
     name: string
     phone?: string | null
-    role?: $Enums.UserRole
+    platformRole?: $Enums.PlatformRole
     passwordHash?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    memberships?: LocationMembershipUncheckedCreateNestedManyWithoutUserInput
     bookings?: BookingUncheckedCreateNestedManyWithoutResidentInput
     approvedBookings?: BookingUncheckedCreateNestedManyWithoutApprovedByInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutActorInput
+    createdLocations?: LocationUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    authUserId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    platformRole?: EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: LocationMembershipUpdateManyWithoutUserNestedInput
     bookings?: BookingUpdateManyWithoutResidentNestedInput
     approvedBookings?: BookingUpdateManyWithoutApprovedByNestedInput
     auditLogs?: AuditLogUpdateManyWithoutActorNestedInput
+    createdLocations?: LocationUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    authUserId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    platformRole?: EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: LocationMembershipUncheckedUpdateManyWithoutUserNestedInput
     bookings?: BookingUncheckedUpdateManyWithoutResidentNestedInput
     approvedBookings?: BookingUncheckedUpdateManyWithoutApprovedByNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutActorNestedInput
+    createdLocations?: LocationUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateManyInput = {
     id?: string
+    authUserId?: string | null
     email: string
     name: string
     phone?: string | null
-    role?: $Enums.UserRole
+    platformRole?: $Enums.PlatformRole
     passwordHash?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -8126,10 +11333,11 @@ export namespace Prisma {
 
   export type UserUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    authUserId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    platformRole?: EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8137,11 +11345,218 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    authUserId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    platformRole?: EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LocationCreateInput = {
+    id?: string
+    name: string
+    slug: string
+    addressLine1: string
+    addressLine2?: string | null
+    city: string
+    province: string
+    postalCode?: string | null
+    country?: string
+    timezone?: string
+    status?: $Enums.LocationStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy?: UserCreateNestedOneWithoutCreatedLocationsInput
+    memberships?: LocationMembershipCreateNestedManyWithoutLocationInput
+    amenities?: AmenityCreateNestedManyWithoutLocationInput
+    bookings?: BookingCreateNestedManyWithoutLocationInput
+    blackoutDates?: BlackoutDateCreateNestedManyWithoutLocationInput
+    auditLogs?: AuditLogCreateNestedManyWithoutLocationInput
+  }
+
+  export type LocationUncheckedCreateInput = {
+    id?: string
+    name: string
+    slug: string
+    addressLine1: string
+    addressLine2?: string | null
+    city: string
+    province: string
+    postalCode?: string | null
+    country?: string
+    timezone?: string
+    status?: $Enums.LocationStatus
+    createdById?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    memberships?: LocationMembershipUncheckedCreateNestedManyWithoutLocationInput
+    amenities?: AmenityUncheckedCreateNestedManyWithoutLocationInput
+    bookings?: BookingUncheckedCreateNestedManyWithoutLocationInput
+    blackoutDates?: BlackoutDateUncheckedCreateNestedManyWithoutLocationInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutLocationInput
+  }
+
+  export type LocationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    addressLine1?: StringFieldUpdateOperationsInput | string
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    status?: EnumLocationStatusFieldUpdateOperationsInput | $Enums.LocationStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneWithoutCreatedLocationsNestedInput
+    memberships?: LocationMembershipUpdateManyWithoutLocationNestedInput
+    amenities?: AmenityUpdateManyWithoutLocationNestedInput
+    bookings?: BookingUpdateManyWithoutLocationNestedInput
+    blackoutDates?: BlackoutDateUpdateManyWithoutLocationNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutLocationNestedInput
+  }
+
+  export type LocationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    addressLine1?: StringFieldUpdateOperationsInput | string
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    status?: EnumLocationStatusFieldUpdateOperationsInput | $Enums.LocationStatus
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: LocationMembershipUncheckedUpdateManyWithoutLocationNestedInput
+    amenities?: AmenityUncheckedUpdateManyWithoutLocationNestedInput
+    bookings?: BookingUncheckedUpdateManyWithoutLocationNestedInput
+    blackoutDates?: BlackoutDateUncheckedUpdateManyWithoutLocationNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutLocationNestedInput
+  }
+
+  export type LocationCreateManyInput = {
+    id?: string
+    name: string
+    slug: string
+    addressLine1: string
+    addressLine2?: string | null
+    city: string
+    province: string
+    postalCode?: string | null
+    country?: string
+    timezone?: string
+    status?: $Enums.LocationStatus
+    createdById?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LocationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    addressLine1?: StringFieldUpdateOperationsInput | string
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    status?: EnumLocationStatusFieldUpdateOperationsInput | $Enums.LocationStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LocationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    addressLine1?: StringFieldUpdateOperationsInput | string
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    status?: EnumLocationStatusFieldUpdateOperationsInput | $Enums.LocationStatus
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LocationMembershipCreateInput = {
+    id?: string
+    role: $Enums.LocationMembershipRole
+    isPrimary?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutMembershipsInput
+    location: LocationCreateNestedOneWithoutMembershipsInput
+  }
+
+  export type LocationMembershipUncheckedCreateInput = {
+    id?: string
+    userId: string
+    locationId: string
+    role: $Enums.LocationMembershipRole
+    isPrimary?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LocationMembershipUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: EnumLocationMembershipRoleFieldUpdateOperationsInput | $Enums.LocationMembershipRole
+    isPrimary?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutMembershipsNestedInput
+    location?: LocationUpdateOneRequiredWithoutMembershipsNestedInput
+  }
+
+  export type LocationMembershipUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    locationId?: StringFieldUpdateOperationsInput | string
+    role?: EnumLocationMembershipRoleFieldUpdateOperationsInput | $Enums.LocationMembershipRole
+    isPrimary?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LocationMembershipCreateManyInput = {
+    id?: string
+    userId: string
+    locationId: string
+    role: $Enums.LocationMembershipRole
+    isPrimary?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LocationMembershipUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: EnumLocationMembershipRoleFieldUpdateOperationsInput | $Enums.LocationMembershipRole
+    isPrimary?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LocationMembershipUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    locationId?: StringFieldUpdateOperationsInput | string
+    role?: EnumLocationMembershipRoleFieldUpdateOperationsInput | $Enums.LocationMembershipRole
+    isPrimary?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8153,7 +11568,7 @@ export namespace Prisma {
     type?: $Enums.AmenityType
     description: string
     imageUrl?: string | null
-    location: string
+    area: string
     capacity: number
     slotDurationMinutes: number
     openTime: string
@@ -8166,18 +11581,20 @@ export namespace Prisma {
     cancellationCutoffHours?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    location: LocationCreateNestedOneWithoutAmenitiesInput
     bookings?: BookingCreateNestedManyWithoutAmenityInput
     blackoutDates?: BlackoutDateCreateNestedManyWithoutAmenityInput
   }
 
   export type AmenityUncheckedCreateInput = {
     id?: string
+    locationId: string
     name: string
     slug: string
     type?: $Enums.AmenityType
     description: string
     imageUrl?: string | null
-    location: string
+    area: string
     capacity: number
     slotDurationMinutes: number
     openTime: string
@@ -8201,7 +11618,7 @@ export namespace Prisma {
     type?: EnumAmenityTypeFieldUpdateOperationsInput | $Enums.AmenityType
     description?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: StringFieldUpdateOperationsInput | string
+    area?: StringFieldUpdateOperationsInput | string
     capacity?: IntFieldUpdateOperationsInput | number
     slotDurationMinutes?: IntFieldUpdateOperationsInput | number
     openTime?: StringFieldUpdateOperationsInput | string
@@ -8214,18 +11631,20 @@ export namespace Prisma {
     cancellationCutoffHours?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: LocationUpdateOneRequiredWithoutAmenitiesNestedInput
     bookings?: BookingUpdateManyWithoutAmenityNestedInput
     blackoutDates?: BlackoutDateUpdateManyWithoutAmenityNestedInput
   }
 
   export type AmenityUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    locationId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     type?: EnumAmenityTypeFieldUpdateOperationsInput | $Enums.AmenityType
     description?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: StringFieldUpdateOperationsInput | string
+    area?: StringFieldUpdateOperationsInput | string
     capacity?: IntFieldUpdateOperationsInput | number
     slotDurationMinutes?: IntFieldUpdateOperationsInput | number
     openTime?: StringFieldUpdateOperationsInput | string
@@ -8244,12 +11663,13 @@ export namespace Prisma {
 
   export type AmenityCreateManyInput = {
     id?: string
+    locationId: string
     name: string
     slug: string
     type?: $Enums.AmenityType
     description: string
     imageUrl?: string | null
-    location: string
+    area: string
     capacity: number
     slotDurationMinutes: number
     openTime: string
@@ -8271,7 +11691,7 @@ export namespace Prisma {
     type?: EnumAmenityTypeFieldUpdateOperationsInput | $Enums.AmenityType
     description?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: StringFieldUpdateOperationsInput | string
+    area?: StringFieldUpdateOperationsInput | string
     capacity?: IntFieldUpdateOperationsInput | number
     slotDurationMinutes?: IntFieldUpdateOperationsInput | number
     openTime?: StringFieldUpdateOperationsInput | string
@@ -8288,12 +11708,13 @@ export namespace Prisma {
 
   export type AmenityUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    locationId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     type?: EnumAmenityTypeFieldUpdateOperationsInput | $Enums.AmenityType
     description?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: StringFieldUpdateOperationsInput | string
+    area?: StringFieldUpdateOperationsInput | string
     capacity?: IntFieldUpdateOperationsInput | number
     slotDurationMinutes?: IntFieldUpdateOperationsInput | number
     openTime?: StringFieldUpdateOperationsInput | string
@@ -8321,6 +11742,7 @@ export namespace Prisma {
     cancelledAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    location: LocationCreateNestedOneWithoutBookingsInput
     resident: UserCreateNestedOneWithoutBookingsInput
     amenity: AmenityCreateNestedOneWithoutBookingsInput
     approvedBy?: UserCreateNestedOneWithoutApprovedBookingsInput
@@ -8328,6 +11750,7 @@ export namespace Prisma {
 
   export type BookingUncheckedCreateInput = {
     id?: string
+    locationId: string
     residentId: string
     amenityId: string
     approvedById?: string | null
@@ -8357,6 +11780,7 @@ export namespace Prisma {
     cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: LocationUpdateOneRequiredWithoutBookingsNestedInput
     resident?: UserUpdateOneRequiredWithoutBookingsNestedInput
     amenity?: AmenityUpdateOneRequiredWithoutBookingsNestedInput
     approvedBy?: UserUpdateOneWithoutApprovedBookingsNestedInput
@@ -8364,6 +11788,7 @@ export namespace Prisma {
 
   export type BookingUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    locationId?: StringFieldUpdateOperationsInput | string
     residentId?: StringFieldUpdateOperationsInput | string
     amenityId?: StringFieldUpdateOperationsInput | string
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
@@ -8382,6 +11807,7 @@ export namespace Prisma {
 
   export type BookingCreateManyInput = {
     id?: string
+    locationId: string
     residentId: string
     amenityId: string
     approvedById?: string | null
@@ -8415,6 +11841,7 @@ export namespace Prisma {
 
   export type BookingUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    locationId?: StringFieldUpdateOperationsInput | string
     residentId?: StringFieldUpdateOperationsInput | string
     amenityId?: StringFieldUpdateOperationsInput | string
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
@@ -8439,11 +11866,13 @@ export namespace Prisma {
     allDay?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    location: LocationCreateNestedOneWithoutBlackoutDatesInput
     amenity: AmenityCreateNestedOneWithoutBlackoutDatesInput
   }
 
   export type BlackoutDateUncheckedCreateInput = {
     id?: string
+    locationId: string
     amenityId: string
     startAt: Date | string
     endAt: Date | string
@@ -8461,11 +11890,13 @@ export namespace Prisma {
     allDay?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: LocationUpdateOneRequiredWithoutBlackoutDatesNestedInput
     amenity?: AmenityUpdateOneRequiredWithoutBlackoutDatesNestedInput
   }
 
   export type BlackoutDateUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    locationId?: StringFieldUpdateOperationsInput | string
     amenityId?: StringFieldUpdateOperationsInput | string
     startAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8477,6 +11908,7 @@ export namespace Prisma {
 
   export type BlackoutDateCreateManyInput = {
     id?: string
+    locationId: string
     amenityId: string
     startAt: Date | string
     endAt: Date | string
@@ -8498,6 +11930,7 @@ export namespace Prisma {
 
   export type BlackoutDateUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    locationId?: StringFieldUpdateOperationsInput | string
     amenityId?: StringFieldUpdateOperationsInput | string
     startAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8515,11 +11948,13 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     actor?: UserCreateNestedOneWithoutAuditLogsInput
+    location?: LocationCreateNestedOneWithoutAuditLogsInput
   }
 
   export type AuditLogUncheckedCreateInput = {
     id?: string
     actorUserId?: string | null
+    locationId?: string | null
     action: string
     entityType: string
     entityId: string
@@ -8535,11 +11970,13 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     actor?: UserUpdateOneWithoutAuditLogsNestedInput
+    location?: LocationUpdateOneWithoutAuditLogsNestedInput
   }
 
   export type AuditLogUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     actorUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    locationId?: NullableStringFieldUpdateOperationsInput | string | null
     action?: StringFieldUpdateOperationsInput | string
     entityType?: StringFieldUpdateOperationsInput | string
     entityId?: StringFieldUpdateOperationsInput | string
@@ -8550,6 +11987,7 @@ export namespace Prisma {
   export type AuditLogCreateManyInput = {
     id?: string
     actorUserId?: string | null
+    locationId?: string | null
     action: string
     entityType: string
     entityId: string
@@ -8569,6 +12007,7 @@ export namespace Prisma {
   export type AuditLogUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     actorUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    locationId?: NullableStringFieldUpdateOperationsInput | string | null
     action?: StringFieldUpdateOperationsInput | string
     entityType?: StringFieldUpdateOperationsInput | string
     entityId?: StringFieldUpdateOperationsInput | string
@@ -8606,11 +12045,11 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type EnumUserRoleFilter<$PrismaModel = never> = {
-    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
+  export type EnumPlatformRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.PlatformRole | EnumPlatformRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.PlatformRole[] | ListEnumPlatformRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PlatformRole[] | ListEnumPlatformRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumPlatformRoleFilter<$PrismaModel> | $Enums.PlatformRole
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -8622,6 +12061,12 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type LocationMembershipListRelationFilter = {
+    every?: LocationMembershipWhereInput
+    some?: LocationMembershipWhereInput
+    none?: LocationMembershipWhereInput
   }
 
   export type BookingListRelationFilter = {
@@ -8636,9 +12081,19 @@ export namespace Prisma {
     none?: AuditLogWhereInput
   }
 
+  export type LocationListRelationFilter = {
+    every?: LocationWhereInput
+    some?: LocationWhereInput
+    none?: LocationWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
+  }
+
+  export type LocationMembershipOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type BookingOrderByRelationAggregateInput = {
@@ -8649,12 +12104,17 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type LocationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
+    authUserId?: SortOrder
     email?: SortOrder
     name?: SortOrder
     phone?: SortOrder
-    role?: SortOrder
+    platformRole?: SortOrder
     passwordHash?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -8662,10 +12122,11 @@ export namespace Prisma {
 
   export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
+    authUserId?: SortOrder
     email?: SortOrder
     name?: SortOrder
     phone?: SortOrder
-    role?: SortOrder
+    platformRole?: SortOrder
     passwordHash?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -8673,10 +12134,11 @@ export namespace Prisma {
 
   export type UserMinOrderByAggregateInput = {
     id?: SortOrder
+    authUserId?: SortOrder
     email?: SortOrder
     name?: SortOrder
     phone?: SortOrder
-    role?: SortOrder
+    platformRole?: SortOrder
     passwordHash?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -8718,14 +12180,14 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type EnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.UserRole
+  export type EnumPlatformRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PlatformRole | EnumPlatformRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.PlatformRole[] | ListEnumPlatformRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PlatformRole[] | ListEnumPlatformRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumPlatformRoleWithAggregatesFilter<$PrismaModel> | $Enums.PlatformRole
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumUserRoleFilter<$PrismaModel>
-    _max?: NestedEnumUserRoleFilter<$PrismaModel>
+    _min?: NestedEnumPlatformRoleFilter<$PrismaModel>
+    _max?: NestedEnumPlatformRoleFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -8740,6 +12202,174 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type EnumLocationStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.LocationStatus | EnumLocationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.LocationStatus[] | ListEnumLocationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LocationStatus[] | ListEnumLocationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumLocationStatusFilter<$PrismaModel> | $Enums.LocationStatus
+  }
+
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
+  export type AmenityListRelationFilter = {
+    every?: AmenityWhereInput
+    some?: AmenityWhereInput
+    none?: AmenityWhereInput
+  }
+
+  export type BlackoutDateListRelationFilter = {
+    every?: BlackoutDateWhereInput
+    some?: BlackoutDateWhereInput
+    none?: BlackoutDateWhereInput
+  }
+
+  export type AmenityOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type BlackoutDateOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type LocationCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    addressLine1?: SortOrder
+    addressLine2?: SortOrder
+    city?: SortOrder
+    province?: SortOrder
+    postalCode?: SortOrder
+    country?: SortOrder
+    timezone?: SortOrder
+    status?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LocationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    addressLine1?: SortOrder
+    addressLine2?: SortOrder
+    city?: SortOrder
+    province?: SortOrder
+    postalCode?: SortOrder
+    country?: SortOrder
+    timezone?: SortOrder
+    status?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LocationMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    addressLine1?: SortOrder
+    addressLine2?: SortOrder
+    city?: SortOrder
+    province?: SortOrder
+    postalCode?: SortOrder
+    country?: SortOrder
+    timezone?: SortOrder
+    status?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumLocationStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.LocationStatus | EnumLocationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.LocationStatus[] | ListEnumLocationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LocationStatus[] | ListEnumLocationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumLocationStatusWithAggregatesFilter<$PrismaModel> | $Enums.LocationStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumLocationStatusFilter<$PrismaModel>
+    _max?: NestedEnumLocationStatusFilter<$PrismaModel>
+  }
+
+  export type EnumLocationMembershipRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.LocationMembershipRole | EnumLocationMembershipRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.LocationMembershipRole[] | ListEnumLocationMembershipRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LocationMembershipRole[] | ListEnumLocationMembershipRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumLocationMembershipRoleFilter<$PrismaModel> | $Enums.LocationMembershipRole
+  }
+
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type LocationScalarRelationFilter = {
+    is?: LocationWhereInput
+    isNot?: LocationWhereInput
+  }
+
+  export type LocationMembershipUserIdLocationIdCompoundUniqueInput = {
+    userId: string
+    locationId: string
+  }
+
+  export type LocationMembershipCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    locationId?: SortOrder
+    role?: SortOrder
+    isPrimary?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LocationMembershipMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    locationId?: SortOrder
+    role?: SortOrder
+    isPrimary?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LocationMembershipMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    locationId?: SortOrder
+    role?: SortOrder
+    isPrimary?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumLocationMembershipRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.LocationMembershipRole | EnumLocationMembershipRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.LocationMembershipRole[] | ListEnumLocationMembershipRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LocationMembershipRole[] | ListEnumLocationMembershipRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumLocationMembershipRoleWithAggregatesFilter<$PrismaModel> | $Enums.LocationMembershipRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumLocationMembershipRoleFilter<$PrismaModel>
+    _max?: NestedEnumLocationMembershipRoleFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type EnumAmenityTypeFilter<$PrismaModel = never> = {
@@ -8767,11 +12397,6 @@ export namespace Prisma {
     not?: NestedEnumAmenityStatusFilter<$PrismaModel> | $Enums.AmenityStatus
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type IntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -8783,24 +12408,20 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type BlackoutDateListRelationFilter = {
-    every?: BlackoutDateWhereInput
-    some?: BlackoutDateWhereInput
-    none?: BlackoutDateWhereInput
-  }
-
-  export type BlackoutDateOrderByRelationAggregateInput = {
-    _count?: SortOrder
+  export type AmenityLocationIdSlugCompoundUniqueInput = {
+    locationId: string
+    slug: string
   }
 
   export type AmenityCountOrderByAggregateInput = {
     id?: SortOrder
+    locationId?: SortOrder
     name?: SortOrder
     slug?: SortOrder
     type?: SortOrder
     description?: SortOrder
     imageUrl?: SortOrder
-    location?: SortOrder
+    area?: SortOrder
     capacity?: SortOrder
     slotDurationMinutes?: SortOrder
     openTime?: SortOrder
@@ -8825,12 +12446,13 @@ export namespace Prisma {
 
   export type AmenityMaxOrderByAggregateInput = {
     id?: SortOrder
+    locationId?: SortOrder
     name?: SortOrder
     slug?: SortOrder
     type?: SortOrder
     description?: SortOrder
     imageUrl?: SortOrder
-    location?: SortOrder
+    area?: SortOrder
     capacity?: SortOrder
     slotDurationMinutes?: SortOrder
     openTime?: SortOrder
@@ -8847,12 +12469,13 @@ export namespace Prisma {
 
   export type AmenityMinOrderByAggregateInput = {
     id?: SortOrder
+    locationId?: SortOrder
     name?: SortOrder
     slug?: SortOrder
     type?: SortOrder
     description?: SortOrder
     imageUrl?: SortOrder
-    location?: SortOrder
+    area?: SortOrder
     capacity?: SortOrder
     slotDurationMinutes?: SortOrder
     openTime?: SortOrder
@@ -8911,14 +12534,6 @@ export namespace Prisma {
     _max?: NestedEnumAmenityStatusFilter<$PrismaModel>
   }
 
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -8953,23 +12568,14 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
-  }
-
   export type AmenityScalarRelationFilter = {
     is?: AmenityWhereInput
     isNot?: AmenityWhereInput
   }
 
-  export type UserNullableScalarRelationFilter = {
-    is?: UserWhereInput | null
-    isNot?: UserWhereInput | null
-  }
-
   export type BookingCountOrderByAggregateInput = {
     id?: SortOrder
+    locationId?: SortOrder
     residentId?: SortOrder
     amenityId?: SortOrder
     approvedById?: SortOrder
@@ -8992,6 +12598,7 @@ export namespace Prisma {
 
   export type BookingMaxOrderByAggregateInput = {
     id?: SortOrder
+    locationId?: SortOrder
     residentId?: SortOrder
     amenityId?: SortOrder
     approvedById?: SortOrder
@@ -9010,6 +12617,7 @@ export namespace Prisma {
 
   export type BookingMinOrderByAggregateInput = {
     id?: SortOrder
+    locationId?: SortOrder
     residentId?: SortOrder
     amenityId?: SortOrder
     approvedById?: SortOrder
@@ -9056,6 +12664,7 @@ export namespace Prisma {
 
   export type BlackoutDateCountOrderByAggregateInput = {
     id?: SortOrder
+    locationId?: SortOrder
     amenityId?: SortOrder
     startAt?: SortOrder
     endAt?: SortOrder
@@ -9067,6 +12676,7 @@ export namespace Prisma {
 
   export type BlackoutDateMaxOrderByAggregateInput = {
     id?: SortOrder
+    locationId?: SortOrder
     amenityId?: SortOrder
     startAt?: SortOrder
     endAt?: SortOrder
@@ -9078,6 +12688,7 @@ export namespace Prisma {
 
   export type BlackoutDateMinOrderByAggregateInput = {
     id?: SortOrder
+    locationId?: SortOrder
     amenityId?: SortOrder
     startAt?: SortOrder
     endAt?: SortOrder
@@ -9110,9 +12721,15 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type LocationNullableScalarRelationFilter = {
+    is?: LocationWhereInput | null
+    isNot?: LocationWhereInput | null
+  }
+
   export type AuditLogCountOrderByAggregateInput = {
     id?: SortOrder
     actorUserId?: SortOrder
+    locationId?: SortOrder
     action?: SortOrder
     entityType?: SortOrder
     entityId?: SortOrder
@@ -9123,6 +12740,7 @@ export namespace Prisma {
   export type AuditLogMaxOrderByAggregateInput = {
     id?: SortOrder
     actorUserId?: SortOrder
+    locationId?: SortOrder
     action?: SortOrder
     entityType?: SortOrder
     entityId?: SortOrder
@@ -9132,6 +12750,7 @@ export namespace Prisma {
   export type AuditLogMinOrderByAggregateInput = {
     id?: SortOrder
     actorUserId?: SortOrder
+    locationId?: SortOrder
     action?: SortOrder
     entityType?: SortOrder
     entityId?: SortOrder
@@ -9164,6 +12783,13 @@ export namespace Prisma {
     _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
+  export type LocationMembershipCreateNestedManyWithoutUserInput = {
+    create?: XOR<LocationMembershipCreateWithoutUserInput, LocationMembershipUncheckedCreateWithoutUserInput> | LocationMembershipCreateWithoutUserInput[] | LocationMembershipUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: LocationMembershipCreateOrConnectWithoutUserInput | LocationMembershipCreateOrConnectWithoutUserInput[]
+    createMany?: LocationMembershipCreateManyUserInputEnvelope
+    connect?: LocationMembershipWhereUniqueInput | LocationMembershipWhereUniqueInput[]
+  }
+
   export type BookingCreateNestedManyWithoutResidentInput = {
     create?: XOR<BookingCreateWithoutResidentInput, BookingUncheckedCreateWithoutResidentInput> | BookingCreateWithoutResidentInput[] | BookingUncheckedCreateWithoutResidentInput[]
     connectOrCreate?: BookingCreateOrConnectWithoutResidentInput | BookingCreateOrConnectWithoutResidentInput[]
@@ -9183,6 +12809,20 @@ export namespace Prisma {
     connectOrCreate?: AuditLogCreateOrConnectWithoutActorInput | AuditLogCreateOrConnectWithoutActorInput[]
     createMany?: AuditLogCreateManyActorInputEnvelope
     connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+  }
+
+  export type LocationCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<LocationCreateWithoutCreatedByInput, LocationUncheckedCreateWithoutCreatedByInput> | LocationCreateWithoutCreatedByInput[] | LocationUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: LocationCreateOrConnectWithoutCreatedByInput | LocationCreateOrConnectWithoutCreatedByInput[]
+    createMany?: LocationCreateManyCreatedByInputEnvelope
+    connect?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+  }
+
+  export type LocationMembershipUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<LocationMembershipCreateWithoutUserInput, LocationMembershipUncheckedCreateWithoutUserInput> | LocationMembershipCreateWithoutUserInput[] | LocationMembershipUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: LocationMembershipCreateOrConnectWithoutUserInput | LocationMembershipCreateOrConnectWithoutUserInput[]
+    createMany?: LocationMembershipCreateManyUserInputEnvelope
+    connect?: LocationMembershipWhereUniqueInput | LocationMembershipWhereUniqueInput[]
   }
 
   export type BookingUncheckedCreateNestedManyWithoutResidentInput = {
@@ -9206,6 +12846,13 @@ export namespace Prisma {
     connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
   }
 
+  export type LocationUncheckedCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<LocationCreateWithoutCreatedByInput, LocationUncheckedCreateWithoutCreatedByInput> | LocationCreateWithoutCreatedByInput[] | LocationUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: LocationCreateOrConnectWithoutCreatedByInput | LocationCreateOrConnectWithoutCreatedByInput[]
+    createMany?: LocationCreateManyCreatedByInputEnvelope
+    connect?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -9214,12 +12861,26 @@ export namespace Prisma {
     set?: string | null
   }
 
-  export type EnumUserRoleFieldUpdateOperationsInput = {
-    set?: $Enums.UserRole
+  export type EnumPlatformRoleFieldUpdateOperationsInput = {
+    set?: $Enums.PlatformRole
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type LocationMembershipUpdateManyWithoutUserNestedInput = {
+    create?: XOR<LocationMembershipCreateWithoutUserInput, LocationMembershipUncheckedCreateWithoutUserInput> | LocationMembershipCreateWithoutUserInput[] | LocationMembershipUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: LocationMembershipCreateOrConnectWithoutUserInput | LocationMembershipCreateOrConnectWithoutUserInput[]
+    upsert?: LocationMembershipUpsertWithWhereUniqueWithoutUserInput | LocationMembershipUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: LocationMembershipCreateManyUserInputEnvelope
+    set?: LocationMembershipWhereUniqueInput | LocationMembershipWhereUniqueInput[]
+    disconnect?: LocationMembershipWhereUniqueInput | LocationMembershipWhereUniqueInput[]
+    delete?: LocationMembershipWhereUniqueInput | LocationMembershipWhereUniqueInput[]
+    connect?: LocationMembershipWhereUniqueInput | LocationMembershipWhereUniqueInput[]
+    update?: LocationMembershipUpdateWithWhereUniqueWithoutUserInput | LocationMembershipUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: LocationMembershipUpdateManyWithWhereWithoutUserInput | LocationMembershipUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: LocationMembershipScalarWhereInput | LocationMembershipScalarWhereInput[]
   }
 
   export type BookingUpdateManyWithoutResidentNestedInput = {
@@ -9264,6 +12925,34 @@ export namespace Prisma {
     deleteMany?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
   }
 
+  export type LocationUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<LocationCreateWithoutCreatedByInput, LocationUncheckedCreateWithoutCreatedByInput> | LocationCreateWithoutCreatedByInput[] | LocationUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: LocationCreateOrConnectWithoutCreatedByInput | LocationCreateOrConnectWithoutCreatedByInput[]
+    upsert?: LocationUpsertWithWhereUniqueWithoutCreatedByInput | LocationUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: LocationCreateManyCreatedByInputEnvelope
+    set?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+    disconnect?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+    delete?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+    connect?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+    update?: LocationUpdateWithWhereUniqueWithoutCreatedByInput | LocationUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: LocationUpdateManyWithWhereWithoutCreatedByInput | LocationUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: LocationScalarWhereInput | LocationScalarWhereInput[]
+  }
+
+  export type LocationMembershipUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<LocationMembershipCreateWithoutUserInput, LocationMembershipUncheckedCreateWithoutUserInput> | LocationMembershipCreateWithoutUserInput[] | LocationMembershipUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: LocationMembershipCreateOrConnectWithoutUserInput | LocationMembershipCreateOrConnectWithoutUserInput[]
+    upsert?: LocationMembershipUpsertWithWhereUniqueWithoutUserInput | LocationMembershipUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: LocationMembershipCreateManyUserInputEnvelope
+    set?: LocationMembershipWhereUniqueInput | LocationMembershipWhereUniqueInput[]
+    disconnect?: LocationMembershipWhereUniqueInput | LocationMembershipWhereUniqueInput[]
+    delete?: LocationMembershipWhereUniqueInput | LocationMembershipWhereUniqueInput[]
+    connect?: LocationMembershipWhereUniqueInput | LocationMembershipWhereUniqueInput[]
+    update?: LocationMembershipUpdateWithWhereUniqueWithoutUserInput | LocationMembershipUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: LocationMembershipUpdateManyWithWhereWithoutUserInput | LocationMembershipUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: LocationMembershipScalarWhereInput | LocationMembershipScalarWhereInput[]
+  }
+
   export type BookingUncheckedUpdateManyWithoutResidentNestedInput = {
     create?: XOR<BookingCreateWithoutResidentInput, BookingUncheckedCreateWithoutResidentInput> | BookingCreateWithoutResidentInput[] | BookingUncheckedCreateWithoutResidentInput[]
     connectOrCreate?: BookingCreateOrConnectWithoutResidentInput | BookingCreateOrConnectWithoutResidentInput[]
@@ -9304,6 +12993,292 @@ export namespace Prisma {
     update?: AuditLogUpdateWithWhereUniqueWithoutActorInput | AuditLogUpdateWithWhereUniqueWithoutActorInput[]
     updateMany?: AuditLogUpdateManyWithWhereWithoutActorInput | AuditLogUpdateManyWithWhereWithoutActorInput[]
     deleteMany?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
+  }
+
+  export type LocationUncheckedUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<LocationCreateWithoutCreatedByInput, LocationUncheckedCreateWithoutCreatedByInput> | LocationCreateWithoutCreatedByInput[] | LocationUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: LocationCreateOrConnectWithoutCreatedByInput | LocationCreateOrConnectWithoutCreatedByInput[]
+    upsert?: LocationUpsertWithWhereUniqueWithoutCreatedByInput | LocationUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: LocationCreateManyCreatedByInputEnvelope
+    set?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+    disconnect?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+    delete?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+    connect?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+    update?: LocationUpdateWithWhereUniqueWithoutCreatedByInput | LocationUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: LocationUpdateManyWithWhereWithoutCreatedByInput | LocationUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: LocationScalarWhereInput | LocationScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutCreatedLocationsInput = {
+    create?: XOR<UserCreateWithoutCreatedLocationsInput, UserUncheckedCreateWithoutCreatedLocationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCreatedLocationsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type LocationMembershipCreateNestedManyWithoutLocationInput = {
+    create?: XOR<LocationMembershipCreateWithoutLocationInput, LocationMembershipUncheckedCreateWithoutLocationInput> | LocationMembershipCreateWithoutLocationInput[] | LocationMembershipUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: LocationMembershipCreateOrConnectWithoutLocationInput | LocationMembershipCreateOrConnectWithoutLocationInput[]
+    createMany?: LocationMembershipCreateManyLocationInputEnvelope
+    connect?: LocationMembershipWhereUniqueInput | LocationMembershipWhereUniqueInput[]
+  }
+
+  export type AmenityCreateNestedManyWithoutLocationInput = {
+    create?: XOR<AmenityCreateWithoutLocationInput, AmenityUncheckedCreateWithoutLocationInput> | AmenityCreateWithoutLocationInput[] | AmenityUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: AmenityCreateOrConnectWithoutLocationInput | AmenityCreateOrConnectWithoutLocationInput[]
+    createMany?: AmenityCreateManyLocationInputEnvelope
+    connect?: AmenityWhereUniqueInput | AmenityWhereUniqueInput[]
+  }
+
+  export type BookingCreateNestedManyWithoutLocationInput = {
+    create?: XOR<BookingCreateWithoutLocationInput, BookingUncheckedCreateWithoutLocationInput> | BookingCreateWithoutLocationInput[] | BookingUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: BookingCreateOrConnectWithoutLocationInput | BookingCreateOrConnectWithoutLocationInput[]
+    createMany?: BookingCreateManyLocationInputEnvelope
+    connect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+  }
+
+  export type BlackoutDateCreateNestedManyWithoutLocationInput = {
+    create?: XOR<BlackoutDateCreateWithoutLocationInput, BlackoutDateUncheckedCreateWithoutLocationInput> | BlackoutDateCreateWithoutLocationInput[] | BlackoutDateUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: BlackoutDateCreateOrConnectWithoutLocationInput | BlackoutDateCreateOrConnectWithoutLocationInput[]
+    createMany?: BlackoutDateCreateManyLocationInputEnvelope
+    connect?: BlackoutDateWhereUniqueInput | BlackoutDateWhereUniqueInput[]
+  }
+
+  export type AuditLogCreateNestedManyWithoutLocationInput = {
+    create?: XOR<AuditLogCreateWithoutLocationInput, AuditLogUncheckedCreateWithoutLocationInput> | AuditLogCreateWithoutLocationInput[] | AuditLogUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: AuditLogCreateOrConnectWithoutLocationInput | AuditLogCreateOrConnectWithoutLocationInput[]
+    createMany?: AuditLogCreateManyLocationInputEnvelope
+    connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+  }
+
+  export type LocationMembershipUncheckedCreateNestedManyWithoutLocationInput = {
+    create?: XOR<LocationMembershipCreateWithoutLocationInput, LocationMembershipUncheckedCreateWithoutLocationInput> | LocationMembershipCreateWithoutLocationInput[] | LocationMembershipUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: LocationMembershipCreateOrConnectWithoutLocationInput | LocationMembershipCreateOrConnectWithoutLocationInput[]
+    createMany?: LocationMembershipCreateManyLocationInputEnvelope
+    connect?: LocationMembershipWhereUniqueInput | LocationMembershipWhereUniqueInput[]
+  }
+
+  export type AmenityUncheckedCreateNestedManyWithoutLocationInput = {
+    create?: XOR<AmenityCreateWithoutLocationInput, AmenityUncheckedCreateWithoutLocationInput> | AmenityCreateWithoutLocationInput[] | AmenityUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: AmenityCreateOrConnectWithoutLocationInput | AmenityCreateOrConnectWithoutLocationInput[]
+    createMany?: AmenityCreateManyLocationInputEnvelope
+    connect?: AmenityWhereUniqueInput | AmenityWhereUniqueInput[]
+  }
+
+  export type BookingUncheckedCreateNestedManyWithoutLocationInput = {
+    create?: XOR<BookingCreateWithoutLocationInput, BookingUncheckedCreateWithoutLocationInput> | BookingCreateWithoutLocationInput[] | BookingUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: BookingCreateOrConnectWithoutLocationInput | BookingCreateOrConnectWithoutLocationInput[]
+    createMany?: BookingCreateManyLocationInputEnvelope
+    connect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+  }
+
+  export type BlackoutDateUncheckedCreateNestedManyWithoutLocationInput = {
+    create?: XOR<BlackoutDateCreateWithoutLocationInput, BlackoutDateUncheckedCreateWithoutLocationInput> | BlackoutDateCreateWithoutLocationInput[] | BlackoutDateUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: BlackoutDateCreateOrConnectWithoutLocationInput | BlackoutDateCreateOrConnectWithoutLocationInput[]
+    createMany?: BlackoutDateCreateManyLocationInputEnvelope
+    connect?: BlackoutDateWhereUniqueInput | BlackoutDateWhereUniqueInput[]
+  }
+
+  export type AuditLogUncheckedCreateNestedManyWithoutLocationInput = {
+    create?: XOR<AuditLogCreateWithoutLocationInput, AuditLogUncheckedCreateWithoutLocationInput> | AuditLogCreateWithoutLocationInput[] | AuditLogUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: AuditLogCreateOrConnectWithoutLocationInput | AuditLogCreateOrConnectWithoutLocationInput[]
+    createMany?: AuditLogCreateManyLocationInputEnvelope
+    connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+  }
+
+  export type EnumLocationStatusFieldUpdateOperationsInput = {
+    set?: $Enums.LocationStatus
+  }
+
+  export type UserUpdateOneWithoutCreatedLocationsNestedInput = {
+    create?: XOR<UserCreateWithoutCreatedLocationsInput, UserUncheckedCreateWithoutCreatedLocationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCreatedLocationsInput
+    upsert?: UserUpsertWithoutCreatedLocationsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCreatedLocationsInput, UserUpdateWithoutCreatedLocationsInput>, UserUncheckedUpdateWithoutCreatedLocationsInput>
+  }
+
+  export type LocationMembershipUpdateManyWithoutLocationNestedInput = {
+    create?: XOR<LocationMembershipCreateWithoutLocationInput, LocationMembershipUncheckedCreateWithoutLocationInput> | LocationMembershipCreateWithoutLocationInput[] | LocationMembershipUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: LocationMembershipCreateOrConnectWithoutLocationInput | LocationMembershipCreateOrConnectWithoutLocationInput[]
+    upsert?: LocationMembershipUpsertWithWhereUniqueWithoutLocationInput | LocationMembershipUpsertWithWhereUniqueWithoutLocationInput[]
+    createMany?: LocationMembershipCreateManyLocationInputEnvelope
+    set?: LocationMembershipWhereUniqueInput | LocationMembershipWhereUniqueInput[]
+    disconnect?: LocationMembershipWhereUniqueInput | LocationMembershipWhereUniqueInput[]
+    delete?: LocationMembershipWhereUniqueInput | LocationMembershipWhereUniqueInput[]
+    connect?: LocationMembershipWhereUniqueInput | LocationMembershipWhereUniqueInput[]
+    update?: LocationMembershipUpdateWithWhereUniqueWithoutLocationInput | LocationMembershipUpdateWithWhereUniqueWithoutLocationInput[]
+    updateMany?: LocationMembershipUpdateManyWithWhereWithoutLocationInput | LocationMembershipUpdateManyWithWhereWithoutLocationInput[]
+    deleteMany?: LocationMembershipScalarWhereInput | LocationMembershipScalarWhereInput[]
+  }
+
+  export type AmenityUpdateManyWithoutLocationNestedInput = {
+    create?: XOR<AmenityCreateWithoutLocationInput, AmenityUncheckedCreateWithoutLocationInput> | AmenityCreateWithoutLocationInput[] | AmenityUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: AmenityCreateOrConnectWithoutLocationInput | AmenityCreateOrConnectWithoutLocationInput[]
+    upsert?: AmenityUpsertWithWhereUniqueWithoutLocationInput | AmenityUpsertWithWhereUniqueWithoutLocationInput[]
+    createMany?: AmenityCreateManyLocationInputEnvelope
+    set?: AmenityWhereUniqueInput | AmenityWhereUniqueInput[]
+    disconnect?: AmenityWhereUniqueInput | AmenityWhereUniqueInput[]
+    delete?: AmenityWhereUniqueInput | AmenityWhereUniqueInput[]
+    connect?: AmenityWhereUniqueInput | AmenityWhereUniqueInput[]
+    update?: AmenityUpdateWithWhereUniqueWithoutLocationInput | AmenityUpdateWithWhereUniqueWithoutLocationInput[]
+    updateMany?: AmenityUpdateManyWithWhereWithoutLocationInput | AmenityUpdateManyWithWhereWithoutLocationInput[]
+    deleteMany?: AmenityScalarWhereInput | AmenityScalarWhereInput[]
+  }
+
+  export type BookingUpdateManyWithoutLocationNestedInput = {
+    create?: XOR<BookingCreateWithoutLocationInput, BookingUncheckedCreateWithoutLocationInput> | BookingCreateWithoutLocationInput[] | BookingUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: BookingCreateOrConnectWithoutLocationInput | BookingCreateOrConnectWithoutLocationInput[]
+    upsert?: BookingUpsertWithWhereUniqueWithoutLocationInput | BookingUpsertWithWhereUniqueWithoutLocationInput[]
+    createMany?: BookingCreateManyLocationInputEnvelope
+    set?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+    disconnect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+    delete?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+    connect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+    update?: BookingUpdateWithWhereUniqueWithoutLocationInput | BookingUpdateWithWhereUniqueWithoutLocationInput[]
+    updateMany?: BookingUpdateManyWithWhereWithoutLocationInput | BookingUpdateManyWithWhereWithoutLocationInput[]
+    deleteMany?: BookingScalarWhereInput | BookingScalarWhereInput[]
+  }
+
+  export type BlackoutDateUpdateManyWithoutLocationNestedInput = {
+    create?: XOR<BlackoutDateCreateWithoutLocationInput, BlackoutDateUncheckedCreateWithoutLocationInput> | BlackoutDateCreateWithoutLocationInput[] | BlackoutDateUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: BlackoutDateCreateOrConnectWithoutLocationInput | BlackoutDateCreateOrConnectWithoutLocationInput[]
+    upsert?: BlackoutDateUpsertWithWhereUniqueWithoutLocationInput | BlackoutDateUpsertWithWhereUniqueWithoutLocationInput[]
+    createMany?: BlackoutDateCreateManyLocationInputEnvelope
+    set?: BlackoutDateWhereUniqueInput | BlackoutDateWhereUniqueInput[]
+    disconnect?: BlackoutDateWhereUniqueInput | BlackoutDateWhereUniqueInput[]
+    delete?: BlackoutDateWhereUniqueInput | BlackoutDateWhereUniqueInput[]
+    connect?: BlackoutDateWhereUniqueInput | BlackoutDateWhereUniqueInput[]
+    update?: BlackoutDateUpdateWithWhereUniqueWithoutLocationInput | BlackoutDateUpdateWithWhereUniqueWithoutLocationInput[]
+    updateMany?: BlackoutDateUpdateManyWithWhereWithoutLocationInput | BlackoutDateUpdateManyWithWhereWithoutLocationInput[]
+    deleteMany?: BlackoutDateScalarWhereInput | BlackoutDateScalarWhereInput[]
+  }
+
+  export type AuditLogUpdateManyWithoutLocationNestedInput = {
+    create?: XOR<AuditLogCreateWithoutLocationInput, AuditLogUncheckedCreateWithoutLocationInput> | AuditLogCreateWithoutLocationInput[] | AuditLogUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: AuditLogCreateOrConnectWithoutLocationInput | AuditLogCreateOrConnectWithoutLocationInput[]
+    upsert?: AuditLogUpsertWithWhereUniqueWithoutLocationInput | AuditLogUpsertWithWhereUniqueWithoutLocationInput[]
+    createMany?: AuditLogCreateManyLocationInputEnvelope
+    set?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    disconnect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    delete?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    update?: AuditLogUpdateWithWhereUniqueWithoutLocationInput | AuditLogUpdateWithWhereUniqueWithoutLocationInput[]
+    updateMany?: AuditLogUpdateManyWithWhereWithoutLocationInput | AuditLogUpdateManyWithWhereWithoutLocationInput[]
+    deleteMany?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
+  }
+
+  export type LocationMembershipUncheckedUpdateManyWithoutLocationNestedInput = {
+    create?: XOR<LocationMembershipCreateWithoutLocationInput, LocationMembershipUncheckedCreateWithoutLocationInput> | LocationMembershipCreateWithoutLocationInput[] | LocationMembershipUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: LocationMembershipCreateOrConnectWithoutLocationInput | LocationMembershipCreateOrConnectWithoutLocationInput[]
+    upsert?: LocationMembershipUpsertWithWhereUniqueWithoutLocationInput | LocationMembershipUpsertWithWhereUniqueWithoutLocationInput[]
+    createMany?: LocationMembershipCreateManyLocationInputEnvelope
+    set?: LocationMembershipWhereUniqueInput | LocationMembershipWhereUniqueInput[]
+    disconnect?: LocationMembershipWhereUniqueInput | LocationMembershipWhereUniqueInput[]
+    delete?: LocationMembershipWhereUniqueInput | LocationMembershipWhereUniqueInput[]
+    connect?: LocationMembershipWhereUniqueInput | LocationMembershipWhereUniqueInput[]
+    update?: LocationMembershipUpdateWithWhereUniqueWithoutLocationInput | LocationMembershipUpdateWithWhereUniqueWithoutLocationInput[]
+    updateMany?: LocationMembershipUpdateManyWithWhereWithoutLocationInput | LocationMembershipUpdateManyWithWhereWithoutLocationInput[]
+    deleteMany?: LocationMembershipScalarWhereInput | LocationMembershipScalarWhereInput[]
+  }
+
+  export type AmenityUncheckedUpdateManyWithoutLocationNestedInput = {
+    create?: XOR<AmenityCreateWithoutLocationInput, AmenityUncheckedCreateWithoutLocationInput> | AmenityCreateWithoutLocationInput[] | AmenityUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: AmenityCreateOrConnectWithoutLocationInput | AmenityCreateOrConnectWithoutLocationInput[]
+    upsert?: AmenityUpsertWithWhereUniqueWithoutLocationInput | AmenityUpsertWithWhereUniqueWithoutLocationInput[]
+    createMany?: AmenityCreateManyLocationInputEnvelope
+    set?: AmenityWhereUniqueInput | AmenityWhereUniqueInput[]
+    disconnect?: AmenityWhereUniqueInput | AmenityWhereUniqueInput[]
+    delete?: AmenityWhereUniqueInput | AmenityWhereUniqueInput[]
+    connect?: AmenityWhereUniqueInput | AmenityWhereUniqueInput[]
+    update?: AmenityUpdateWithWhereUniqueWithoutLocationInput | AmenityUpdateWithWhereUniqueWithoutLocationInput[]
+    updateMany?: AmenityUpdateManyWithWhereWithoutLocationInput | AmenityUpdateManyWithWhereWithoutLocationInput[]
+    deleteMany?: AmenityScalarWhereInput | AmenityScalarWhereInput[]
+  }
+
+  export type BookingUncheckedUpdateManyWithoutLocationNestedInput = {
+    create?: XOR<BookingCreateWithoutLocationInput, BookingUncheckedCreateWithoutLocationInput> | BookingCreateWithoutLocationInput[] | BookingUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: BookingCreateOrConnectWithoutLocationInput | BookingCreateOrConnectWithoutLocationInput[]
+    upsert?: BookingUpsertWithWhereUniqueWithoutLocationInput | BookingUpsertWithWhereUniqueWithoutLocationInput[]
+    createMany?: BookingCreateManyLocationInputEnvelope
+    set?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+    disconnect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+    delete?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+    connect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+    update?: BookingUpdateWithWhereUniqueWithoutLocationInput | BookingUpdateWithWhereUniqueWithoutLocationInput[]
+    updateMany?: BookingUpdateManyWithWhereWithoutLocationInput | BookingUpdateManyWithWhereWithoutLocationInput[]
+    deleteMany?: BookingScalarWhereInput | BookingScalarWhereInput[]
+  }
+
+  export type BlackoutDateUncheckedUpdateManyWithoutLocationNestedInput = {
+    create?: XOR<BlackoutDateCreateWithoutLocationInput, BlackoutDateUncheckedCreateWithoutLocationInput> | BlackoutDateCreateWithoutLocationInput[] | BlackoutDateUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: BlackoutDateCreateOrConnectWithoutLocationInput | BlackoutDateCreateOrConnectWithoutLocationInput[]
+    upsert?: BlackoutDateUpsertWithWhereUniqueWithoutLocationInput | BlackoutDateUpsertWithWhereUniqueWithoutLocationInput[]
+    createMany?: BlackoutDateCreateManyLocationInputEnvelope
+    set?: BlackoutDateWhereUniqueInput | BlackoutDateWhereUniqueInput[]
+    disconnect?: BlackoutDateWhereUniqueInput | BlackoutDateWhereUniqueInput[]
+    delete?: BlackoutDateWhereUniqueInput | BlackoutDateWhereUniqueInput[]
+    connect?: BlackoutDateWhereUniqueInput | BlackoutDateWhereUniqueInput[]
+    update?: BlackoutDateUpdateWithWhereUniqueWithoutLocationInput | BlackoutDateUpdateWithWhereUniqueWithoutLocationInput[]
+    updateMany?: BlackoutDateUpdateManyWithWhereWithoutLocationInput | BlackoutDateUpdateManyWithWhereWithoutLocationInput[]
+    deleteMany?: BlackoutDateScalarWhereInput | BlackoutDateScalarWhereInput[]
+  }
+
+  export type AuditLogUncheckedUpdateManyWithoutLocationNestedInput = {
+    create?: XOR<AuditLogCreateWithoutLocationInput, AuditLogUncheckedCreateWithoutLocationInput> | AuditLogCreateWithoutLocationInput[] | AuditLogUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: AuditLogCreateOrConnectWithoutLocationInput | AuditLogCreateOrConnectWithoutLocationInput[]
+    upsert?: AuditLogUpsertWithWhereUniqueWithoutLocationInput | AuditLogUpsertWithWhereUniqueWithoutLocationInput[]
+    createMany?: AuditLogCreateManyLocationInputEnvelope
+    set?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    disconnect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    delete?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+    update?: AuditLogUpdateWithWhereUniqueWithoutLocationInput | AuditLogUpdateWithWhereUniqueWithoutLocationInput[]
+    updateMany?: AuditLogUpdateManyWithWhereWithoutLocationInput | AuditLogUpdateManyWithWhereWithoutLocationInput[]
+    deleteMany?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutMembershipsInput = {
+    create?: XOR<UserCreateWithoutMembershipsInput, UserUncheckedCreateWithoutMembershipsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutMembershipsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type LocationCreateNestedOneWithoutMembershipsInput = {
+    create?: XOR<LocationCreateWithoutMembershipsInput, LocationUncheckedCreateWithoutMembershipsInput>
+    connectOrCreate?: LocationCreateOrConnectWithoutMembershipsInput
+    connect?: LocationWhereUniqueInput
+  }
+
+  export type EnumLocationMembershipRoleFieldUpdateOperationsInput = {
+    set?: $Enums.LocationMembershipRole
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type UserUpdateOneRequiredWithoutMembershipsNestedInput = {
+    create?: XOR<UserCreateWithoutMembershipsInput, UserUncheckedCreateWithoutMembershipsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutMembershipsInput
+    upsert?: UserUpsertWithoutMembershipsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutMembershipsInput, UserUpdateWithoutMembershipsInput>, UserUncheckedUpdateWithoutMembershipsInput>
+  }
+
+  export type LocationUpdateOneRequiredWithoutMembershipsNestedInput = {
+    create?: XOR<LocationCreateWithoutMembershipsInput, LocationUncheckedCreateWithoutMembershipsInput>
+    connectOrCreate?: LocationCreateOrConnectWithoutMembershipsInput
+    upsert?: LocationUpsertWithoutMembershipsInput
+    connect?: LocationWhereUniqueInput
+    update?: XOR<XOR<LocationUpdateToOneWithWhereWithoutMembershipsInput, LocationUpdateWithoutMembershipsInput>, LocationUncheckedUpdateWithoutMembershipsInput>
+  }
+
+  export type LocationCreateNestedOneWithoutAmenitiesInput = {
+    create?: XOR<LocationCreateWithoutAmenitiesInput, LocationUncheckedCreateWithoutAmenitiesInput>
+    connectOrCreate?: LocationCreateOrConnectWithoutAmenitiesInput
+    connect?: LocationWhereUniqueInput
   }
 
   export type BookingCreateNestedManyWithoutAmenityInput = {
@@ -9350,16 +13325,20 @@ export namespace Prisma {
     set?: $Enums.AmenityStatus
   }
 
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
-  }
-
   export type NullableIntFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type LocationUpdateOneRequiredWithoutAmenitiesNestedInput = {
+    create?: XOR<LocationCreateWithoutAmenitiesInput, LocationUncheckedCreateWithoutAmenitiesInput>
+    connectOrCreate?: LocationCreateOrConnectWithoutAmenitiesInput
+    upsert?: LocationUpsertWithoutAmenitiesInput
+    connect?: LocationWhereUniqueInput
+    update?: XOR<XOR<LocationUpdateToOneWithWhereWithoutAmenitiesInput, LocationUpdateWithoutAmenitiesInput>, LocationUncheckedUpdateWithoutAmenitiesInput>
   }
 
   export type BookingUpdateManyWithoutAmenityNestedInput = {
@@ -9418,6 +13397,12 @@ export namespace Prisma {
     deleteMany?: BlackoutDateScalarWhereInput | BlackoutDateScalarWhereInput[]
   }
 
+  export type LocationCreateNestedOneWithoutBookingsInput = {
+    create?: XOR<LocationCreateWithoutBookingsInput, LocationUncheckedCreateWithoutBookingsInput>
+    connectOrCreate?: LocationCreateOrConnectWithoutBookingsInput
+    connect?: LocationWhereUniqueInput
+  }
+
   export type UserCreateNestedOneWithoutBookingsInput = {
     create?: XOR<UserCreateWithoutBookingsInput, UserUncheckedCreateWithoutBookingsInput>
     connectOrCreate?: UserCreateOrConnectWithoutBookingsInput
@@ -9442,6 +13427,14 @@ export namespace Prisma {
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
+  }
+
+  export type LocationUpdateOneRequiredWithoutBookingsNestedInput = {
+    create?: XOR<LocationCreateWithoutBookingsInput, LocationUncheckedCreateWithoutBookingsInput>
+    connectOrCreate?: LocationCreateOrConnectWithoutBookingsInput
+    upsert?: LocationUpsertWithoutBookingsInput
+    connect?: LocationWhereUniqueInput
+    update?: XOR<XOR<LocationUpdateToOneWithWhereWithoutBookingsInput, LocationUpdateWithoutBookingsInput>, LocationUncheckedUpdateWithoutBookingsInput>
   }
 
   export type UserUpdateOneRequiredWithoutBookingsNestedInput = {
@@ -9470,10 +13463,24 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutApprovedBookingsInput, UserUpdateWithoutApprovedBookingsInput>, UserUncheckedUpdateWithoutApprovedBookingsInput>
   }
 
+  export type LocationCreateNestedOneWithoutBlackoutDatesInput = {
+    create?: XOR<LocationCreateWithoutBlackoutDatesInput, LocationUncheckedCreateWithoutBlackoutDatesInput>
+    connectOrCreate?: LocationCreateOrConnectWithoutBlackoutDatesInput
+    connect?: LocationWhereUniqueInput
+  }
+
   export type AmenityCreateNestedOneWithoutBlackoutDatesInput = {
     create?: XOR<AmenityCreateWithoutBlackoutDatesInput, AmenityUncheckedCreateWithoutBlackoutDatesInput>
     connectOrCreate?: AmenityCreateOrConnectWithoutBlackoutDatesInput
     connect?: AmenityWhereUniqueInput
+  }
+
+  export type LocationUpdateOneRequiredWithoutBlackoutDatesNestedInput = {
+    create?: XOR<LocationCreateWithoutBlackoutDatesInput, LocationUncheckedCreateWithoutBlackoutDatesInput>
+    connectOrCreate?: LocationCreateOrConnectWithoutBlackoutDatesInput
+    upsert?: LocationUpsertWithoutBlackoutDatesInput
+    connect?: LocationWhereUniqueInput
+    update?: XOR<XOR<LocationUpdateToOneWithWhereWithoutBlackoutDatesInput, LocationUpdateWithoutBlackoutDatesInput>, LocationUncheckedUpdateWithoutBlackoutDatesInput>
   }
 
   export type AmenityUpdateOneRequiredWithoutBlackoutDatesNestedInput = {
@@ -9490,6 +13497,12 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type LocationCreateNestedOneWithoutAuditLogsInput = {
+    create?: XOR<LocationCreateWithoutAuditLogsInput, LocationUncheckedCreateWithoutAuditLogsInput>
+    connectOrCreate?: LocationCreateOrConnectWithoutAuditLogsInput
+    connect?: LocationWhereUniqueInput
+  }
+
   export type UserUpdateOneWithoutAuditLogsNestedInput = {
     create?: XOR<UserCreateWithoutAuditLogsInput, UserUncheckedCreateWithoutAuditLogsInput>
     connectOrCreate?: UserCreateOrConnectWithoutAuditLogsInput
@@ -9498,6 +13511,16 @@ export namespace Prisma {
     delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAuditLogsInput, UserUpdateWithoutAuditLogsInput>, UserUncheckedUpdateWithoutAuditLogsInput>
+  }
+
+  export type LocationUpdateOneWithoutAuditLogsNestedInput = {
+    create?: XOR<LocationCreateWithoutAuditLogsInput, LocationUncheckedCreateWithoutAuditLogsInput>
+    connectOrCreate?: LocationCreateOrConnectWithoutAuditLogsInput
+    upsert?: LocationUpsertWithoutAuditLogsInput
+    disconnect?: LocationWhereInput | boolean
+    delete?: LocationWhereInput | boolean
+    connect?: LocationWhereUniqueInput
+    update?: XOR<XOR<LocationUpdateToOneWithWhereWithoutAuditLogsInput, LocationUpdateWithoutAuditLogsInput>, LocationUncheckedUpdateWithoutAuditLogsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -9528,11 +13551,11 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedEnumUserRoleFilter<$PrismaModel = never> = {
-    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
+  export type NestedEnumPlatformRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.PlatformRole | EnumPlatformRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.PlatformRole[] | ListEnumPlatformRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PlatformRole[] | ListEnumPlatformRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumPlatformRoleFilter<$PrismaModel> | $Enums.PlatformRole
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -9602,14 +13625,14 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedEnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.UserRole
+  export type NestedEnumPlatformRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PlatformRole | EnumPlatformRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.PlatformRole[] | ListEnumPlatformRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PlatformRole[] | ListEnumPlatformRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumPlatformRoleWithAggregatesFilter<$PrismaModel> | $Enums.PlatformRole
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumUserRoleFilter<$PrismaModel>
-    _max?: NestedEnumUserRoleFilter<$PrismaModel>
+    _min?: NestedEnumPlatformRoleFilter<$PrismaModel>
+    _max?: NestedEnumPlatformRoleFilter<$PrismaModel>
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -9626,6 +13649,53 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedEnumLocationStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.LocationStatus | EnumLocationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.LocationStatus[] | ListEnumLocationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LocationStatus[] | ListEnumLocationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumLocationStatusFilter<$PrismaModel> | $Enums.LocationStatus
+  }
+
+  export type NestedEnumLocationStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.LocationStatus | EnumLocationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.LocationStatus[] | ListEnumLocationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LocationStatus[] | ListEnumLocationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumLocationStatusWithAggregatesFilter<$PrismaModel> | $Enums.LocationStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumLocationStatusFilter<$PrismaModel>
+    _max?: NestedEnumLocationStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumLocationMembershipRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.LocationMembershipRole | EnumLocationMembershipRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.LocationMembershipRole[] | ListEnumLocationMembershipRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LocationMembershipRole[] | ListEnumLocationMembershipRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumLocationMembershipRoleFilter<$PrismaModel> | $Enums.LocationMembershipRole
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedEnumLocationMembershipRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.LocationMembershipRole | EnumLocationMembershipRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.LocationMembershipRole[] | ListEnumLocationMembershipRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.LocationMembershipRole[] | ListEnumLocationMembershipRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumLocationMembershipRoleWithAggregatesFilter<$PrismaModel> | $Enums.LocationMembershipRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumLocationMembershipRoleFilter<$PrismaModel>
+    _max?: NestedEnumLocationMembershipRoleFilter<$PrismaModel>
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type NestedEnumAmenityTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.AmenityType | EnumAmenityTypeFieldRefInput<$PrismaModel>
     in?: $Enums.AmenityType[] | ListEnumAmenityTypeFieldRefInput<$PrismaModel>
@@ -9638,11 +13708,6 @@ export namespace Prisma {
     in?: $Enums.AmenityStatus[] | ListEnumAmenityStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.AmenityStatus[] | ListEnumAmenityStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumAmenityStatusFilter<$PrismaModel> | $Enums.AmenityStatus
-  }
-
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type NestedEnumAmenityTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -9690,14 +13755,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumAmenityStatusFilter<$PrismaModel>
     _max?: NestedEnumAmenityStatusFilter<$PrismaModel>
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -9792,6 +13849,34 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type LocationMembershipCreateWithoutUserInput = {
+    id?: string
+    role: $Enums.LocationMembershipRole
+    isPrimary?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    location: LocationCreateNestedOneWithoutMembershipsInput
+  }
+
+  export type LocationMembershipUncheckedCreateWithoutUserInput = {
+    id?: string
+    locationId: string
+    role: $Enums.LocationMembershipRole
+    isPrimary?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LocationMembershipCreateOrConnectWithoutUserInput = {
+    where: LocationMembershipWhereUniqueInput
+    create: XOR<LocationMembershipCreateWithoutUserInput, LocationMembershipUncheckedCreateWithoutUserInput>
+  }
+
+  export type LocationMembershipCreateManyUserInputEnvelope = {
+    data: LocationMembershipCreateManyUserInput | LocationMembershipCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type BookingCreateWithoutResidentInput = {
     id?: string
     startAt: Date | string
@@ -9805,12 +13890,14 @@ export namespace Prisma {
     cancelledAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    location: LocationCreateNestedOneWithoutBookingsInput
     amenity: AmenityCreateNestedOneWithoutBookingsInput
     approvedBy?: UserCreateNestedOneWithoutApprovedBookingsInput
   }
 
   export type BookingUncheckedCreateWithoutResidentInput = {
     id?: string
+    locationId: string
     amenityId: string
     approvedById?: string | null
     startAt: Date | string
@@ -9849,12 +13936,14 @@ export namespace Prisma {
     cancelledAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    location: LocationCreateNestedOneWithoutBookingsInput
     resident: UserCreateNestedOneWithoutBookingsInput
     amenity: AmenityCreateNestedOneWithoutBookingsInput
   }
 
   export type BookingUncheckedCreateWithoutApprovedByInput = {
     id?: string
+    locationId: string
     residentId: string
     amenityId: string
     startAt: Date | string
@@ -9887,10 +13976,12 @@ export namespace Prisma {
     entityId: string
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    location?: LocationCreateNestedOneWithoutAuditLogsInput
   }
 
   export type AuditLogUncheckedCreateWithoutActorInput = {
     id?: string
+    locationId?: string | null
     action: string
     entityType: string
     entityId: string
@@ -9906,6 +13997,87 @@ export namespace Prisma {
   export type AuditLogCreateManyActorInputEnvelope = {
     data: AuditLogCreateManyActorInput | AuditLogCreateManyActorInput[]
     skipDuplicates?: boolean
+  }
+
+  export type LocationCreateWithoutCreatedByInput = {
+    id?: string
+    name: string
+    slug: string
+    addressLine1: string
+    addressLine2?: string | null
+    city: string
+    province: string
+    postalCode?: string | null
+    country?: string
+    timezone?: string
+    status?: $Enums.LocationStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    memberships?: LocationMembershipCreateNestedManyWithoutLocationInput
+    amenities?: AmenityCreateNestedManyWithoutLocationInput
+    bookings?: BookingCreateNestedManyWithoutLocationInput
+    blackoutDates?: BlackoutDateCreateNestedManyWithoutLocationInput
+    auditLogs?: AuditLogCreateNestedManyWithoutLocationInput
+  }
+
+  export type LocationUncheckedCreateWithoutCreatedByInput = {
+    id?: string
+    name: string
+    slug: string
+    addressLine1: string
+    addressLine2?: string | null
+    city: string
+    province: string
+    postalCode?: string | null
+    country?: string
+    timezone?: string
+    status?: $Enums.LocationStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    memberships?: LocationMembershipUncheckedCreateNestedManyWithoutLocationInput
+    amenities?: AmenityUncheckedCreateNestedManyWithoutLocationInput
+    bookings?: BookingUncheckedCreateNestedManyWithoutLocationInput
+    blackoutDates?: BlackoutDateUncheckedCreateNestedManyWithoutLocationInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutLocationInput
+  }
+
+  export type LocationCreateOrConnectWithoutCreatedByInput = {
+    where: LocationWhereUniqueInput
+    create: XOR<LocationCreateWithoutCreatedByInput, LocationUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type LocationCreateManyCreatedByInputEnvelope = {
+    data: LocationCreateManyCreatedByInput | LocationCreateManyCreatedByInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LocationMembershipUpsertWithWhereUniqueWithoutUserInput = {
+    where: LocationMembershipWhereUniqueInput
+    update: XOR<LocationMembershipUpdateWithoutUserInput, LocationMembershipUncheckedUpdateWithoutUserInput>
+    create: XOR<LocationMembershipCreateWithoutUserInput, LocationMembershipUncheckedCreateWithoutUserInput>
+  }
+
+  export type LocationMembershipUpdateWithWhereUniqueWithoutUserInput = {
+    where: LocationMembershipWhereUniqueInput
+    data: XOR<LocationMembershipUpdateWithoutUserInput, LocationMembershipUncheckedUpdateWithoutUserInput>
+  }
+
+  export type LocationMembershipUpdateManyWithWhereWithoutUserInput = {
+    where: LocationMembershipScalarWhereInput
+    data: XOR<LocationMembershipUpdateManyMutationInput, LocationMembershipUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type LocationMembershipScalarWhereInput = {
+    AND?: LocationMembershipScalarWhereInput | LocationMembershipScalarWhereInput[]
+    OR?: LocationMembershipScalarWhereInput[]
+    NOT?: LocationMembershipScalarWhereInput | LocationMembershipScalarWhereInput[]
+    id?: StringFilter<"LocationMembership"> | string
+    userId?: StringFilter<"LocationMembership"> | string
+    locationId?: StringFilter<"LocationMembership"> | string
+    role?: EnumLocationMembershipRoleFilter<"LocationMembership"> | $Enums.LocationMembershipRole
+    isPrimary?: BoolFilter<"LocationMembership"> | boolean
+    createdAt?: DateTimeFilter<"LocationMembership"> | Date | string
+    updatedAt?: DateTimeFilter<"LocationMembership"> | Date | string
   }
 
   export type BookingUpsertWithWhereUniqueWithoutResidentInput = {
@@ -9929,6 +14101,7 @@ export namespace Prisma {
     OR?: BookingScalarWhereInput[]
     NOT?: BookingScalarWhereInput | BookingScalarWhereInput[]
     id?: StringFilter<"Booking"> | string
+    locationId?: StringFilter<"Booking"> | string
     residentId?: StringFilter<"Booking"> | string
     amenityId?: StringFilter<"Booking"> | string
     approvedById?: StringNullableFilter<"Booking"> | string | null
@@ -9983,11 +14156,670 @@ export namespace Prisma {
     NOT?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
     id?: StringFilter<"AuditLog"> | string
     actorUserId?: StringNullableFilter<"AuditLog"> | string | null
+    locationId?: StringNullableFilter<"AuditLog"> | string | null
     action?: StringFilter<"AuditLog"> | string
     entityType?: StringFilter<"AuditLog"> | string
     entityId?: StringFilter<"AuditLog"> | string
     metadata?: JsonNullableFilter<"AuditLog">
     createdAt?: DateTimeFilter<"AuditLog"> | Date | string
+  }
+
+  export type LocationUpsertWithWhereUniqueWithoutCreatedByInput = {
+    where: LocationWhereUniqueInput
+    update: XOR<LocationUpdateWithoutCreatedByInput, LocationUncheckedUpdateWithoutCreatedByInput>
+    create: XOR<LocationCreateWithoutCreatedByInput, LocationUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type LocationUpdateWithWhereUniqueWithoutCreatedByInput = {
+    where: LocationWhereUniqueInput
+    data: XOR<LocationUpdateWithoutCreatedByInput, LocationUncheckedUpdateWithoutCreatedByInput>
+  }
+
+  export type LocationUpdateManyWithWhereWithoutCreatedByInput = {
+    where: LocationScalarWhereInput
+    data: XOR<LocationUpdateManyMutationInput, LocationUncheckedUpdateManyWithoutCreatedByInput>
+  }
+
+  export type LocationScalarWhereInput = {
+    AND?: LocationScalarWhereInput | LocationScalarWhereInput[]
+    OR?: LocationScalarWhereInput[]
+    NOT?: LocationScalarWhereInput | LocationScalarWhereInput[]
+    id?: StringFilter<"Location"> | string
+    name?: StringFilter<"Location"> | string
+    slug?: StringFilter<"Location"> | string
+    addressLine1?: StringFilter<"Location"> | string
+    addressLine2?: StringNullableFilter<"Location"> | string | null
+    city?: StringFilter<"Location"> | string
+    province?: StringFilter<"Location"> | string
+    postalCode?: StringNullableFilter<"Location"> | string | null
+    country?: StringFilter<"Location"> | string
+    timezone?: StringFilter<"Location"> | string
+    status?: EnumLocationStatusFilter<"Location"> | $Enums.LocationStatus
+    createdById?: StringNullableFilter<"Location"> | string | null
+    createdAt?: DateTimeFilter<"Location"> | Date | string
+    updatedAt?: DateTimeFilter<"Location"> | Date | string
+  }
+
+  export type UserCreateWithoutCreatedLocationsInput = {
+    id?: string
+    authUserId?: string | null
+    email: string
+    name: string
+    phone?: string | null
+    platformRole?: $Enums.PlatformRole
+    passwordHash?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    memberships?: LocationMembershipCreateNestedManyWithoutUserInput
+    bookings?: BookingCreateNestedManyWithoutResidentInput
+    approvedBookings?: BookingCreateNestedManyWithoutApprovedByInput
+    auditLogs?: AuditLogCreateNestedManyWithoutActorInput
+  }
+
+  export type UserUncheckedCreateWithoutCreatedLocationsInput = {
+    id?: string
+    authUserId?: string | null
+    email: string
+    name: string
+    phone?: string | null
+    platformRole?: $Enums.PlatformRole
+    passwordHash?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    memberships?: LocationMembershipUncheckedCreateNestedManyWithoutUserInput
+    bookings?: BookingUncheckedCreateNestedManyWithoutResidentInput
+    approvedBookings?: BookingUncheckedCreateNestedManyWithoutApprovedByInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutActorInput
+  }
+
+  export type UserCreateOrConnectWithoutCreatedLocationsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCreatedLocationsInput, UserUncheckedCreateWithoutCreatedLocationsInput>
+  }
+
+  export type LocationMembershipCreateWithoutLocationInput = {
+    id?: string
+    role: $Enums.LocationMembershipRole
+    isPrimary?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutMembershipsInput
+  }
+
+  export type LocationMembershipUncheckedCreateWithoutLocationInput = {
+    id?: string
+    userId: string
+    role: $Enums.LocationMembershipRole
+    isPrimary?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LocationMembershipCreateOrConnectWithoutLocationInput = {
+    where: LocationMembershipWhereUniqueInput
+    create: XOR<LocationMembershipCreateWithoutLocationInput, LocationMembershipUncheckedCreateWithoutLocationInput>
+  }
+
+  export type LocationMembershipCreateManyLocationInputEnvelope = {
+    data: LocationMembershipCreateManyLocationInput | LocationMembershipCreateManyLocationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AmenityCreateWithoutLocationInput = {
+    id?: string
+    name: string
+    slug: string
+    type?: $Enums.AmenityType
+    description: string
+    imageUrl?: string | null
+    area: string
+    capacity: number
+    slotDurationMinutes: number
+    openTime: string
+    closeTime: string
+    rules?: string | null
+    status?: $Enums.AmenityStatus
+    requiresApproval?: boolean
+    maxAdvanceDays?: number | null
+    maxBookingDurationMinutes?: number | null
+    cancellationCutoffHours?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bookings?: BookingCreateNestedManyWithoutAmenityInput
+    blackoutDates?: BlackoutDateCreateNestedManyWithoutAmenityInput
+  }
+
+  export type AmenityUncheckedCreateWithoutLocationInput = {
+    id?: string
+    name: string
+    slug: string
+    type?: $Enums.AmenityType
+    description: string
+    imageUrl?: string | null
+    area: string
+    capacity: number
+    slotDurationMinutes: number
+    openTime: string
+    closeTime: string
+    rules?: string | null
+    status?: $Enums.AmenityStatus
+    requiresApproval?: boolean
+    maxAdvanceDays?: number | null
+    maxBookingDurationMinutes?: number | null
+    cancellationCutoffHours?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bookings?: BookingUncheckedCreateNestedManyWithoutAmenityInput
+    blackoutDates?: BlackoutDateUncheckedCreateNestedManyWithoutAmenityInput
+  }
+
+  export type AmenityCreateOrConnectWithoutLocationInput = {
+    where: AmenityWhereUniqueInput
+    create: XOR<AmenityCreateWithoutLocationInput, AmenityUncheckedCreateWithoutLocationInput>
+  }
+
+  export type AmenityCreateManyLocationInputEnvelope = {
+    data: AmenityCreateManyLocationInput | AmenityCreateManyLocationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type BookingCreateWithoutLocationInput = {
+    id?: string
+    startAt: Date | string
+    endAt: Date | string
+    guestCount?: number | null
+    status?: $Enums.BookingStatus
+    notes?: string | null
+    eventTitle?: string | null
+    eventDetails?: string | null
+    approvedAt?: Date | string | null
+    cancelledAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    resident: UserCreateNestedOneWithoutBookingsInput
+    amenity: AmenityCreateNestedOneWithoutBookingsInput
+    approvedBy?: UserCreateNestedOneWithoutApprovedBookingsInput
+  }
+
+  export type BookingUncheckedCreateWithoutLocationInput = {
+    id?: string
+    residentId: string
+    amenityId: string
+    approvedById?: string | null
+    startAt: Date | string
+    endAt: Date | string
+    guestCount?: number | null
+    status?: $Enums.BookingStatus
+    notes?: string | null
+    eventTitle?: string | null
+    eventDetails?: string | null
+    approvedAt?: Date | string | null
+    cancelledAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookingCreateOrConnectWithoutLocationInput = {
+    where: BookingWhereUniqueInput
+    create: XOR<BookingCreateWithoutLocationInput, BookingUncheckedCreateWithoutLocationInput>
+  }
+
+  export type BookingCreateManyLocationInputEnvelope = {
+    data: BookingCreateManyLocationInput | BookingCreateManyLocationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type BlackoutDateCreateWithoutLocationInput = {
+    id?: string
+    startAt: Date | string
+    endAt: Date | string
+    reason: string
+    allDay?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    amenity: AmenityCreateNestedOneWithoutBlackoutDatesInput
+  }
+
+  export type BlackoutDateUncheckedCreateWithoutLocationInput = {
+    id?: string
+    amenityId: string
+    startAt: Date | string
+    endAt: Date | string
+    reason: string
+    allDay?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BlackoutDateCreateOrConnectWithoutLocationInput = {
+    where: BlackoutDateWhereUniqueInput
+    create: XOR<BlackoutDateCreateWithoutLocationInput, BlackoutDateUncheckedCreateWithoutLocationInput>
+  }
+
+  export type BlackoutDateCreateManyLocationInputEnvelope = {
+    data: BlackoutDateCreateManyLocationInput | BlackoutDateCreateManyLocationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AuditLogCreateWithoutLocationInput = {
+    id?: string
+    action: string
+    entityType: string
+    entityId: string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    actor?: UserCreateNestedOneWithoutAuditLogsInput
+  }
+
+  export type AuditLogUncheckedCreateWithoutLocationInput = {
+    id?: string
+    actorUserId?: string | null
+    action: string
+    entityType: string
+    entityId: string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type AuditLogCreateOrConnectWithoutLocationInput = {
+    where: AuditLogWhereUniqueInput
+    create: XOR<AuditLogCreateWithoutLocationInput, AuditLogUncheckedCreateWithoutLocationInput>
+  }
+
+  export type AuditLogCreateManyLocationInputEnvelope = {
+    data: AuditLogCreateManyLocationInput | AuditLogCreateManyLocationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutCreatedLocationsInput = {
+    update: XOR<UserUpdateWithoutCreatedLocationsInput, UserUncheckedUpdateWithoutCreatedLocationsInput>
+    create: XOR<UserCreateWithoutCreatedLocationsInput, UserUncheckedCreateWithoutCreatedLocationsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCreatedLocationsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCreatedLocationsInput, UserUncheckedUpdateWithoutCreatedLocationsInput>
+  }
+
+  export type UserUpdateWithoutCreatedLocationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    authUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    platformRole?: EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: LocationMembershipUpdateManyWithoutUserNestedInput
+    bookings?: BookingUpdateManyWithoutResidentNestedInput
+    approvedBookings?: BookingUpdateManyWithoutApprovedByNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutActorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCreatedLocationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    authUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    platformRole?: EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: LocationMembershipUncheckedUpdateManyWithoutUserNestedInput
+    bookings?: BookingUncheckedUpdateManyWithoutResidentNestedInput
+    approvedBookings?: BookingUncheckedUpdateManyWithoutApprovedByNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  }
+
+  export type LocationMembershipUpsertWithWhereUniqueWithoutLocationInput = {
+    where: LocationMembershipWhereUniqueInput
+    update: XOR<LocationMembershipUpdateWithoutLocationInput, LocationMembershipUncheckedUpdateWithoutLocationInput>
+    create: XOR<LocationMembershipCreateWithoutLocationInput, LocationMembershipUncheckedCreateWithoutLocationInput>
+  }
+
+  export type LocationMembershipUpdateWithWhereUniqueWithoutLocationInput = {
+    where: LocationMembershipWhereUniqueInput
+    data: XOR<LocationMembershipUpdateWithoutLocationInput, LocationMembershipUncheckedUpdateWithoutLocationInput>
+  }
+
+  export type LocationMembershipUpdateManyWithWhereWithoutLocationInput = {
+    where: LocationMembershipScalarWhereInput
+    data: XOR<LocationMembershipUpdateManyMutationInput, LocationMembershipUncheckedUpdateManyWithoutLocationInput>
+  }
+
+  export type AmenityUpsertWithWhereUniqueWithoutLocationInput = {
+    where: AmenityWhereUniqueInput
+    update: XOR<AmenityUpdateWithoutLocationInput, AmenityUncheckedUpdateWithoutLocationInput>
+    create: XOR<AmenityCreateWithoutLocationInput, AmenityUncheckedCreateWithoutLocationInput>
+  }
+
+  export type AmenityUpdateWithWhereUniqueWithoutLocationInput = {
+    where: AmenityWhereUniqueInput
+    data: XOR<AmenityUpdateWithoutLocationInput, AmenityUncheckedUpdateWithoutLocationInput>
+  }
+
+  export type AmenityUpdateManyWithWhereWithoutLocationInput = {
+    where: AmenityScalarWhereInput
+    data: XOR<AmenityUpdateManyMutationInput, AmenityUncheckedUpdateManyWithoutLocationInput>
+  }
+
+  export type AmenityScalarWhereInput = {
+    AND?: AmenityScalarWhereInput | AmenityScalarWhereInput[]
+    OR?: AmenityScalarWhereInput[]
+    NOT?: AmenityScalarWhereInput | AmenityScalarWhereInput[]
+    id?: StringFilter<"Amenity"> | string
+    locationId?: StringFilter<"Amenity"> | string
+    name?: StringFilter<"Amenity"> | string
+    slug?: StringFilter<"Amenity"> | string
+    type?: EnumAmenityTypeFilter<"Amenity"> | $Enums.AmenityType
+    description?: StringFilter<"Amenity"> | string
+    imageUrl?: StringNullableFilter<"Amenity"> | string | null
+    area?: StringFilter<"Amenity"> | string
+    capacity?: IntFilter<"Amenity"> | number
+    slotDurationMinutes?: IntFilter<"Amenity"> | number
+    openTime?: StringFilter<"Amenity"> | string
+    closeTime?: StringFilter<"Amenity"> | string
+    rules?: StringNullableFilter<"Amenity"> | string | null
+    status?: EnumAmenityStatusFilter<"Amenity"> | $Enums.AmenityStatus
+    requiresApproval?: BoolFilter<"Amenity"> | boolean
+    maxAdvanceDays?: IntNullableFilter<"Amenity"> | number | null
+    maxBookingDurationMinutes?: IntNullableFilter<"Amenity"> | number | null
+    cancellationCutoffHours?: IntNullableFilter<"Amenity"> | number | null
+    createdAt?: DateTimeFilter<"Amenity"> | Date | string
+    updatedAt?: DateTimeFilter<"Amenity"> | Date | string
+  }
+
+  export type BookingUpsertWithWhereUniqueWithoutLocationInput = {
+    where: BookingWhereUniqueInput
+    update: XOR<BookingUpdateWithoutLocationInput, BookingUncheckedUpdateWithoutLocationInput>
+    create: XOR<BookingCreateWithoutLocationInput, BookingUncheckedCreateWithoutLocationInput>
+  }
+
+  export type BookingUpdateWithWhereUniqueWithoutLocationInput = {
+    where: BookingWhereUniqueInput
+    data: XOR<BookingUpdateWithoutLocationInput, BookingUncheckedUpdateWithoutLocationInput>
+  }
+
+  export type BookingUpdateManyWithWhereWithoutLocationInput = {
+    where: BookingScalarWhereInput
+    data: XOR<BookingUpdateManyMutationInput, BookingUncheckedUpdateManyWithoutLocationInput>
+  }
+
+  export type BlackoutDateUpsertWithWhereUniqueWithoutLocationInput = {
+    where: BlackoutDateWhereUniqueInput
+    update: XOR<BlackoutDateUpdateWithoutLocationInput, BlackoutDateUncheckedUpdateWithoutLocationInput>
+    create: XOR<BlackoutDateCreateWithoutLocationInput, BlackoutDateUncheckedCreateWithoutLocationInput>
+  }
+
+  export type BlackoutDateUpdateWithWhereUniqueWithoutLocationInput = {
+    where: BlackoutDateWhereUniqueInput
+    data: XOR<BlackoutDateUpdateWithoutLocationInput, BlackoutDateUncheckedUpdateWithoutLocationInput>
+  }
+
+  export type BlackoutDateUpdateManyWithWhereWithoutLocationInput = {
+    where: BlackoutDateScalarWhereInput
+    data: XOR<BlackoutDateUpdateManyMutationInput, BlackoutDateUncheckedUpdateManyWithoutLocationInput>
+  }
+
+  export type BlackoutDateScalarWhereInput = {
+    AND?: BlackoutDateScalarWhereInput | BlackoutDateScalarWhereInput[]
+    OR?: BlackoutDateScalarWhereInput[]
+    NOT?: BlackoutDateScalarWhereInput | BlackoutDateScalarWhereInput[]
+    id?: StringFilter<"BlackoutDate"> | string
+    locationId?: StringFilter<"BlackoutDate"> | string
+    amenityId?: StringFilter<"BlackoutDate"> | string
+    startAt?: DateTimeFilter<"BlackoutDate"> | Date | string
+    endAt?: DateTimeFilter<"BlackoutDate"> | Date | string
+    reason?: StringFilter<"BlackoutDate"> | string
+    allDay?: BoolFilter<"BlackoutDate"> | boolean
+    createdAt?: DateTimeFilter<"BlackoutDate"> | Date | string
+    updatedAt?: DateTimeFilter<"BlackoutDate"> | Date | string
+  }
+
+  export type AuditLogUpsertWithWhereUniqueWithoutLocationInput = {
+    where: AuditLogWhereUniqueInput
+    update: XOR<AuditLogUpdateWithoutLocationInput, AuditLogUncheckedUpdateWithoutLocationInput>
+    create: XOR<AuditLogCreateWithoutLocationInput, AuditLogUncheckedCreateWithoutLocationInput>
+  }
+
+  export type AuditLogUpdateWithWhereUniqueWithoutLocationInput = {
+    where: AuditLogWhereUniqueInput
+    data: XOR<AuditLogUpdateWithoutLocationInput, AuditLogUncheckedUpdateWithoutLocationInput>
+  }
+
+  export type AuditLogUpdateManyWithWhereWithoutLocationInput = {
+    where: AuditLogScalarWhereInput
+    data: XOR<AuditLogUpdateManyMutationInput, AuditLogUncheckedUpdateManyWithoutLocationInput>
+  }
+
+  export type UserCreateWithoutMembershipsInput = {
+    id?: string
+    authUserId?: string | null
+    email: string
+    name: string
+    phone?: string | null
+    platformRole?: $Enums.PlatformRole
+    passwordHash?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bookings?: BookingCreateNestedManyWithoutResidentInput
+    approvedBookings?: BookingCreateNestedManyWithoutApprovedByInput
+    auditLogs?: AuditLogCreateNestedManyWithoutActorInput
+    createdLocations?: LocationCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserUncheckedCreateWithoutMembershipsInput = {
+    id?: string
+    authUserId?: string | null
+    email: string
+    name: string
+    phone?: string | null
+    platformRole?: $Enums.PlatformRole
+    passwordHash?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bookings?: BookingUncheckedCreateNestedManyWithoutResidentInput
+    approvedBookings?: BookingUncheckedCreateNestedManyWithoutApprovedByInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutActorInput
+    createdLocations?: LocationUncheckedCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserCreateOrConnectWithoutMembershipsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutMembershipsInput, UserUncheckedCreateWithoutMembershipsInput>
+  }
+
+  export type LocationCreateWithoutMembershipsInput = {
+    id?: string
+    name: string
+    slug: string
+    addressLine1: string
+    addressLine2?: string | null
+    city: string
+    province: string
+    postalCode?: string | null
+    country?: string
+    timezone?: string
+    status?: $Enums.LocationStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy?: UserCreateNestedOneWithoutCreatedLocationsInput
+    amenities?: AmenityCreateNestedManyWithoutLocationInput
+    bookings?: BookingCreateNestedManyWithoutLocationInput
+    blackoutDates?: BlackoutDateCreateNestedManyWithoutLocationInput
+    auditLogs?: AuditLogCreateNestedManyWithoutLocationInput
+  }
+
+  export type LocationUncheckedCreateWithoutMembershipsInput = {
+    id?: string
+    name: string
+    slug: string
+    addressLine1: string
+    addressLine2?: string | null
+    city: string
+    province: string
+    postalCode?: string | null
+    country?: string
+    timezone?: string
+    status?: $Enums.LocationStatus
+    createdById?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    amenities?: AmenityUncheckedCreateNestedManyWithoutLocationInput
+    bookings?: BookingUncheckedCreateNestedManyWithoutLocationInput
+    blackoutDates?: BlackoutDateUncheckedCreateNestedManyWithoutLocationInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutLocationInput
+  }
+
+  export type LocationCreateOrConnectWithoutMembershipsInput = {
+    where: LocationWhereUniqueInput
+    create: XOR<LocationCreateWithoutMembershipsInput, LocationUncheckedCreateWithoutMembershipsInput>
+  }
+
+  export type UserUpsertWithoutMembershipsInput = {
+    update: XOR<UserUpdateWithoutMembershipsInput, UserUncheckedUpdateWithoutMembershipsInput>
+    create: XOR<UserCreateWithoutMembershipsInput, UserUncheckedCreateWithoutMembershipsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutMembershipsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutMembershipsInput, UserUncheckedUpdateWithoutMembershipsInput>
+  }
+
+  export type UserUpdateWithoutMembershipsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    authUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    platformRole?: EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookings?: BookingUpdateManyWithoutResidentNestedInput
+    approvedBookings?: BookingUpdateManyWithoutApprovedByNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutActorNestedInput
+    createdLocations?: LocationUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutMembershipsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    authUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    platformRole?: EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookings?: BookingUncheckedUpdateManyWithoutResidentNestedInput
+    approvedBookings?: BookingUncheckedUpdateManyWithoutApprovedByNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutActorNestedInput
+    createdLocations?: LocationUncheckedUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type LocationUpsertWithoutMembershipsInput = {
+    update: XOR<LocationUpdateWithoutMembershipsInput, LocationUncheckedUpdateWithoutMembershipsInput>
+    create: XOR<LocationCreateWithoutMembershipsInput, LocationUncheckedCreateWithoutMembershipsInput>
+    where?: LocationWhereInput
+  }
+
+  export type LocationUpdateToOneWithWhereWithoutMembershipsInput = {
+    where?: LocationWhereInput
+    data: XOR<LocationUpdateWithoutMembershipsInput, LocationUncheckedUpdateWithoutMembershipsInput>
+  }
+
+  export type LocationUpdateWithoutMembershipsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    addressLine1?: StringFieldUpdateOperationsInput | string
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    status?: EnumLocationStatusFieldUpdateOperationsInput | $Enums.LocationStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneWithoutCreatedLocationsNestedInput
+    amenities?: AmenityUpdateManyWithoutLocationNestedInput
+    bookings?: BookingUpdateManyWithoutLocationNestedInput
+    blackoutDates?: BlackoutDateUpdateManyWithoutLocationNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutLocationNestedInput
+  }
+
+  export type LocationUncheckedUpdateWithoutMembershipsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    addressLine1?: StringFieldUpdateOperationsInput | string
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    status?: EnumLocationStatusFieldUpdateOperationsInput | $Enums.LocationStatus
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    amenities?: AmenityUncheckedUpdateManyWithoutLocationNestedInput
+    bookings?: BookingUncheckedUpdateManyWithoutLocationNestedInput
+    blackoutDates?: BlackoutDateUncheckedUpdateManyWithoutLocationNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutLocationNestedInput
+  }
+
+  export type LocationCreateWithoutAmenitiesInput = {
+    id?: string
+    name: string
+    slug: string
+    addressLine1: string
+    addressLine2?: string | null
+    city: string
+    province: string
+    postalCode?: string | null
+    country?: string
+    timezone?: string
+    status?: $Enums.LocationStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy?: UserCreateNestedOneWithoutCreatedLocationsInput
+    memberships?: LocationMembershipCreateNestedManyWithoutLocationInput
+    bookings?: BookingCreateNestedManyWithoutLocationInput
+    blackoutDates?: BlackoutDateCreateNestedManyWithoutLocationInput
+    auditLogs?: AuditLogCreateNestedManyWithoutLocationInput
+  }
+
+  export type LocationUncheckedCreateWithoutAmenitiesInput = {
+    id?: string
+    name: string
+    slug: string
+    addressLine1: string
+    addressLine2?: string | null
+    city: string
+    province: string
+    postalCode?: string | null
+    country?: string
+    timezone?: string
+    status?: $Enums.LocationStatus
+    createdById?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    memberships?: LocationMembershipUncheckedCreateNestedManyWithoutLocationInput
+    bookings?: BookingUncheckedCreateNestedManyWithoutLocationInput
+    blackoutDates?: BlackoutDateUncheckedCreateNestedManyWithoutLocationInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutLocationInput
+  }
+
+  export type LocationCreateOrConnectWithoutAmenitiesInput = {
+    where: LocationWhereUniqueInput
+    create: XOR<LocationCreateWithoutAmenitiesInput, LocationUncheckedCreateWithoutAmenitiesInput>
   }
 
   export type BookingCreateWithoutAmenityInput = {
@@ -10003,12 +14835,14 @@ export namespace Prisma {
     cancelledAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    location: LocationCreateNestedOneWithoutBookingsInput
     resident: UserCreateNestedOneWithoutBookingsInput
     approvedBy?: UserCreateNestedOneWithoutApprovedBookingsInput
   }
 
   export type BookingUncheckedCreateWithoutAmenityInput = {
     id?: string
+    locationId: string
     residentId: string
     approvedById?: string | null
     startAt: Date | string
@@ -10042,10 +14876,12 @@ export namespace Prisma {
     allDay?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    location: LocationCreateNestedOneWithoutBlackoutDatesInput
   }
 
   export type BlackoutDateUncheckedCreateWithoutAmenityInput = {
     id?: string
+    locationId: string
     startAt: Date | string
     endAt: Date | string
     reason: string
@@ -10062,6 +14898,59 @@ export namespace Prisma {
   export type BlackoutDateCreateManyAmenityInputEnvelope = {
     data: BlackoutDateCreateManyAmenityInput | BlackoutDateCreateManyAmenityInput[]
     skipDuplicates?: boolean
+  }
+
+  export type LocationUpsertWithoutAmenitiesInput = {
+    update: XOR<LocationUpdateWithoutAmenitiesInput, LocationUncheckedUpdateWithoutAmenitiesInput>
+    create: XOR<LocationCreateWithoutAmenitiesInput, LocationUncheckedCreateWithoutAmenitiesInput>
+    where?: LocationWhereInput
+  }
+
+  export type LocationUpdateToOneWithWhereWithoutAmenitiesInput = {
+    where?: LocationWhereInput
+    data: XOR<LocationUpdateWithoutAmenitiesInput, LocationUncheckedUpdateWithoutAmenitiesInput>
+  }
+
+  export type LocationUpdateWithoutAmenitiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    addressLine1?: StringFieldUpdateOperationsInput | string
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    status?: EnumLocationStatusFieldUpdateOperationsInput | $Enums.LocationStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneWithoutCreatedLocationsNestedInput
+    memberships?: LocationMembershipUpdateManyWithoutLocationNestedInput
+    bookings?: BookingUpdateManyWithoutLocationNestedInput
+    blackoutDates?: BlackoutDateUpdateManyWithoutLocationNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutLocationNestedInput
+  }
+
+  export type LocationUncheckedUpdateWithoutAmenitiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    addressLine1?: StringFieldUpdateOperationsInput | string
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    status?: EnumLocationStatusFieldUpdateOperationsInput | $Enums.LocationStatus
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: LocationMembershipUncheckedUpdateManyWithoutLocationNestedInput
+    bookings?: BookingUncheckedUpdateManyWithoutLocationNestedInput
+    blackoutDates?: BlackoutDateUncheckedUpdateManyWithoutLocationNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutLocationNestedInput
   }
 
   export type BookingUpsertWithWhereUniqueWithoutAmenityInput = {
@@ -10096,44 +14985,83 @@ export namespace Prisma {
     data: XOR<BlackoutDateUpdateManyMutationInput, BlackoutDateUncheckedUpdateManyWithoutAmenityInput>
   }
 
-  export type BlackoutDateScalarWhereInput = {
-    AND?: BlackoutDateScalarWhereInput | BlackoutDateScalarWhereInput[]
-    OR?: BlackoutDateScalarWhereInput[]
-    NOT?: BlackoutDateScalarWhereInput | BlackoutDateScalarWhereInput[]
-    id?: StringFilter<"BlackoutDate"> | string
-    amenityId?: StringFilter<"BlackoutDate"> | string
-    startAt?: DateTimeFilter<"BlackoutDate"> | Date | string
-    endAt?: DateTimeFilter<"BlackoutDate"> | Date | string
-    reason?: StringFilter<"BlackoutDate"> | string
-    allDay?: BoolFilter<"BlackoutDate"> | boolean
-    createdAt?: DateTimeFilter<"BlackoutDate"> | Date | string
-    updatedAt?: DateTimeFilter<"BlackoutDate"> | Date | string
+  export type LocationCreateWithoutBookingsInput = {
+    id?: string
+    name: string
+    slug: string
+    addressLine1: string
+    addressLine2?: string | null
+    city: string
+    province: string
+    postalCode?: string | null
+    country?: string
+    timezone?: string
+    status?: $Enums.LocationStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy?: UserCreateNestedOneWithoutCreatedLocationsInput
+    memberships?: LocationMembershipCreateNestedManyWithoutLocationInput
+    amenities?: AmenityCreateNestedManyWithoutLocationInput
+    blackoutDates?: BlackoutDateCreateNestedManyWithoutLocationInput
+    auditLogs?: AuditLogCreateNestedManyWithoutLocationInput
+  }
+
+  export type LocationUncheckedCreateWithoutBookingsInput = {
+    id?: string
+    name: string
+    slug: string
+    addressLine1: string
+    addressLine2?: string | null
+    city: string
+    province: string
+    postalCode?: string | null
+    country?: string
+    timezone?: string
+    status?: $Enums.LocationStatus
+    createdById?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    memberships?: LocationMembershipUncheckedCreateNestedManyWithoutLocationInput
+    amenities?: AmenityUncheckedCreateNestedManyWithoutLocationInput
+    blackoutDates?: BlackoutDateUncheckedCreateNestedManyWithoutLocationInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutLocationInput
+  }
+
+  export type LocationCreateOrConnectWithoutBookingsInput = {
+    where: LocationWhereUniqueInput
+    create: XOR<LocationCreateWithoutBookingsInput, LocationUncheckedCreateWithoutBookingsInput>
   }
 
   export type UserCreateWithoutBookingsInput = {
     id?: string
+    authUserId?: string | null
     email: string
     name: string
     phone?: string | null
-    role?: $Enums.UserRole
+    platformRole?: $Enums.PlatformRole
     passwordHash?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    memberships?: LocationMembershipCreateNestedManyWithoutUserInput
     approvedBookings?: BookingCreateNestedManyWithoutApprovedByInput
     auditLogs?: AuditLogCreateNestedManyWithoutActorInput
+    createdLocations?: LocationCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutBookingsInput = {
     id?: string
+    authUserId?: string | null
     email: string
     name: string
     phone?: string | null
-    role?: $Enums.UserRole
+    platformRole?: $Enums.PlatformRole
     passwordHash?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    memberships?: LocationMembershipUncheckedCreateNestedManyWithoutUserInput
     approvedBookings?: BookingUncheckedCreateNestedManyWithoutApprovedByInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutActorInput
+    createdLocations?: LocationUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutBookingsInput = {
@@ -10148,7 +15076,7 @@ export namespace Prisma {
     type?: $Enums.AmenityType
     description: string
     imageUrl?: string | null
-    location: string
+    area: string
     capacity: number
     slotDurationMinutes: number
     openTime: string
@@ -10161,17 +15089,19 @@ export namespace Prisma {
     cancellationCutoffHours?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    location: LocationCreateNestedOneWithoutAmenitiesInput
     blackoutDates?: BlackoutDateCreateNestedManyWithoutAmenityInput
   }
 
   export type AmenityUncheckedCreateWithoutBookingsInput = {
     id?: string
+    locationId: string
     name: string
     slug: string
     type?: $Enums.AmenityType
     description: string
     imageUrl?: string | null
-    location: string
+    area: string
     capacity: number
     slotDurationMinutes: number
     openTime: string
@@ -10194,33 +15124,92 @@ export namespace Prisma {
 
   export type UserCreateWithoutApprovedBookingsInput = {
     id?: string
+    authUserId?: string | null
     email: string
     name: string
     phone?: string | null
-    role?: $Enums.UserRole
+    platformRole?: $Enums.PlatformRole
     passwordHash?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    memberships?: LocationMembershipCreateNestedManyWithoutUserInput
     bookings?: BookingCreateNestedManyWithoutResidentInput
     auditLogs?: AuditLogCreateNestedManyWithoutActorInput
+    createdLocations?: LocationCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutApprovedBookingsInput = {
     id?: string
+    authUserId?: string | null
     email: string
     name: string
     phone?: string | null
-    role?: $Enums.UserRole
+    platformRole?: $Enums.PlatformRole
     passwordHash?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    memberships?: LocationMembershipUncheckedCreateNestedManyWithoutUserInput
     bookings?: BookingUncheckedCreateNestedManyWithoutResidentInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutActorInput
+    createdLocations?: LocationUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutApprovedBookingsInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutApprovedBookingsInput, UserUncheckedCreateWithoutApprovedBookingsInput>
+  }
+
+  export type LocationUpsertWithoutBookingsInput = {
+    update: XOR<LocationUpdateWithoutBookingsInput, LocationUncheckedUpdateWithoutBookingsInput>
+    create: XOR<LocationCreateWithoutBookingsInput, LocationUncheckedCreateWithoutBookingsInput>
+    where?: LocationWhereInput
+  }
+
+  export type LocationUpdateToOneWithWhereWithoutBookingsInput = {
+    where?: LocationWhereInput
+    data: XOR<LocationUpdateWithoutBookingsInput, LocationUncheckedUpdateWithoutBookingsInput>
+  }
+
+  export type LocationUpdateWithoutBookingsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    addressLine1?: StringFieldUpdateOperationsInput | string
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    status?: EnumLocationStatusFieldUpdateOperationsInput | $Enums.LocationStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneWithoutCreatedLocationsNestedInput
+    memberships?: LocationMembershipUpdateManyWithoutLocationNestedInput
+    amenities?: AmenityUpdateManyWithoutLocationNestedInput
+    blackoutDates?: BlackoutDateUpdateManyWithoutLocationNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutLocationNestedInput
+  }
+
+  export type LocationUncheckedUpdateWithoutBookingsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    addressLine1?: StringFieldUpdateOperationsInput | string
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    status?: EnumLocationStatusFieldUpdateOperationsInput | $Enums.LocationStatus
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: LocationMembershipUncheckedUpdateManyWithoutLocationNestedInput
+    amenities?: AmenityUncheckedUpdateManyWithoutLocationNestedInput
+    blackoutDates?: BlackoutDateUncheckedUpdateManyWithoutLocationNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutLocationNestedInput
   }
 
   export type UserUpsertWithoutBookingsInput = {
@@ -10236,28 +15225,34 @@ export namespace Prisma {
 
   export type UserUpdateWithoutBookingsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    authUserId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    platformRole?: EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: LocationMembershipUpdateManyWithoutUserNestedInput
     approvedBookings?: BookingUpdateManyWithoutApprovedByNestedInput
     auditLogs?: AuditLogUpdateManyWithoutActorNestedInput
+    createdLocations?: LocationUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBookingsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    authUserId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    platformRole?: EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: LocationMembershipUncheckedUpdateManyWithoutUserNestedInput
     approvedBookings?: BookingUncheckedUpdateManyWithoutApprovedByNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutActorNestedInput
+    createdLocations?: LocationUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type AmenityUpsertWithoutBookingsInput = {
@@ -10278,7 +15273,7 @@ export namespace Prisma {
     type?: EnumAmenityTypeFieldUpdateOperationsInput | $Enums.AmenityType
     description?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: StringFieldUpdateOperationsInput | string
+    area?: StringFieldUpdateOperationsInput | string
     capacity?: IntFieldUpdateOperationsInput | number
     slotDurationMinutes?: IntFieldUpdateOperationsInput | number
     openTime?: StringFieldUpdateOperationsInput | string
@@ -10291,17 +15286,19 @@ export namespace Prisma {
     cancellationCutoffHours?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: LocationUpdateOneRequiredWithoutAmenitiesNestedInput
     blackoutDates?: BlackoutDateUpdateManyWithoutAmenityNestedInput
   }
 
   export type AmenityUncheckedUpdateWithoutBookingsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    locationId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     type?: EnumAmenityTypeFieldUpdateOperationsInput | $Enums.AmenityType
     description?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: StringFieldUpdateOperationsInput | string
+    area?: StringFieldUpdateOperationsInput | string
     capacity?: IntFieldUpdateOperationsInput | number
     slotDurationMinutes?: IntFieldUpdateOperationsInput | number
     openTime?: StringFieldUpdateOperationsInput | string
@@ -10330,28 +15327,81 @@ export namespace Prisma {
 
   export type UserUpdateWithoutApprovedBookingsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    authUserId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    platformRole?: EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: LocationMembershipUpdateManyWithoutUserNestedInput
     bookings?: BookingUpdateManyWithoutResidentNestedInput
     auditLogs?: AuditLogUpdateManyWithoutActorNestedInput
+    createdLocations?: LocationUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutApprovedBookingsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    authUserId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    platformRole?: EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: LocationMembershipUncheckedUpdateManyWithoutUserNestedInput
     bookings?: BookingUncheckedUpdateManyWithoutResidentNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutActorNestedInput
+    createdLocations?: LocationUncheckedUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type LocationCreateWithoutBlackoutDatesInput = {
+    id?: string
+    name: string
+    slug: string
+    addressLine1: string
+    addressLine2?: string | null
+    city: string
+    province: string
+    postalCode?: string | null
+    country?: string
+    timezone?: string
+    status?: $Enums.LocationStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy?: UserCreateNestedOneWithoutCreatedLocationsInput
+    memberships?: LocationMembershipCreateNestedManyWithoutLocationInput
+    amenities?: AmenityCreateNestedManyWithoutLocationInput
+    bookings?: BookingCreateNestedManyWithoutLocationInput
+    auditLogs?: AuditLogCreateNestedManyWithoutLocationInput
+  }
+
+  export type LocationUncheckedCreateWithoutBlackoutDatesInput = {
+    id?: string
+    name: string
+    slug: string
+    addressLine1: string
+    addressLine2?: string | null
+    city: string
+    province: string
+    postalCode?: string | null
+    country?: string
+    timezone?: string
+    status?: $Enums.LocationStatus
+    createdById?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    memberships?: LocationMembershipUncheckedCreateNestedManyWithoutLocationInput
+    amenities?: AmenityUncheckedCreateNestedManyWithoutLocationInput
+    bookings?: BookingUncheckedCreateNestedManyWithoutLocationInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutLocationInput
+  }
+
+  export type LocationCreateOrConnectWithoutBlackoutDatesInput = {
+    where: LocationWhereUniqueInput
+    create: XOR<LocationCreateWithoutBlackoutDatesInput, LocationUncheckedCreateWithoutBlackoutDatesInput>
   }
 
   export type AmenityCreateWithoutBlackoutDatesInput = {
@@ -10361,7 +15411,7 @@ export namespace Prisma {
     type?: $Enums.AmenityType
     description: string
     imageUrl?: string | null
-    location: string
+    area: string
     capacity: number
     slotDurationMinutes: number
     openTime: string
@@ -10374,17 +15424,19 @@ export namespace Prisma {
     cancellationCutoffHours?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    location: LocationCreateNestedOneWithoutAmenitiesInput
     bookings?: BookingCreateNestedManyWithoutAmenityInput
   }
 
   export type AmenityUncheckedCreateWithoutBlackoutDatesInput = {
     id?: string
+    locationId: string
     name: string
     slug: string
     type?: $Enums.AmenityType
     description: string
     imageUrl?: string | null
-    location: string
+    area: string
     capacity: number
     slotDurationMinutes: number
     openTime: string
@@ -10405,6 +15457,59 @@ export namespace Prisma {
     create: XOR<AmenityCreateWithoutBlackoutDatesInput, AmenityUncheckedCreateWithoutBlackoutDatesInput>
   }
 
+  export type LocationUpsertWithoutBlackoutDatesInput = {
+    update: XOR<LocationUpdateWithoutBlackoutDatesInput, LocationUncheckedUpdateWithoutBlackoutDatesInput>
+    create: XOR<LocationCreateWithoutBlackoutDatesInput, LocationUncheckedCreateWithoutBlackoutDatesInput>
+    where?: LocationWhereInput
+  }
+
+  export type LocationUpdateToOneWithWhereWithoutBlackoutDatesInput = {
+    where?: LocationWhereInput
+    data: XOR<LocationUpdateWithoutBlackoutDatesInput, LocationUncheckedUpdateWithoutBlackoutDatesInput>
+  }
+
+  export type LocationUpdateWithoutBlackoutDatesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    addressLine1?: StringFieldUpdateOperationsInput | string
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    status?: EnumLocationStatusFieldUpdateOperationsInput | $Enums.LocationStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneWithoutCreatedLocationsNestedInput
+    memberships?: LocationMembershipUpdateManyWithoutLocationNestedInput
+    amenities?: AmenityUpdateManyWithoutLocationNestedInput
+    bookings?: BookingUpdateManyWithoutLocationNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutLocationNestedInput
+  }
+
+  export type LocationUncheckedUpdateWithoutBlackoutDatesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    addressLine1?: StringFieldUpdateOperationsInput | string
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    status?: EnumLocationStatusFieldUpdateOperationsInput | $Enums.LocationStatus
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: LocationMembershipUncheckedUpdateManyWithoutLocationNestedInput
+    amenities?: AmenityUncheckedUpdateManyWithoutLocationNestedInput
+    bookings?: BookingUncheckedUpdateManyWithoutLocationNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutLocationNestedInput
+  }
+
   export type AmenityUpsertWithoutBlackoutDatesInput = {
     update: XOR<AmenityUpdateWithoutBlackoutDatesInput, AmenityUncheckedUpdateWithoutBlackoutDatesInput>
     create: XOR<AmenityCreateWithoutBlackoutDatesInput, AmenityUncheckedCreateWithoutBlackoutDatesInput>
@@ -10423,7 +15528,7 @@ export namespace Prisma {
     type?: EnumAmenityTypeFieldUpdateOperationsInput | $Enums.AmenityType
     description?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: StringFieldUpdateOperationsInput | string
+    area?: StringFieldUpdateOperationsInput | string
     capacity?: IntFieldUpdateOperationsInput | number
     slotDurationMinutes?: IntFieldUpdateOperationsInput | number
     openTime?: StringFieldUpdateOperationsInput | string
@@ -10436,17 +15541,19 @@ export namespace Prisma {
     cancellationCutoffHours?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: LocationUpdateOneRequiredWithoutAmenitiesNestedInput
     bookings?: BookingUpdateManyWithoutAmenityNestedInput
   }
 
   export type AmenityUncheckedUpdateWithoutBlackoutDatesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    locationId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     type?: EnumAmenityTypeFieldUpdateOperationsInput | $Enums.AmenityType
     description?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: StringFieldUpdateOperationsInput | string
+    area?: StringFieldUpdateOperationsInput | string
     capacity?: IntFieldUpdateOperationsInput | number
     slotDurationMinutes?: IntFieldUpdateOperationsInput | number
     openTime?: StringFieldUpdateOperationsInput | string
@@ -10464,33 +15571,86 @@ export namespace Prisma {
 
   export type UserCreateWithoutAuditLogsInput = {
     id?: string
+    authUserId?: string | null
     email: string
     name: string
     phone?: string | null
-    role?: $Enums.UserRole
+    platformRole?: $Enums.PlatformRole
     passwordHash?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    memberships?: LocationMembershipCreateNestedManyWithoutUserInput
     bookings?: BookingCreateNestedManyWithoutResidentInput
     approvedBookings?: BookingCreateNestedManyWithoutApprovedByInput
+    createdLocations?: LocationCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutAuditLogsInput = {
     id?: string
+    authUserId?: string | null
     email: string
     name: string
     phone?: string | null
-    role?: $Enums.UserRole
+    platformRole?: $Enums.PlatformRole
     passwordHash?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    memberships?: LocationMembershipUncheckedCreateNestedManyWithoutUserInput
     bookings?: BookingUncheckedCreateNestedManyWithoutResidentInput
     approvedBookings?: BookingUncheckedCreateNestedManyWithoutApprovedByInput
+    createdLocations?: LocationUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutAuditLogsInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutAuditLogsInput, UserUncheckedCreateWithoutAuditLogsInput>
+  }
+
+  export type LocationCreateWithoutAuditLogsInput = {
+    id?: string
+    name: string
+    slug: string
+    addressLine1: string
+    addressLine2?: string | null
+    city: string
+    province: string
+    postalCode?: string | null
+    country?: string
+    timezone?: string
+    status?: $Enums.LocationStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy?: UserCreateNestedOneWithoutCreatedLocationsInput
+    memberships?: LocationMembershipCreateNestedManyWithoutLocationInput
+    amenities?: AmenityCreateNestedManyWithoutLocationInput
+    bookings?: BookingCreateNestedManyWithoutLocationInput
+    blackoutDates?: BlackoutDateCreateNestedManyWithoutLocationInput
+  }
+
+  export type LocationUncheckedCreateWithoutAuditLogsInput = {
+    id?: string
+    name: string
+    slug: string
+    addressLine1: string
+    addressLine2?: string | null
+    city: string
+    province: string
+    postalCode?: string | null
+    country?: string
+    timezone?: string
+    status?: $Enums.LocationStatus
+    createdById?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    memberships?: LocationMembershipUncheckedCreateNestedManyWithoutLocationInput
+    amenities?: AmenityUncheckedCreateNestedManyWithoutLocationInput
+    bookings?: BookingUncheckedCreateNestedManyWithoutLocationInput
+    blackoutDates?: BlackoutDateUncheckedCreateNestedManyWithoutLocationInput
+  }
+
+  export type LocationCreateOrConnectWithoutAuditLogsInput = {
+    where: LocationWhereUniqueInput
+    create: XOR<LocationCreateWithoutAuditLogsInput, LocationUncheckedCreateWithoutAuditLogsInput>
   }
 
   export type UserUpsertWithoutAuditLogsInput = {
@@ -10506,32 +15666,101 @@ export namespace Prisma {
 
   export type UserUpdateWithoutAuditLogsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    authUserId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    platformRole?: EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: LocationMembershipUpdateManyWithoutUserNestedInput
     bookings?: BookingUpdateManyWithoutResidentNestedInput
     approvedBookings?: BookingUpdateManyWithoutApprovedByNestedInput
+    createdLocations?: LocationUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAuditLogsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    authUserId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    platformRole?: EnumPlatformRoleFieldUpdateOperationsInput | $Enums.PlatformRole
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: LocationMembershipUncheckedUpdateManyWithoutUserNestedInput
     bookings?: BookingUncheckedUpdateManyWithoutResidentNestedInput
     approvedBookings?: BookingUncheckedUpdateManyWithoutApprovedByNestedInput
+    createdLocations?: LocationUncheckedUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type LocationUpsertWithoutAuditLogsInput = {
+    update: XOR<LocationUpdateWithoutAuditLogsInput, LocationUncheckedUpdateWithoutAuditLogsInput>
+    create: XOR<LocationCreateWithoutAuditLogsInput, LocationUncheckedCreateWithoutAuditLogsInput>
+    where?: LocationWhereInput
+  }
+
+  export type LocationUpdateToOneWithWhereWithoutAuditLogsInput = {
+    where?: LocationWhereInput
+    data: XOR<LocationUpdateWithoutAuditLogsInput, LocationUncheckedUpdateWithoutAuditLogsInput>
+  }
+
+  export type LocationUpdateWithoutAuditLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    addressLine1?: StringFieldUpdateOperationsInput | string
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    status?: EnumLocationStatusFieldUpdateOperationsInput | $Enums.LocationStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneWithoutCreatedLocationsNestedInput
+    memberships?: LocationMembershipUpdateManyWithoutLocationNestedInput
+    amenities?: AmenityUpdateManyWithoutLocationNestedInput
+    bookings?: BookingUpdateManyWithoutLocationNestedInput
+    blackoutDates?: BlackoutDateUpdateManyWithoutLocationNestedInput
+  }
+
+  export type LocationUncheckedUpdateWithoutAuditLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    addressLine1?: StringFieldUpdateOperationsInput | string
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    status?: EnumLocationStatusFieldUpdateOperationsInput | $Enums.LocationStatus
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: LocationMembershipUncheckedUpdateManyWithoutLocationNestedInput
+    amenities?: AmenityUncheckedUpdateManyWithoutLocationNestedInput
+    bookings?: BookingUncheckedUpdateManyWithoutLocationNestedInput
+    blackoutDates?: BlackoutDateUncheckedUpdateManyWithoutLocationNestedInput
+  }
+
+  export type LocationMembershipCreateManyUserInput = {
+    id?: string
+    locationId: string
+    role: $Enums.LocationMembershipRole
+    isPrimary?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type BookingCreateManyResidentInput = {
     id?: string
+    locationId: string
     amenityId: string
     approvedById?: string | null
     startAt: Date | string
@@ -10549,6 +15778,7 @@ export namespace Prisma {
 
   export type BookingCreateManyApprovedByInput = {
     id?: string
+    locationId: string
     residentId: string
     amenityId: string
     startAt: Date | string
@@ -10566,11 +15796,55 @@ export namespace Prisma {
 
   export type AuditLogCreateManyActorInput = {
     id?: string
+    locationId?: string | null
     action: string
     entityType: string
     entityId: string
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+  }
+
+  export type LocationCreateManyCreatedByInput = {
+    id?: string
+    name: string
+    slug: string
+    addressLine1: string
+    addressLine2?: string | null
+    city: string
+    province: string
+    postalCode?: string | null
+    country?: string
+    timezone?: string
+    status?: $Enums.LocationStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LocationMembershipUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: EnumLocationMembershipRoleFieldUpdateOperationsInput | $Enums.LocationMembershipRole
+    isPrimary?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: LocationUpdateOneRequiredWithoutMembershipsNestedInput
+  }
+
+  export type LocationMembershipUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    locationId?: StringFieldUpdateOperationsInput | string
+    role?: EnumLocationMembershipRoleFieldUpdateOperationsInput | $Enums.LocationMembershipRole
+    isPrimary?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LocationMembershipUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    locationId?: StringFieldUpdateOperationsInput | string
+    role?: EnumLocationMembershipRoleFieldUpdateOperationsInput | $Enums.LocationMembershipRole
+    isPrimary?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BookingUpdateWithoutResidentInput = {
@@ -10586,12 +15860,14 @@ export namespace Prisma {
     cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: LocationUpdateOneRequiredWithoutBookingsNestedInput
     amenity?: AmenityUpdateOneRequiredWithoutBookingsNestedInput
     approvedBy?: UserUpdateOneWithoutApprovedBookingsNestedInput
   }
 
   export type BookingUncheckedUpdateWithoutResidentInput = {
     id?: StringFieldUpdateOperationsInput | string
+    locationId?: StringFieldUpdateOperationsInput | string
     amenityId?: StringFieldUpdateOperationsInput | string
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
     startAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10609,6 +15885,7 @@ export namespace Prisma {
 
   export type BookingUncheckedUpdateManyWithoutResidentInput = {
     id?: StringFieldUpdateOperationsInput | string
+    locationId?: StringFieldUpdateOperationsInput | string
     amenityId?: StringFieldUpdateOperationsInput | string
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
     startAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10637,12 +15914,14 @@ export namespace Prisma {
     cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: LocationUpdateOneRequiredWithoutBookingsNestedInput
     resident?: UserUpdateOneRequiredWithoutBookingsNestedInput
     amenity?: AmenityUpdateOneRequiredWithoutBookingsNestedInput
   }
 
   export type BookingUncheckedUpdateWithoutApprovedByInput = {
     id?: StringFieldUpdateOperationsInput | string
+    locationId?: StringFieldUpdateOperationsInput | string
     residentId?: StringFieldUpdateOperationsInput | string
     amenityId?: StringFieldUpdateOperationsInput | string
     startAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10660,6 +15939,7 @@ export namespace Prisma {
 
   export type BookingUncheckedUpdateManyWithoutApprovedByInput = {
     id?: StringFieldUpdateOperationsInput | string
+    locationId?: StringFieldUpdateOperationsInput | string
     residentId?: StringFieldUpdateOperationsInput | string
     amenityId?: StringFieldUpdateOperationsInput | string
     startAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10682,10 +15962,12 @@ export namespace Prisma {
     entityId?: StringFieldUpdateOperationsInput | string
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: LocationUpdateOneWithoutAuditLogsNestedInput
   }
 
   export type AuditLogUncheckedUpdateWithoutActorInput = {
     id?: StringFieldUpdateOperationsInput | string
+    locationId?: NullableStringFieldUpdateOperationsInput | string | null
     action?: StringFieldUpdateOperationsInput | string
     entityType?: StringFieldUpdateOperationsInput | string
     entityId?: StringFieldUpdateOperationsInput | string
@@ -10695,6 +15977,349 @@ export namespace Prisma {
 
   export type AuditLogUncheckedUpdateManyWithoutActorInput = {
     id?: StringFieldUpdateOperationsInput | string
+    locationId?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    entityType?: StringFieldUpdateOperationsInput | string
+    entityId?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LocationUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    addressLine1?: StringFieldUpdateOperationsInput | string
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    status?: EnumLocationStatusFieldUpdateOperationsInput | $Enums.LocationStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: LocationMembershipUpdateManyWithoutLocationNestedInput
+    amenities?: AmenityUpdateManyWithoutLocationNestedInput
+    bookings?: BookingUpdateManyWithoutLocationNestedInput
+    blackoutDates?: BlackoutDateUpdateManyWithoutLocationNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutLocationNestedInput
+  }
+
+  export type LocationUncheckedUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    addressLine1?: StringFieldUpdateOperationsInput | string
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    status?: EnumLocationStatusFieldUpdateOperationsInput | $Enums.LocationStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: LocationMembershipUncheckedUpdateManyWithoutLocationNestedInput
+    amenities?: AmenityUncheckedUpdateManyWithoutLocationNestedInput
+    bookings?: BookingUncheckedUpdateManyWithoutLocationNestedInput
+    blackoutDates?: BlackoutDateUncheckedUpdateManyWithoutLocationNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutLocationNestedInput
+  }
+
+  export type LocationUncheckedUpdateManyWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    addressLine1?: StringFieldUpdateOperationsInput | string
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: StringFieldUpdateOperationsInput | string
+    province?: StringFieldUpdateOperationsInput | string
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: StringFieldUpdateOperationsInput | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    status?: EnumLocationStatusFieldUpdateOperationsInput | $Enums.LocationStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LocationMembershipCreateManyLocationInput = {
+    id?: string
+    userId: string
+    role: $Enums.LocationMembershipRole
+    isPrimary?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AmenityCreateManyLocationInput = {
+    id?: string
+    name: string
+    slug: string
+    type?: $Enums.AmenityType
+    description: string
+    imageUrl?: string | null
+    area: string
+    capacity: number
+    slotDurationMinutes: number
+    openTime: string
+    closeTime: string
+    rules?: string | null
+    status?: $Enums.AmenityStatus
+    requiresApproval?: boolean
+    maxAdvanceDays?: number | null
+    maxBookingDurationMinutes?: number | null
+    cancellationCutoffHours?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookingCreateManyLocationInput = {
+    id?: string
+    residentId: string
+    amenityId: string
+    approvedById?: string | null
+    startAt: Date | string
+    endAt: Date | string
+    guestCount?: number | null
+    status?: $Enums.BookingStatus
+    notes?: string | null
+    eventTitle?: string | null
+    eventDetails?: string | null
+    approvedAt?: Date | string | null
+    cancelledAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BlackoutDateCreateManyLocationInput = {
+    id?: string
+    amenityId: string
+    startAt: Date | string
+    endAt: Date | string
+    reason: string
+    allDay?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AuditLogCreateManyLocationInput = {
+    id?: string
+    actorUserId?: string | null
+    action: string
+    entityType: string
+    entityId: string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type LocationMembershipUpdateWithoutLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: EnumLocationMembershipRoleFieldUpdateOperationsInput | $Enums.LocationMembershipRole
+    isPrimary?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutMembershipsNestedInput
+  }
+
+  export type LocationMembershipUncheckedUpdateWithoutLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    role?: EnumLocationMembershipRoleFieldUpdateOperationsInput | $Enums.LocationMembershipRole
+    isPrimary?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LocationMembershipUncheckedUpdateManyWithoutLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    role?: EnumLocationMembershipRoleFieldUpdateOperationsInput | $Enums.LocationMembershipRole
+    isPrimary?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AmenityUpdateWithoutLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    type?: EnumAmenityTypeFieldUpdateOperationsInput | $Enums.AmenityType
+    description?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    area?: StringFieldUpdateOperationsInput | string
+    capacity?: IntFieldUpdateOperationsInput | number
+    slotDurationMinutes?: IntFieldUpdateOperationsInput | number
+    openTime?: StringFieldUpdateOperationsInput | string
+    closeTime?: StringFieldUpdateOperationsInput | string
+    rules?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAmenityStatusFieldUpdateOperationsInput | $Enums.AmenityStatus
+    requiresApproval?: BoolFieldUpdateOperationsInput | boolean
+    maxAdvanceDays?: NullableIntFieldUpdateOperationsInput | number | null
+    maxBookingDurationMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+    cancellationCutoffHours?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookings?: BookingUpdateManyWithoutAmenityNestedInput
+    blackoutDates?: BlackoutDateUpdateManyWithoutAmenityNestedInput
+  }
+
+  export type AmenityUncheckedUpdateWithoutLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    type?: EnumAmenityTypeFieldUpdateOperationsInput | $Enums.AmenityType
+    description?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    area?: StringFieldUpdateOperationsInput | string
+    capacity?: IntFieldUpdateOperationsInput | number
+    slotDurationMinutes?: IntFieldUpdateOperationsInput | number
+    openTime?: StringFieldUpdateOperationsInput | string
+    closeTime?: StringFieldUpdateOperationsInput | string
+    rules?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAmenityStatusFieldUpdateOperationsInput | $Enums.AmenityStatus
+    requiresApproval?: BoolFieldUpdateOperationsInput | boolean
+    maxAdvanceDays?: NullableIntFieldUpdateOperationsInput | number | null
+    maxBookingDurationMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+    cancellationCutoffHours?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookings?: BookingUncheckedUpdateManyWithoutAmenityNestedInput
+    blackoutDates?: BlackoutDateUncheckedUpdateManyWithoutAmenityNestedInput
+  }
+
+  export type AmenityUncheckedUpdateManyWithoutLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    type?: EnumAmenityTypeFieldUpdateOperationsInput | $Enums.AmenityType
+    description?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    area?: StringFieldUpdateOperationsInput | string
+    capacity?: IntFieldUpdateOperationsInput | number
+    slotDurationMinutes?: IntFieldUpdateOperationsInput | number
+    openTime?: StringFieldUpdateOperationsInput | string
+    closeTime?: StringFieldUpdateOperationsInput | string
+    rules?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAmenityStatusFieldUpdateOperationsInput | $Enums.AmenityStatus
+    requiresApproval?: BoolFieldUpdateOperationsInput | boolean
+    maxAdvanceDays?: NullableIntFieldUpdateOperationsInput | number | null
+    maxBookingDurationMinutes?: NullableIntFieldUpdateOperationsInput | number | null
+    cancellationCutoffHours?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookingUpdateWithoutLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    guestCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    eventTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    eventDetails?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resident?: UserUpdateOneRequiredWithoutBookingsNestedInput
+    amenity?: AmenityUpdateOneRequiredWithoutBookingsNestedInput
+    approvedBy?: UserUpdateOneWithoutApprovedBookingsNestedInput
+  }
+
+  export type BookingUncheckedUpdateWithoutLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    residentId?: StringFieldUpdateOperationsInput | string
+    amenityId?: StringFieldUpdateOperationsInput | string
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    startAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    guestCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    eventTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    eventDetails?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookingUncheckedUpdateManyWithoutLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    residentId?: StringFieldUpdateOperationsInput | string
+    amenityId?: StringFieldUpdateOperationsInput | string
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    startAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    guestCount?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumBookingStatusFieldUpdateOperationsInput | $Enums.BookingStatus
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    eventTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    eventDetails?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BlackoutDateUpdateWithoutLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
+    allDay?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    amenity?: AmenityUpdateOneRequiredWithoutBlackoutDatesNestedInput
+  }
+
+  export type BlackoutDateUncheckedUpdateWithoutLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amenityId?: StringFieldUpdateOperationsInput | string
+    startAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
+    allDay?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BlackoutDateUncheckedUpdateManyWithoutLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amenityId?: StringFieldUpdateOperationsInput | string
+    startAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    reason?: StringFieldUpdateOperationsInput | string
+    allDay?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AuditLogUpdateWithoutLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    entityType?: StringFieldUpdateOperationsInput | string
+    entityId?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    actor?: UserUpdateOneWithoutAuditLogsNestedInput
+  }
+
+  export type AuditLogUncheckedUpdateWithoutLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    actorUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    action?: StringFieldUpdateOperationsInput | string
+    entityType?: StringFieldUpdateOperationsInput | string
+    entityId?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AuditLogUncheckedUpdateManyWithoutLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    actorUserId?: NullableStringFieldUpdateOperationsInput | string | null
     action?: StringFieldUpdateOperationsInput | string
     entityType?: StringFieldUpdateOperationsInput | string
     entityId?: StringFieldUpdateOperationsInput | string
@@ -10704,6 +16329,7 @@ export namespace Prisma {
 
   export type BookingCreateManyAmenityInput = {
     id?: string
+    locationId: string
     residentId: string
     approvedById?: string | null
     startAt: Date | string
@@ -10721,6 +16347,7 @@ export namespace Prisma {
 
   export type BlackoutDateCreateManyAmenityInput = {
     id?: string
+    locationId: string
     startAt: Date | string
     endAt: Date | string
     reason: string
@@ -10742,12 +16369,14 @@ export namespace Prisma {
     cancelledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: LocationUpdateOneRequiredWithoutBookingsNestedInput
     resident?: UserUpdateOneRequiredWithoutBookingsNestedInput
     approvedBy?: UserUpdateOneWithoutApprovedBookingsNestedInput
   }
 
   export type BookingUncheckedUpdateWithoutAmenityInput = {
     id?: StringFieldUpdateOperationsInput | string
+    locationId?: StringFieldUpdateOperationsInput | string
     residentId?: StringFieldUpdateOperationsInput | string
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
     startAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10765,6 +16394,7 @@ export namespace Prisma {
 
   export type BookingUncheckedUpdateManyWithoutAmenityInput = {
     id?: StringFieldUpdateOperationsInput | string
+    locationId?: StringFieldUpdateOperationsInput | string
     residentId?: StringFieldUpdateOperationsInput | string
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
     startAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10788,10 +16418,12 @@ export namespace Prisma {
     allDay?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: LocationUpdateOneRequiredWithoutBlackoutDatesNestedInput
   }
 
   export type BlackoutDateUncheckedUpdateWithoutAmenityInput = {
     id?: StringFieldUpdateOperationsInput | string
+    locationId?: StringFieldUpdateOperationsInput | string
     startAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endAt?: DateTimeFieldUpdateOperationsInput | Date | string
     reason?: StringFieldUpdateOperationsInput | string
@@ -10802,6 +16434,7 @@ export namespace Prisma {
 
   export type BlackoutDateUncheckedUpdateManyWithoutAmenityInput = {
     id?: StringFieldUpdateOperationsInput | string
+    locationId?: StringFieldUpdateOperationsInput | string
     startAt?: DateTimeFieldUpdateOperationsInput | Date | string
     endAt?: DateTimeFieldUpdateOperationsInput | Date | string
     reason?: StringFieldUpdateOperationsInput | string
